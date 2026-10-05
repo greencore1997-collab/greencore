@@ -776,6 +776,20 @@ footer {
   .campo-highlight { padding: 1.2rem 1.2rem; }
 }
 
+
+/* ===== QR FLOTANTE ===== */
+#qr-fab { position:fixed; bottom:2rem; right:2rem; z-index:9999; width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--green)); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,207,255,0.35); transition:transform .25s,box-shadow .25s; }
+#qr-fab:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(0,207,255,0.55); }
+#qr-fab svg { width:26px; height:26px; fill:#fff; }
+#qr-overlay { display:none; position:fixed; inset:0; z-index:10000; background:rgba(3,7,18,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; }
+#qr-overlay.open { display:flex; }
+#qr-modal { background:var(--panel); border:1px solid rgba(0,207,255,0.25); border-radius:20px; padding:2rem 2.5rem 1.8rem; text-align:center; max-width:320px; width:90%; position:relative; box-shadow:0 0 60px rgba(0,207,255,0.12); }
+#qr-modal h3 { font-family:'Orbitron',monospace; font-size:0.85rem; letter-spacing:0.12em; color:var(--green); margin:0 0 0.4rem; }
+#qr-modal p { font-size:0.75rem; color:rgba(255,255,255,0.45); margin:0 0 1.4rem; }
+#qr-canvas { display:inline-block; padding:12px; background:#fff; border-radius:12px; }
+#qr-url { margin-top:1rem; font-size:0.68rem; color:rgba(0,207,255,0.6); word-break:break-all; font-family:'Orbitron',monospace; }
+#qr-close { position:absolute; top:0.9rem; right:1rem; background:none; border:none; color:rgba(255,255,255,0.4); font-size:1.3rem; cursor:pointer; line-height:1; }
+#qr-close:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -2034,5 +2048,45 @@ function sendForm(e) {
 }
 </script>
 
+
+<!-- QR FAB -->
+<button id="qr-fab" title="Compartir por QR">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 3h7v7H3V3zm1 1v5h5V4H4zm1 1h3v3H5V5zM14 3h7v7h-7V3zm1 1v5h5V4h-5zm1 1h3v3h-3V5zM3 14h7v7H3v-7zm1 1v5h5v-5H4zm1 1h3v3H5v-3zm9 0h2v2h-2v-2zm3 0h2v2h-2v-2zm-3 3h2v2h-2v-2zm3 0h2v2h-2v-2zm-6-3h2v2h-2v-2zm0 3h2v2h-2v-2z"/>
+  </svg>
+</button>
+<div id="qr-overlay">
+  <div id="qr-modal">
+    <button id="qr-close">&times;</button>
+    <h3>// COMPARTIR</h3>
+    <p>Escanea el c&oacute;digo con tu c&aacute;mara</p>
+    <div id="qr-canvas"></div>
+    <div id="qr-url"></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var fab = document.getElementById('qr-fab');
+  var overlay = document.getElementById('qr-overlay');
+  var closeBtn = document.getElementById('qr-close');
+  var generated = false;
+  fab.addEventListener('click', function(){
+    overlay.classList.add('open');
+    if (!generated) {
+      var url = window.location.href;
+      new QRCode(document.getElementById('qr-canvas'), {
+        text: url, width: 200, height: 200,
+        colorDark: '#000000', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+      document.getElementById('qr-url').textContent = url;
+      generated = true;
+    }
+  });
+  closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.classList.remove('open'); });
+})();
+</script>
 </body>
 </html>

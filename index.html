@@ -1208,6 +1208,17 @@ footer {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
+  // Synthetic env map â€” critical for realistic metallic/PBR reflections
+  (function(){
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const envSc = new THREE.Scene();
+    envSc.add(new THREE.HemisphereLight(0x1565FF, 0x000510, 3.0));
+    const dl = new THREE.DirectionalLight(0xfff5e0, 4.0); dl.position.set(-5,4,3); envSc.add(dl);
+    const pl = new THREE.PointLight(0x00CFFF, 3.0, 18); pl.position.set(4,-2,2); envSc.add(pl);
+    const gl = new THREE.PointLight(0x00FF88, 1.5, 18); gl.position.set(0,5,-5); envSc.add(gl);
+    scene.environment = pmrem.fromScene(envSc).texture;
+    pmrem.dispose();
+  })();
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);
@@ -1509,8 +1520,9 @@ footer {
       }),
       // Gold MLI (Multi-Layer Insulation) — crinkled foil look
       mliGold: new THREE.MeshStandardMaterial({
-        color: 0xb87820, roughness: 0.18, metalness: 0.92,
-        envMapIntensity: 1.8
+        color: 0xc88a28, roughness: 0.10, metalness: 0.96,
+        emissive: new THREE.Color(0x402200), emissiveIntensity: 0.35,
+        envMapIntensity: 3.0
       }),
       // Silver/white MLI
       mliSilver: new THREE.MeshStandardMaterial({
@@ -1520,7 +1532,8 @@ footer {
       // Solar cell — deep blue photovoltaic
       cell: new THREE.MeshStandardMaterial({
         color: 0x060e28, roughness: 0.12, metalness: 0.35,
-        envMapIntensity: 0.9
+        emissive: new THREE.Color(0x0a1f5a), emissiveIntensity: 1.1,
+        envMapIntensity: 1.4
       }),
       // Solar panel frame — aluminum
       frame: new THREE.MeshStandardMaterial({
@@ -1545,7 +1558,7 @@ footer {
       // Instrument aperture — optical black
       aperture: new THREE.MeshStandardMaterial({
         color: 0x010306, roughness: 0.05, metalness: 0.0,
-        emissive: new THREE.Color(accentColor), emissiveIntensity: 0.55,
+        emissive: new THREE.Color(accentColor), emissiveIntensity: 1.8,
         envMapIntensity: 0.3
       }),
       // Glow accent (emissive only)
@@ -1877,10 +1890,33 @@ footer {
   const sat1 = makeSatellite(C_BLUE, 'A');
   const sat2 = makeSatellite(0x00CFFF, 'B');
   const sat3 = makeSatellite(0x00FF88, 'A');
-  sat1.scale.setScalar(0.42);
-  sat2.scale.setScalar(0.42);
-  sat3.scale.setScalar(0.38);
+  sat1.scale.setScalar(0.62);
+  sat2.scale.setScalar(0.62);
+  sat3.scale.setScalar(0.56);
   scene.add(sat1); scene.add(sat2); scene.add(sat3);
+
+  // Glow sprites â€” visible halos around each satellite
+  (function(){
+    const gc2 = document.createElement('canvas'); gc2.width = gc2.height = 256;
+    const ctx = gc2.getContext('2d');
+    const grad = ctx.createRadialGradient(128,128,0,128,128,128);
+    grad.addColorStop(0,   'rgba(255,255,255,0.95)');
+    grad.addColorStop(0.18,'rgba(120,200,255,0.55)');
+    grad.addColorStop(0.5, 'rgba(30,80,200,0.18)');
+    grad.addColorStop(1,   'rgba(0,0,0,0)');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+    const glowTex = new THREE.CanvasTexture(gc2);
+    const mkGlow = (col) => {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: glowTex, color: col, transparent: true,
+        opacity: 0.72, blending: THREE.AdditiveBlending, depthWrite: false
+      }));
+      sp.scale.setScalar(1.1); scene.add(sp); return sp;
+    };
+    window._satGlow1 = mkGlow(0x4488ff);
+    window._satGlow2 = mkGlow(0x00CFFF);
+    window._satGlow3 = mkGlow(0x00FF88);
+  })();
 
   // ---- LIGHTS — PBR-tuned
   // Deep space ambient (very dim — space is dark)
@@ -2002,6 +2038,11 @@ footer {
       sat3.userData.navLight.intensity = Math.floor(t * 2 + 2) % 5 === 0 ? 2.0 : 0.0;
     if (sat3.userData.engineLight)
       sat3.userData.engineLight.intensity = 0.42 + Math.sin(t * 5.2) * 0.28;
+
+    // Sync glow sprites
+    if (window._satGlow1) { window._satGlow1.position.copy(sat1.position); window._satGlow1.material.opacity = 0.55 + 0.18*Math.sin(t*1.3); }
+    if (window._satGlow2) { window._satGlow2.position.copy(sat2.position); window._satGlow2.material.opacity = 0.55 + 0.18*Math.cos(t*1.1); }
+    if (window._satGlow3) { window._satGlow3.position.copy(sat3.position); window._satGlow3.material.opacity = 0.55 + 0.18*Math.sin(t*1.7+1); }
 
     // Pulsing lights
     blueLight.intensity  = 3.0 + Math.sin(t * 0.9) * 0.7;

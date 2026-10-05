@@ -1456,6 +1456,7 @@ footer {
   const ORBITS = [
     { rx: 2.4,  ry: 2.0,  tiltX:  Math.PI * 0.28, tiltZ:  Math.PI * 0.05, color: C_BLUE  },
     { rx: 3.0,  ry: 2.6,  tiltX: -Math.PI * 0.15,  tiltZ:  Math.PI * 0.18, color: C_GREEN },
+    { rx: 2.7,  ry: 2.3,  tiltX:  Math.PI * 0.08,  tiltZ: -Math.PI * 0.22, color: 0x00FF88 },
   ];
 
   // Euler objects (order XZ, matching Three.js line.rotation applied sequentially)
@@ -1875,9 +1876,11 @@ footer {
 
   const sat1 = makeSatellite(C_BLUE, 'A');
   const sat2 = makeSatellite(0x00CFFF, 'B');
+  const sat3 = makeSatellite(0x00FF88, 'A');
   sat1.scale.setScalar(0.42);
   sat2.scale.setScalar(0.42);
-  scene.add(sat1); scene.add(sat2);
+  sat3.scale.setScalar(0.38);
+  scene.add(sat1); scene.add(sat2); scene.add(sat3);
 
   // ---- LIGHTS — PBR-tuned
   // Deep space ambient (very dim — space is dark)
@@ -1985,6 +1988,20 @@ footer {
       sat2.userData.navLight.intensity = Math.floor(t * 2 + 1) % 4 === 0 ? 2.0 : 0.0;
     if (sat2.userData.engineLight)
       sat2.userData.engineLight.intensity = 0.35 + Math.cos(t * 3.8) * 0.25;
+
+    // Sat 3 - orbit 2 (polar-ish, green accent)
+    const a3  = t * 0.19 + Math.PI * 0.66;
+    const p3  = orbitPos(2, a3);
+    const fwd3 = orbitTangent(2, a3);
+    const right3 = new THREE.Vector3().crossVectors(fwd3, p3.clone().normalize()).normalize();
+    const up3    = new THREE.Vector3().crossVectors(right3, fwd3).normalize();
+    _mat3.makeBasis(fwd3, up3, right3);
+    sat3.position.copy(p3);
+    sat3.quaternion.setFromRotationMatrix(_mat3);
+    if (sat3.userData.navLight)
+      sat3.userData.navLight.intensity = Math.floor(t * 2 + 2) % 5 === 0 ? 2.0 : 0.0;
+    if (sat3.userData.engineLight)
+      sat3.userData.engineLight.intensity = 0.42 + Math.sin(t * 5.2) * 0.28;
 
     // Pulsing lights
     blueLight.intensity  = 3.0 + Math.sin(t * 0.9) * 0.7;

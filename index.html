@@ -490,6 +490,51 @@ section {
 .about-badge:hover { border-color: var(--blue); box-shadow: var(--glow-b); }
 
 /* ========================================================
+   CASES / CASOS DE EXITO
+======================================================== */
+#casos { background: #060E1F; }
+.casos-header { text-align:center; margin-bottom: 64px; }
+.casos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.caso-card {
+  background: rgba(4,10,30,0.72);
+  border: 1px solid rgba(21,101,255,0.18);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.28s, box-shadow 0.28s, border-color 0.28s;
+  display: flex;
+  flex-direction: column;
+}
+.caso-card:hover { transform: translateY(-6px); box-shadow: 0 8px 40px rgba(21,101,255,0.22); border-color: #1565FF; }
+.caso-card.featured { border-color: rgba(0,207,255,0.35); grid-column: span 2; }
+.caso-card.featured:hover { border-color: #00CFFF; box-shadow: 0 8px 40px rgba(0,207,255,0.22); }
+.caso-header-inner { padding: 28px 28px 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.caso-icon { font-size: 2.2rem; line-height: 1; filter: drop-shadow(0 0 8px #1565FF); }
+.caso-card.featured .caso-icon { filter: drop-shadow(0 0 8px #00CFFF); }
+.caso-badge { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; background: rgba(21,101,255,0.15); color: #1565FF; border: 1px solid rgba(21,101,255,0.3); white-space: nowrap; }
+.caso-card.featured .caso-badge { background: rgba(0,207,255,0.12); color: #00CFFF; border-color: rgba(0,207,255,0.3); }
+.caso-body { padding: 20px 28px 28px; flex: 1; display: flex; flex-direction: column; }
+.caso-location { font-family: 'Orbitron', sans-serif; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: #00CFFF; margin-bottom: 8px; }
+.caso-card.featured .caso-location { color: #1565FF; }
+.caso-title { font-size: 1.12rem; font-weight: 700; color: #D0E8FF; margin-bottom: 12px; line-height: 1.3; }
+.caso-desc { font-size: 0.88rem; color: #7AA8CC; font-weight: 300; line-height: 1.65; margin-bottom: 22px; flex: 1; }
+.caso-metrics { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.caso-metric { display: flex; flex-direction: column; }
+.caso-metric .m-val { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 700; color: #1565FF; line-height: 1; }
+.caso-card.featured .caso-metric .m-val { color: #00CFFF; }
+.caso-metric .m-lbl { font-size: 0.7rem; color: #7AA8CC; margin-top: 3px; letter-spacing: 0.06em; }
+.caso-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.caso-tag { font-size: 0.68rem; padding: 3px 9px; border-radius: 3px; background: rgba(255,255,255,0.05); color: #7AA8CC; border: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.06em; }
+.caso-divider { height: 1px; background: linear-gradient(to right, rgba(21,101,255,0.25), transparent); margin: 0 28px 20px; }
+.caso-card.featured .caso-divider { background: linear-gradient(to right, rgba(0,207,255,0.25), transparent); }
+@media (max-width: 768px) { .caso-card.featured { grid-column: span 1; } }
+
+/* ========================================================
    CONTACT
 ======================================================== */
 #contact {
@@ -687,6 +732,7 @@ footer {
     <li><a href="#services">Servicios</a></li>
     <li><a href="#pipeline">Metodología</a></li>
     <li><a href="#about">Nosotros</a></li>
+    <li><a href="#casos">Casos</a></li>
     <li><a href="#contact">Contacto</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contactar</button>
@@ -857,6 +903,91 @@ footer {
     <div class="about-badge reveal">
       <strong>⚡ Velocidad & Precisión</strong>
       Planchas A1 en 700 DPI, redes de distribución con retiro de 1,50 m y cobertura del 100%.
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== CASOS DE EXITO ==== -->
+<section id="casos">
+  <div class="casos-header">
+    <p class="section-label reveal">// Proyectos</p>
+    <h2 class="section-title reveal">Casos de <span class="accent">&#201;xito</span></h2>
+    <p class="section-sub reveal" style="margin:0 auto">
+      Proyectos reales, datos reales. Cada entrega transforma informaci&#243;n geoespacial en infraestructura que funciona.
+    </p>
+  </div>
+  <div class="casos-grid">
+    <div class="caso-card featured reveal">
+      <div class="caso-header-inner">
+        <div class="caso-icon">&#128506;</div>
+        <span class="caso-badge">&#11088; Proyecto Insignia</span>
+      </div>
+      <div class="caso-body">
+        <p class="caso-location">&#128205; Quibd&#243;, Choc&#243; &middot; Colombia</p>
+        <h3 class="caso-title">Red de Distribuci&#243;n GLP &mdash; Quibd&#243;</h3>
+        <p class="caso-desc">Cartograf&#237;a integral de 988 manzanas urbanas y dise&#241;o completo de la red de distribuci&#243;n de gas licuado de petr&#243;leo para la ciudad de Quibd&#243;. Ejecutado con est&#225;ndares GIS internacionales, georeferenciado en EPSG:3115 MAGNA-SIRGAS Colombia Oeste, con entregables vectoriales listos para formulaci&#243;n ante entidades reguladoras del sector energ&#233;tico.</p>
+        <div class="caso-metrics">
+          <div class="caso-metric"><span class="m-val">988</span><span class="m-lbl">Manzanas cartografiadas</span></div>
+          <div class="caso-metric"><span class="m-val">324 km</span><span class="m-lbl">Red proyectada</span></div>
+          <div class="caso-metric"><span class="m-val">1:10.000</span><span class="m-lbl">Escala de trabajo</span></div>
+          <div class="caso-metric"><span class="m-val">700 DPI</span><span class="m-lbl">Resoluci&#243;n de ploteo</span></div>
+        </div>
+        <div class="caso-divider"></div>
+        <div class="caso-tags">
+          <span class="caso-tag">GIS &middot; QGIS</span>
+          <span class="caso-tag">EPSG:3115</span>
+          <span class="caso-tag">GLP &middot; Gas</span>
+          <span class="caso-tag">PDF vectorial</span>
+          <span class="caso-tag">DXF &middot; SHP</span>
+          <span class="caso-tag">Araucana de Gases</span>
+        </div>
+      </div>
+    </div>
+    <div class="caso-card reveal">
+      <div class="caso-header-inner">
+        <div class="caso-icon">&#128752;</div>
+        <span class="caso-badge">Cartograf&#237;a Urbana</span>
+      </div>
+      <div class="caso-body">
+        <p class="caso-location">&#128205; Arauca &middot; Colombia</p>
+        <h3 class="caso-title">Plano Urbano de Arauca para Impresi&#243;n</h3>
+        <p class="caso-desc">Producci&#243;n de plancha cartogr&#225;fica A1 a 700 DPI del municipio de Arauca, con representaci&#243;n de red vial, manzanas, nomenclatura y elementos de infraestructura. Georeferenciado en sistema oficial colombiano con r&#243;tulo institucional y escala gr&#225;fica.</p>
+        <div class="caso-metrics">
+          <div class="caso-metric"><span class="m-val">A1</span><span class="m-lbl">Formato de plancha</span></div>
+          <div class="caso-metric"><span class="m-val">700 DPI</span><span class="m-lbl">Resoluci&#243;n ploteo</span></div>
+          <div class="caso-metric"><span class="m-val">100%</span><span class="m-lbl">Precisi&#243;n vectorial</span></div>
+        </div>
+        <div class="caso-divider"></div>
+        <div class="caso-tags">
+          <span class="caso-tag">Plancha A1</span>
+          <span class="caso-tag">MAGNA-SIRGAS</span>
+          <span class="caso-tag">CAD &middot; GIS</span>
+          <span class="caso-tag">PDF vectorial</span>
+        </div>
+      </div>
+    </div>
+    <div class="caso-card reveal">
+      <div class="caso-header-inner">
+        <div class="caso-icon">&#128225;</div>
+        <span class="caso-badge">An&#225;lisis Espacial</span>
+      </div>
+      <div class="caso-body">
+        <p class="caso-location">&#128205; Norte de Santander &middot; Colombia</p>
+        <h3 class="caso-title">Modelo Geoespacial de Infraestructura Energ&#233;tica</h3>
+        <p class="caso-desc">Procesamiento de datos de campo y fuentes satelitales para modelado de corredores de infraestructura energ&#233;tica. Integraci&#243;n de capas vectoriales con an&#225;lisis de cobertura, segmentaci&#243;n territorial y cuadros de cantidades automatizados.</p>
+        <div class="caso-metrics">
+          <div class="caso-metric"><span class="m-val">3</span><span class="m-lbl">Departamentos cubiertos</span></div>
+          <div class="caso-metric"><span class="m-val">12+</span><span class="m-lbl">Proyectos entregados</span></div>
+        </div>
+        <div class="caso-divider"></div>
+        <div class="caso-tags">
+          <span class="caso-tag">Python &middot; Shapely</span>
+          <span class="caso-tag">OSM</span>
+          <span class="caso-tag">An&#225;lisis de cobertura</span>
+          <span class="caso-tag">Reportes t&#233;cnicos</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>

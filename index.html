@@ -1208,17 +1208,7 @@ footer {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // Synthetic env map â€” critical for realistic metallic/PBR reflections
-  (function(){
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const envSc = new THREE.Scene();
-    envSc.add(new THREE.HemisphereLight(0x1565FF, 0x000510, 3.0));
-    const dl = new THREE.DirectionalLight(0xfff5e0, 4.0); dl.position.set(-5,4,3); envSc.add(dl);
-    const pl = new THREE.PointLight(0x00CFFF, 3.0, 18); pl.position.set(4,-2,2); envSc.add(pl);
-    const gl = new THREE.PointLight(0x00FF88, 1.5, 18); gl.position.set(0,5,-5); envSc.add(gl);
-    scene.environment = pmrem.fromScene(envSc).texture;
-    pmrem.dispose();
-  })();
+
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);

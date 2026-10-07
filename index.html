@@ -1968,13 +1968,15 @@ footer {
   // MAPAMUNDI + SOMBREADO ALEATORIO DE PAÍSES
   // Coordenadas simplificadas en lat/lon (grados)
   // ════════════════════════════════════════════════════
-  const GLOBE_R = 1.353; // radio de la esfera
+  // MAPAMUNDI REAL (Natural Earth 110m) + SOMBREADO GIS
+  // ════════════════════════════════════════════════════
+  const GLOBE_R   = 1.353;
   const WORLD_GROUP = new THREE.Group();
   scene.add(WORLD_GROUP);
 
-  // Convierte lat/lon (grados) → Vector3 en la superficie
-  function ll2v(lat, lon) {
-    const phi   = (90 - lat) * Math.PI / 180;
+  // GeoJSON [lon,lat] → Vector3 sobre la superficie de la esfera
+  function ll2v(lon, lat) {
+    const phi   = (90 - lat)  * Math.PI / 180;
     const theta = (lon + 180) * Math.PI / 180;
     return new THREE.Vector3(
       -GLOBE_R * Math.sin(phi) * Math.cos(theta),
@@ -1983,61 +1985,47 @@ footer {
     );
   }
 
-  // Países simplificados: [nombre, [[lat,lon], ...poligono...]]
-  // Formato: contorno aproximado como array de [lat, lon]
-  const COUNTRIES = [
-    ['Colombia',    [[12,-72],[11,-73],[10,-75],[7,-77],[4,-77],[1,-78],[-1,-76],[0,-74],[1,-71],[4,-68],[7,-67],[8,-72],[12,-72]]],
-    ['Brasil',      [[5,-52],[2,-52],[-1,-50],[-4,-42],[-8,-35],[-15,-39],[-23,-43],[-30,-51],[-34,-53],[-30,-57],[-20,-58],[-16,-60],[-10,-68],[-5,-73],[0,-70],[5,-61],[5,-52]]],
-    ['USA',         [[48,-125],[48,-66],[25,-80],[25,-98],[30,-115],[35,-120],[48,-125]]],
-    ['Canada',      [[70,-140],[70,-55],[45,-65],[45,-75],[50,-80],[55,-90],[60,-95],[68,-110],[70,-140]]],
-    ['Argentina',   [[-22,-65],[-28,-70],[-38,-72],[-52,-70],[-55,-65],[-45,-65],[-38,-57],[-28,-48],[-22,-65]]],
-    ['Russia',      [[55,30],[55,55],[60,80],[65,100],[68,140],[68,160],[55,160],[50,140],[45,130],[50,100],[55,60],[55,30]]],
-    ['China',       [[42,80],[40,75],[30,78],[20,100],[22,110],[28,122],[38,122],[42,120],[48,130],[48,90],[42,80]]],
-    ['Australia',   [[-12,136],[-17,123],[-24,114],[-35,117],[-38,140],[-38,148],[-28,153],[-20,148],[-12,136]]],
-    ['India',       [[35,75],[28,65],[20,68],[8,77],[12,80],[20,87],[28,88],[35,75]]],
-    ['Africa-W',    [[15,-17],[5,-9],[-5,-5],[-20,14],[-30,17],[-20,35],[-5,25],[5,15],[10,-5],[15,-17]]],
-    ['Europe',      [[71,28],[60,30],[45,28],[37,26],[36,10],[44,-9],[50,-5],[58,5],[64,15],[71,28]]],
-    ['Mexico',      [[30,-117],[25,-110],[18,-90],[16,-92],[20,-87],[24,-91],[27,-110],[30,-117]]],
-    ['Greenland',   [[83,-45],[75,-20],[63,-25],[63,-50],[75,-70],[83,-45]]],
-    ['Scandinavia', [[71,28],[65,15],[58,5],[58,10],[64,15],[70,20],[71,28]]],
-    ['Japan',       [[44,142],[38,141],[34,135],[33,131],[36,130],[42,140],[44,142]]],
-    ['Indonesia',   [[5,95],[0,105],[-8,115],[-8,125],[0,135],[5,130],[5,120],[5,95]]],
+  // Paleta de colores GIS por capa
+  const _GIS_PALETTE = [
+    { fill: 0x00E5FF, line: 0x00FFFF },
+    { fill: 0x69FF8A, line: 0xAAFFBB },
+    { fill: 0xFF6B35, line: 0xFFAA70 },
+    { fill: 0xB388FF, line: 0xD4BAFF },
+    { fill: 0xFFD740, line: 0xFFEC8B },
+    { fill: 0xFF4081, line: 0xFF80AB },
+    { fill: 0x40C4FF, line: 0x80D8FF },
   ];
+  let _paletteIdx = 0;
 
-  // Líneas de contorno de países (rotan con el globo)
-  const countryLineMat = new THREE.LineBasicMaterial({
-    color: 0x00CFFF, transparent: true, opacity: 0.72, linewidth: 2
-  });
-  // Segunda pasada ligeramente más gruesa para efecto glow
-  const countryGlowMat = new THREE.LineBasicMaterial({
-    color: 0x0088CC, transparent: true, opacity: 0.28, linewidth: 4
-  });
-  const countryMeshes = []; // para sombreado
+  const countryMeshes = [];
+  let _hlActive = null;
+  let _hlNextAt = 3.0;
 
-  COUNTRIES.forEach(function(entry) {
-    const name = entry[0];
-    const poly  = entry[1];
+  // Construye líneas + relleno para un anillo de coordenadas GeoJSON
+  function _buildRing(coords) {
+    if (coords.length < 3) return null;
+    const pts = coords.map(function(c){ return ll2v(c[0], c[1]); });
+    pts.push(pts[0].clone());
+
     // Línea de contorno
-    const pts = poly.map(function(ll){ return ll2v(ll[0], ll[1]); });
-    pts.push(pts[0].clone()); // cerrar
     const geo  = new THREE.BufferGeometry().setFromPoints(pts);
-    const line = new THREE.Line(geo, countryLineMat.clone());
-    const glow = new THREE.Line(geo, countryGlowMat.clone());
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.75 });
+    const glowMat = new THREE.LineBasicMaterial({ color: 0x0077AA, transparent: true, opacity: 0.28 });
+    const line = new THREE.Line(geo, lineMat);
+    const glow = new THREE.Line(geo, glowMat);
     WORLD_GROUP.add(glow);
     WORLD_GROUP.add(line);
 
-    // Malla para el relleno (usando triángulos tipo fan desde centroide)
-    const verts = [];
-    let cx = 0, cy = 0, cz = 0;
-    pts.slice(0,-1).forEach(function(p){ cx+=p.x; cy+=p.y; cz+=p.z; });
+    // Relleno tipo fan-triangulation desde centroide
     const n = pts.length - 1;
+    let cx=0, cy=0, cz=0;
+    for (let i=0;i<n;i++){ cx+=pts[i].x; cy+=pts[i].y; cz+=pts[i].z; }
     cx/=n; cy/=n; cz/=n;
-    // Empujar centroide levemente hacia fuera
-    const cLen = Math.sqrt(cx*cx+cy*cy+cz*cz);
-    const scale = GLOBE_R / cLen;
-    const center = new THREE.Vector3(cx*scale, cy*scale, cz*scale);
-
-    for (let i = 0; i < n; i++) {
+    const cLen = Math.sqrt(cx*cx+cy*cy+cz*cz) || 1;
+    const sc   = GLOBE_R / cLen;
+    const center = new THREE.Vector3(cx*sc, cy*sc, cz*sc);
+    const verts = [];
+    for (let i=0;i<n;i++){
       verts.push(center.x, center.y, center.z);
       verts.push(pts[i].x, pts[i].y, pts[i].z);
       verts.push(pts[(i+1)%n].x, pts[(i+1)%n].y, pts[(i+1)%n].z);
@@ -2048,43 +2036,56 @@ footer {
       color: 0x00E5FF, transparent: true, opacity: 0.0,
       side: THREE.DoubleSide, depthWrite: false
     });
-    const fillMesh = new THREE.Mesh(fillGeo, fillMat);
-    WORLD_GROUP.add(fillMesh);
-    countryMeshes.push({ mesh: fillMesh, line: line, glow: glow, name: name });
-  });
-
-  // Estado del sombreado aleatorio
-  let _hlActive  = null;   // { mesh, line, lineMat, t0 }
-  let _hlNextAt  = 2.5;    // tiempo en que se activa el próximo
-
-  // Paleta tipo capa GIS: cada país recibe un color diferente al activarse
-  const _GIS_PALETTE = [
-    { fill: 0x00E5FF, line: 0x00FFFF, name: 'cian'    },
-    { fill: 0x69FF8A, line: 0xAAFFBB, name: 'verde'   },
-    { fill: 0xFF6B35, line: 0xFFAA70, name: 'naranja' },
-    { fill: 0xB388FF, line: 0xD4BAFF, name: 'violeta' },
-    { fill: 0xFFD740, line: 0xFFEC8B, name: 'amarillo'},
-    { fill: 0xFF4081, line: 0xFF80AB, name: 'magenta' },
-    { fill: 0x40C4FF, line: 0x80D8FF, name: 'azul'   },
-  ];
-  let _paletteIdx = 0;
-
-  function _triggerHighlight() {
-    // Apagar el anterior completamente
-    if (_hlActive) {
-      _hlActive.mesh.material.opacity = 0.0;
-      _hlActive.line.material.opacity = 0.72;
-      _hlActive.line.material.color.setHex(0x00CFFF);
-      if (_hlActive.glow) { _hlActive.glow.material.opacity = 0.28; _hlActive.glow.material.color.setHex(0x0088CC); }
-    }
-    const entry  = countryMeshes[Math.floor(Math.random() * countryMeshes.length)];
-    const pal    = _GIS_PALETTE[_paletteIdx % _GIS_PALETTE.length];
-    _paletteIdx++;
-    _hlActive = { mesh: entry.mesh, line: entry.line, glow: entry.glow, t0: t, pal: pal };
-    // Precambiar color al nuevo
-    entry.mesh.material.color.setHex(pal.fill);
+    const fill = new THREE.Mesh(fillGeo, fillMat);
+    WORLD_GROUP.add(fill);
+    return { mesh: fill, line: line, glow: glow };
   }
 
+  // Carga GeoJSON Natural Earth 110m y construye la geometría
+  fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+    .then(function(r){ return r.json(); })
+    .then(function(geojson) {
+      geojson.features.forEach(function(feat) {
+        const geom = feat.geometry;
+        if (!geom) return;
+        const rings = [];
+        if (geom.type === 'Polygon') {
+          rings.push(geom.coordinates[0]); // exterior ring
+        } else if (geom.type === 'MultiPolygon') {
+          geom.coordinates.forEach(function(poly){ rings.push(poly[0]); });
+        }
+        // Tomar solo el anillo más grande del feature (evitar islas pequeñas para el relleno)
+        let maxRing = null, maxLen = 0;
+        rings.forEach(function(r){ if(r.length > maxLen){ maxLen=r.length; maxRing=r; } });
+
+        // Dibujar todos los anillos como líneas
+        rings.forEach(function(ring) {
+          const obj = _buildRing(ring);
+          if (obj && ring === maxRing) {
+            countryMeshes.push({
+              mesh: obj.mesh, line: obj.line, glow: obj.glow,
+              name: feat.properties.NAME || ''
+            });
+          }
+        });
+      });
+      console.log('[Globe] Mapamundi cargado:', countryMeshes.length, 'países');
+    })
+    .catch(function(e){ console.warn('[Globe] GeoJSON no disponible:', e); });
+
+  function _triggerHighlight() {
+    if (!countryMeshes.length) return;
+    if (_hlActive) {
+      _hlActive.mesh.material.opacity = 0.0;
+      _hlActive.line.material.opacity = 0.75;
+      _hlActive.line.material.color.setHex(0x00D4FF);
+      if (_hlActive.glow) { _hlActive.glow.material.opacity = 0.28; _hlActive.glow.material.color.setHex(0x0077AA); }
+    }
+    const entry = countryMeshes[Math.floor(Math.random() * countryMeshes.length)];
+    const pal   = _GIS_PALETTE[_paletteIdx++ % _GIS_PALETTE.length];
+    _hlActive   = { mesh: entry.mesh, line: entry.line, glow: entry.glow, t0: t, pal: pal };
+    entry.mesh.material.color.setHex(pal.fill);
+  }
 
     // ---- ANIMATE
   let t = 0;

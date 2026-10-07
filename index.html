@@ -1916,7 +1916,7 @@ footer {
     window._satGlow3 = mkGlow(0x00FF88);
   })();
 
-  // ==== COUNTRY HIGHLIGHT ====
+  // ==== COUNTRY HIGHLIGHT (click simulation) ====
   (function(){
     var W=2048,H=1024;
     var hlCv=document.createElement('canvas');hlCv.width=W;hlCv.height=H;
@@ -1929,31 +1929,83 @@ footer {
     );
     globe.add(hlMesh);
     function px(lo,la){return [(lo+180)/360*W,(90-la)/180*H];}
-    function drawFeat(f){
+    function geoCentroid(feat){
+      var geom=feat.geometry;
+      var ring=geom.type==='Polygon'?geom.coordinates[0]:geom.coordinates[0][0];
+      var sx=0,sy=0;
+      ring.forEach(function(c){sx+=c[0];sy+=c[1];});
+      return px(sx/ring.length,sy/ring.length);
+    }
+    var CLICK=280,HOLD=1440,FADE=280,TOTAL=2000;
+    var curFeat=null,startT=0,rafId=null;
+    function frame(now){
       hlCtx.clearRect(0,0,W,H);
-      var g=f&&f.geometry;if(!g)return;
+      if(!curFeat){hlTex.needsUpdate=true;return;}
+      var geom=curFeat.geometry;
+      var dt=now-startT;
+      var alpha;
+      if(dt<CLICK)alpha=dt/CLICK;
+      else if(dt<CLICK+HOLD)alpha=1;
+      else alpha=Math.max(0,1-(dt-CLICK-HOLD)/FADE);
+      var fp=Math.min(dt/CLICK,1);
+      var gch=Math.round(200+(1-fp)*55);
       hlCtx.beginPath();
-      var ps=g.type==='Polygon'?[g.coordinates]:g.coordinates;
-      ps.forEach(function(rs){rs.forEach(function(r){
-        r.forEach(function(c,i){var p=px(c[0],c[1]);i?hlCtx.lineTo(p[0],p[1]):hlCtx.moveTo(p[0],p[1]);});
+      var polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;
+      polys.forEach(function(rings){rings.forEach(function(ring){
+        ring.forEach(function(c,i){var p=px(c[0],c[1]);if(i)hlCtx.lineTo(p[0],p[1]);else hlCtx.moveTo(p[0],p[1]);});
         hlCtx.closePath();
       });});
-      hlCtx.fillStyle='rgba(21,101,255,0.40)';hlCtx.fill();
-      hlCtx.save();hlCtx.shadowColor='#00CFFF';hlCtx.shadowBlur=24;
-      hlCtx.strokeStyle='rgba(0,200,255,0.88)';hlCtx.lineWidth=2.5;
-      hlCtx.stroke();hlCtx.restore();
+      hlCtx.fillStyle='rgba(21,'+gch+',255,'+(0.45*alpha)+')';
+      hlCtx.fill();
+      hlCtx.save();
+      hlCtx.shadowColor='rgba(0,220,255,'+alpha+')';
+      hlCtx.shadowBlur=fp<1?36:20;
+      hlCtx.strokeStyle='rgba(0,200,255,'+(0.9*alpha)+')';
+      hlCtx.lineWidth=fp<1?4.5:2.5;
+      hlCtx.stroke();
+      hlCtx.restore();
+      if(dt<CLICK*2.5){
+        var cp=geoCentroid(curFeat);
+        var rp=Math.min(dt/(CLICK*0.9),1);
+        var rAlpha=(1-rp)*alpha*0.85;
+        hlCtx.beginPath();
+        hlCtx.arc(cp[0],cp[1],rp*100,0,Math.PI*2);
+        hlCtx.strokeStyle='rgba(200,240,255,'+rAlpha+')';
+        hlCtx.lineWidth=3.5;
+        hlCtx.stroke();
+        var rp2=Math.min(dt/(CLICK*1.6),1);
+        var rAlpha2=(1-rp2)*alpha*0.5;
+        hlCtx.beginPath();
+        hlCtx.arc(cp[0],cp[1],rp2*170,0,Math.PI*2);
+        hlCtx.strokeStyle='rgba(0,200,255,'+rAlpha2+')';
+        hlCtx.lineWidth=1.5;
+        hlCtx.stroke();
+        var dotA=Math.max(0,1-dt/(CLICK*0.5))*alpha;
+        if(dotA>0){
+          hlCtx.beginPath();
+          hlCtx.arc(cp[0],cp[1],12,0,Math.PI*2);
+          hlCtx.fillStyle='rgba(255,255,255,'+dotA+')';
+          hlCtx.fill();
+        }
+      }
       hlTex.needsUpdate=true;
+      if(dt<TOTAL)rafId=requestAnimationFrame(frame);
     }
-    var countries=[];
-    function pick(){if(countries.length)drawFeat(countries[Math.floor(Math.random()*countries.length)]);}
+    var allCountries=[];
+    function pickCountry(){
+      if(!allCountries.length)return;
+      curFeat=allCountries[Math.floor(Math.random()*allCountries.length)];
+      if(rafId)cancelAnimationFrame(rafId);
+      rafId=requestAnimationFrame(function(now){startT=now;frame(now);});
+    }
     var s=document.createElement('script');
     s.src='https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js';
     s.onload=function(){
       fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
         .then(function(r){return r.json();})
         .then(function(w){
-          countries=topojson.feature(w,w.objects.countries).features.filter(function(f){return f.geometry;});
-          pick();setInterval(pick,2000);
+          allCountries=topojson.feature(w,w.objects.countries).features.filter(function(f){return f.geometry;});
+          pickCountry();setInterval(pickCountry,2000);
         }).catch(function(){});
     };
     document.head.appendChild(s);

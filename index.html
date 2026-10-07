@@ -1253,6 +1253,8 @@ footer {
     wireframe: false,
   });
   const globe = new THREE.Mesh(sphereGeo, globeMat);
+  // Rotación inicial: Europa centrada al frente
+  globe.rotation.y = -0.35;
   scene.add(globe);
 
   // Wireframe overlay
@@ -1985,21 +1987,21 @@ footer {
     );
   }
 
-  // Paleta de colores GIS por capa
+  // Paleta azul digital exclusiva
   const _GIS_PALETTE = [
-    { fill: 0x00E5FF, line: 0x00FFFF },
-    { fill: 0x69FF8A, line: 0xAAFFBB },
-    { fill: 0xFF6B35, line: 0xFFAA70 },
-    { fill: 0xB388FF, line: 0xD4BAFF },
-    { fill: 0xFFD740, line: 0xFFEC8B },
-    { fill: 0xFF4081, line: 0xFF80AB },
-    { fill: 0x40C4FF, line: 0x80D8FF },
+    { fill: 0x0066FF, line: 0x44AAFF },
+    { fill: 0x0033CC, line: 0x3399FF },
+    { fill: 0x1144DD, line: 0x55BBFF },
+    { fill: 0x0055EE, line: 0x22CCFF },
+    { fill: 0x003399, line: 0x2288DD },
+    { fill: 0x0077FF, line: 0x66DDFF },
+    { fill: 0x0044BB, line: 0x33AAEE },
   ];
-  let _paletteIdx = 0;
 
+  let _paletteIdx = 0;
   const countryMeshes = [];
   let _hlActive = null;
-  let _hlNextAt = 3.0;
+  let _hlNextAt = 0.0;  // Inicia inmediatamente
 
   // Construye líneas + relleno para un anillo de coordenadas GeoJSON
   function _buildRing(coords) {
@@ -2196,7 +2198,7 @@ footer {
     // ── País sombreado aleatorio ──────────────────────────────────
     if (t > _hlNextAt) {
       _triggerHighlight();
-      _hlNextAt = t + 2.0 + Math.random() * 2.5; // próximo en 2-4.5 seg
+      _hlNextAt = t + 2.0; // cada 2 segundos exactos
     }
     if (_hlActive) {
       const dt  = t - _hlActive.t0;

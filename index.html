@@ -2006,7 +2006,11 @@ footer {
 
   // Líneas de contorno de países (rotan con el globo)
   const countryLineMat = new THREE.LineBasicMaterial({
-    color: 0x00BFFF, transparent: true, opacity: 0.22, linewidth: 1
+    color: 0x00CFFF, transparent: true, opacity: 0.72, linewidth: 2
+  });
+  // Segunda pasada ligeramente más gruesa para efecto glow
+  const countryGlowMat = new THREE.LineBasicMaterial({
+    color: 0x0088CC, transparent: true, opacity: 0.28, linewidth: 4
   });
   const countryMeshes = []; // para sombreado
 
@@ -2018,6 +2022,8 @@ footer {
     pts.push(pts[0].clone()); // cerrar
     const geo  = new THREE.BufferGeometry().setFromPoints(pts);
     const line = new THREE.Line(geo, countryLineMat.clone());
+    const glow = new THREE.Line(geo, countryGlowMat.clone());
+    WORLD_GROUP.add(glow);
     WORLD_GROUP.add(line);
 
     // Malla para el relleno (usando triángulos tipo fan desde centroide)
@@ -2039,27 +2045,44 @@ footer {
     const fillGeo = new THREE.BufferGeometry();
     fillGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
     const fillMat = new THREE.MeshBasicMaterial({
-      color: 0x00FFFF, transparent: true, opacity: 0.0,
+      color: 0x00E5FF, transparent: true, opacity: 0.0,
       side: THREE.DoubleSide, depthWrite: false
     });
     const fillMesh = new THREE.Mesh(fillGeo, fillMat);
     WORLD_GROUP.add(fillMesh);
-    countryMeshes.push({ mesh: fillMesh, line: line, name: name });
+    countryMeshes.push({ mesh: fillMesh, line: line, glow: glow, name: name });
   });
 
   // Estado del sombreado aleatorio
   let _hlActive  = null;   // { mesh, line, lineMat, t0 }
   let _hlNextAt  = 2.5;    // tiempo en que se activa el próximo
 
+  // Paleta tipo capa GIS: cada país recibe un color diferente al activarse
+  const _GIS_PALETTE = [
+    { fill: 0x00E5FF, line: 0x00FFFF, name: 'cian'    },
+    { fill: 0x69FF8A, line: 0xAAFFBB, name: 'verde'   },
+    { fill: 0xFF6B35, line: 0xFFAA70, name: 'naranja' },
+    { fill: 0xB388FF, line: 0xD4BAFF, name: 'violeta' },
+    { fill: 0xFFD740, line: 0xFFEC8B, name: 'amarillo'},
+    { fill: 0xFF4081, line: 0xFF80AB, name: 'magenta' },
+    { fill: 0x40C4FF, line: 0x80D8FF, name: 'azul'   },
+  ];
+  let _paletteIdx = 0;
+
   function _triggerHighlight() {
-    // Apagar el anterior si existe
+    // Apagar el anterior completamente
     if (_hlActive) {
       _hlActive.mesh.material.opacity = 0.0;
-      _hlActive.line.material.opacity = 0.22;
-      _hlActive.line.material.color.setHex(0x00BFFF);
+      _hlActive.line.material.opacity = 0.72;
+      _hlActive.line.material.color.setHex(0x00CFFF);
+      if (_hlActive.glow) { _hlActive.glow.material.opacity = 0.28; _hlActive.glow.material.color.setHex(0x0088CC); }
     }
-    const entry = countryMeshes[Math.floor(Math.random() * countryMeshes.length)];
-    _hlActive = { mesh: entry.mesh, line: entry.line, t0: t };
+    const entry  = countryMeshes[Math.floor(Math.random() * countryMeshes.length)];
+    const pal    = _GIS_PALETTE[_paletteIdx % _GIS_PALETTE.length];
+    _paletteIdx++;
+    _hlActive = { mesh: entry.mesh, line: entry.line, glow: entry.glow, t0: t, pal: pal };
+    // Precambiar color al nuevo
+    entry.mesh.material.color.setHex(pal.fill);
   }
 
 
@@ -2172,20 +2195,36 @@ footer {
     // ── País sombreado aleatorio ──────────────────────────────────
     if (t > _hlNextAt) {
       _triggerHighlight();
-      _hlNextAt = t + 3.5 + Math.random() * 4.5; // próximo en 3.5-8 seg
+      _hlNextAt = t + 2.0 + Math.random() * 2.5; // próximo en 2-4.5 seg
     }
     if (_hlActive) {
-      const dt   = t - _hlActive.t0;
-      const DUR  = 2.0;   // duración total del ciclo (fade-in + hold + fade-out)
+      const dt  = t - _hlActive.t0;
+      const DUR = 3.2;     // duración total: fade-in + hold + fade-out
+      const FIN = 0.5;     // fade-in duration
+      const FOUT= 0.7;     // fade-out duration
+      const MAX_FILL = 0.58;
+      const MAX_LINE = 1.0;
       let alpha;
-      if (dt < 0.4)        alpha = (dt / 0.4) * 0.38;          // fade-in
-      else if (dt < DUR-0.5) alpha = 0.38;                      // hold
-      else if (dt < DUR)   alpha = (DUR - dt) / 0.5 * 0.38;    // fade-out
-      else { alpha = 0.0; _hlActive = null; }
+      if (dt < FIN) {
+        alpha = (dt / FIN) * MAX_FILL;           // fade-in rápido
+      } else if (dt < DUR - FOUT) {
+        // Pulso suave mientras está activo (simula "capa encendida")
+        alpha = MAX_FILL * (0.85 + 0.15 * Math.sin((dt - FIN) * 4.5));
+      } else if (dt < DUR) {
+        alpha = ((DUR - dt) / FOUT) * MAX_FILL;  // fade-out gradual
+      } else {
+        alpha = 0.0;
+        _hlActive = null;
+      }
       if (_hlActive) {
         _hlActive.mesh.material.opacity = alpha;
-        _hlActive.line.material.opacity = 0.22 + alpha * 1.5;
-        _hlActive.line.material.color.setHex(alpha > 0.1 ? 0x00FFFF : 0x00BFFF);
+        const lineOp = 0.72 + alpha * 0.5;
+        _hlActive.line.material.opacity = Math.min(lineOp, 1.0);
+        _hlActive.line.material.color.setHex(_hlActive.pal.line);
+        if (_hlActive.glow) {
+          _hlActive.glow.material.opacity = alpha * 1.2;
+          _hlActive.glow.material.color.setHex(_hlActive.pal.fill);
+        }
       }
     }
 

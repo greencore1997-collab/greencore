@@ -2011,60 +2011,7 @@ footer {
     document.head.appendChild(s);
     globe.rotation.y=Math.PI*0.92;
   })();
-
-
-
-  // ---- LIGHTS — PBR-tuned
-  // Deep space ambient (very dim — space is dark)
-  scene.add(new THREE.AmbientLight(0x0d1630, 0.6));
-
-  // Sun — directional, harsh white from upper-left
-  const sunLight = new THREE.DirectionalLight(0xfff5e8, 4.5);
-  sunLight.position.set(-5, 4, 3);
-  sunLight.castShadow = false;
-  scene.add(sunLight);
-
-  // Fill — soft blue scatter (atmosphere reflection)
-  const blueLight = new THREE.PointLight(C_BLUE, 2.2, 22);
-  blueLight.position.set(-4, 3, 3); scene.add(blueLight);
-
-  // Accent — colder blue from opposite side
-  const greenLight = new THREE.PointLight(C_GREEN, 1.8, 22);
-  greenLight.position.set(4, -2, 2); scene.add(greenLight);
-
-  // Rim/backlight for satellite silhouette
-  const rimLight = new THREE.PointLight(0xaabbff, 1.2, 18);
-  rimLight.position.set(0, 5, -5); scene.add(rimLight);
-
-  // ---- PARTICLES (floating data points)
-  const ptGeo = new THREE.BufferGeometry();
-  const ptCount = 160;
-  const ptPos = new Float32Array(ptCount * 3);
-  for (let i = 0; i < ptCount; i++) {
-    ptPos[i*3]   = (Math.random() - 0.5) * 14;
-    ptPos[i*3+1] = (Math.random() - 0.5) * 10;
-    ptPos[i*3+2] = (Math.random() - 0.5) * 8 - 2;
-  }
-  ptGeo.setAttribute('position', new THREE.BufferAttribute(ptPos, 3));
-  const ptMat = new THREE.PointsMaterial({ color: C_BLUE, size: 0.04, transparent: true, opacity: 0.35 });
-  scene.add(new THREE.Points(ptGeo, ptMat));
-
-  // ---- MOUSE interaction
-  let mouseX = 0, mouseY = 0;
-  document.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth  - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  // ---- RESIZE
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-
-  // ════════════════════════════════════════════════════  function animate() {
+  function animate() {
     requestAnimationFrame(animate);
     t += 0.008;
 

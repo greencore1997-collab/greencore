@@ -1927,7 +1927,7 @@ footer {
       new THREE.MeshBasicMaterial({map:hlTex,transparent:true,opacity:1,
         depthWrite:false,blending:THREE.AdditiveBlending})
     );
-    earth.add(hlMesh);
+    globe.add(hlMesh);
     function px(lo,la){return [(lo+180)/360*W,(90-la)/180*H];}
     function drawFeat(f){
       hlCtx.clearRect(0,0,W,H);
@@ -1957,7 +1957,7 @@ footer {
         }).catch(function(){});
     };
     document.head.appendChild(s);
-    earth.rotation.y=Math.PI*0.92;
+    globe.rotation.y=Math.PI*0.92;
   })();
 
 

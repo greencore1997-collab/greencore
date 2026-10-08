@@ -2118,7 +2118,7 @@ function animate() {
     // ── País sombreado aleatorio ──────────────────────────────────
       _triggerHighlight();
     if (_hlActive) {
-  nst dt  = t - _hlActive.t0;
+      const dt  = t - _hlActive.t0;
       const DUR = 3.2;     // duración total: fade-in + hold + fade-out
       const FIN = 0.5;     // fade-in duration
       const FOUT= 0.7;     // fade-out duration

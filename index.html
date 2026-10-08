@@ -2022,6 +2022,7 @@ function animate() {
     wireGlobe.rotation.y = globe.rotation.y;
 
     // GIS node halos pulse
+    GIS_HALOS.forEach(h => {
       const s = 1.0 + 0.45 * Math.sin(t * 1.8 + h.userData.phase);
       h.scale.setScalar(s);
       h.material.opacity = 0.196 - 0.126 * Math.sin(t * 1.8 + h.userData.phase);
@@ -2116,9 +2117,8 @@ function animate() {
 
     // ── País sombreado aleatorio ──────────────────────────────────
       _triggerHighlight();
-    }
     if (_hlActive) {
-      const dt  = t - _hlActive.t0;
+  nst dt  = t - _hlActive.t0;
       const DUR = 3.2;     // duración total: fade-in + hold + fade-out
       const FIN = 0.5;     // fade-in duration
       const FOUT= 0.7;     // fade-out duration

@@ -2022,7 +2022,6 @@ function animate() {
     wireGlobe.rotation.y = globe.rotation.y;
 
     // GIS node halos pulse
-    GIS_HALOS.forEach(h => {
       const s = 1.0 + 0.45 * Math.sin(t * 1.8 + h.userData.phase);
       h.scale.setScalar(s);
       h.material.opacity = 0.196 - 0.126 * Math.sin(t * 1.8 + h.userData.phase);
@@ -2116,9 +2115,7 @@ function animate() {
       sat5.userData.engineLight.intensity = 0.45 + Math.cos(t*4.7)*0.3;
 
     // ── País sombreado aleatorio ──────────────────────────────────
-    if (t > _hlNextAt) {
       _triggerHighlight();
-      _hlNextAt = t + 2.0; // cada 2 segundos exactos
     }
     if (_hlActive) {
       const dt  = t - _hlActive.t0;

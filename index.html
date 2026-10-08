@@ -1281,6 +1281,14 @@ footer {
   ring2.rotation.x = Math.PI * 0.42;
   ring2.rotation.z = Math.PI * 0.1;
   scene.add(ring2);
+  // ---- SCENE LIGHTS
+  const blueLight = new THREE.PointLight(0x1565FF, 3.0, 8);
+  blueLight.position.set(-2, 2, 2);
+  scene.add(blueLight);
+  const greenLight = new THREE.PointLight(0x00CFFF, 2.5, 8);
+  greenLight.position.set(2, -1, 2);
+  scene.add(greenLight);
+  scene.add(new THREE.AmbientLight(0x112244, 0.5));
 
   // ---- GIS NETWORK on sphere surface (40% coverage, one hemisphere patch)
   const GIS_GROUP = new THREE.Group();

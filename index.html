@@ -1160,7 +1160,8 @@ footer {
     <form class="contact-form reveal" onsubmit="sendForm(event)">
       <div class="form-row">
         <input type="text"  placeholder="Nombre" required>
-        <input type="email" placeholder="Correo electrónico" required>
+        <input type="email" id="emailInput" placeholder="Correo electrónico" required autocomplete="off" list="emailSuggestions">
+        <datalist id="emailSuggestions"></datalist>
       </div>
       <input type="text" placeholder="Empresa / Entidad">
       <input type="text" placeholder="Asunto del proyecto">
@@ -2253,6 +2254,36 @@ function sendForm(e) {
     link.click();
   });
 })();
+
+  // Email domain autocomplete
+  (function() {
+    const domains = ['gmail.com','hotmail.com','outlook.com','yahoo.com','icloud.com','yahoo.es','hotmail.es','gmail.com.co','yahoo.com.co','live.com'];
+    const emailInput = document.getElementById('emailInput');
+    const datalist = document.getElementById('emailSuggestions');
+    if (!emailInput || !datalist) return;
+    emailInput.addEventListener('input', function() {
+      const val = this.value;
+      datalist.innerHTML = '';
+      if (val.length < 5) return;
+      const atIdx = val.indexOf('@');
+      if (atIdx === -1) {
+        // suggest adding @domain
+        domains.forEach(d => {
+          const opt = document.createElement('option');
+          opt.value = val + '@' + d;
+          datalist.appendChild(opt);
+        });
+      } else {
+        const user = val.slice(0, atIdx);
+        const partial = val.slice(atIdx + 1).toLowerCase();
+        domains.filter(d => d.startsWith(partial)).forEach(d => {
+          const opt = document.createElement('option');
+          opt.value = user + '@' + d;
+          datalist.appendChild(opt);
+        });
+      }
+    });
+  })();
 </script>
 </body>
 </html>

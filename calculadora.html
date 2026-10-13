@@ -8,6 +8,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+#mini-map{height:280px;border-radius:12px;border:1px solid rgba(21,101,255,0.3);overflow:hidden;margin-top:1.2rem;display:none}
+#mini-map.show{display:block}
+.leaflet-container{background:#030712}
+.map-label{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);margin-top:1rem;margin-bottom:0.3rem;display:none}
+.map-label.show{display:block}
+.leaflet-popup-content-wrapper{background:rgba(4,10,30,0.95);color:#D0E8FF;border:1px solid rgba(21,101,255,0.4);border-radius:8px;font-family:'Exo 2',sans-serif;font-size:0.8rem}
+.leaflet-popup-tip{background:rgba(4,10,30,0.95)}
+.leaflet-control-attribution{font-size:0.65rem;background:rgba(3,7,18,0.8)!important;color:#7AA8CC!important}
+.leaflet-control-attribution a{color:#1565FF!important}
+.leaflet-control-zoom a{background:rgba(4,10,30,0.9)!important;color:#D0E8FF!important;border-color:rgba(21,101,255,0.3)!important}
+.leaflet-control-zoom a:hover{background:rgba(21,101,255,0.2)!important}
+</style>
 <style>
 :root{--blue:#1565FF;--blue2:#0A3BCC;--green:#00CFFF;--dark:#030712;--dark2:#060E1F;--panel:rgba(4,10,30,0.82);--text:#D0E8FF;--sub:#7AA8CC;--font:'Exo 2','Segoe UI',sans-serif;--title:'Orbitron',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -186,6 +201,8 @@ footer a{color:var(--blue);text-decoration:none}
       </div>
       <div class="result-box" id="coord-result"><div id="coord-output"></div></div>
     </div>
+    <p class="map-label" id="map-label">📍 Visualización del punto en el mapa</p>
+    <div id="mini-map"></div>
     <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
   </div>
   <div class="tab-panel" id="tab-gsd">
@@ -327,4 +344,71 @@ function calcDPI(){
   box.classList.add('show');
 }
 document.addEventListener('DOMContentLoaded',convertArea);
+
+// ═══════════════════════════════════════
+// MINI-MAP (Leaflet + OpenStreetMap)
+// ═══════════════════════════════════════
+let _map = null, _marker = null;
+
+function showMap(lat, lon, labelHtml) {
+  const mapEl = document.getElementById('mini-map');
+  const mapLbl = document.getElementById('map-label');
+  mapEl.classList.add('show');
+  mapLbl.classList.add('show');
+
+  if (!_map) {
+    _map = L.map('mini-map', {zoomControl:true, attributionControl:true}).setView([lat, lon], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 19
+    }).addTo(_map);
+    const icon = L.divIcon({
+      html: '<div style="width:14px;height:14px;background:#00CFFF;border:2px solid #1565FF;border-radius:50%;box-shadow:0 0 12px rgba(0,207,255,0.8)"></div>',
+      iconSize:[14,14], iconAnchor:[7,7], className:''
+    });
+    _marker = L.marker([lat, lon], {icon}).addTo(_map);
+  } else {
+    _map.setView([lat, lon], 13);
+    _marker.setLatLng([lat, lon]);
+  }
+  _marker.bindPopup('<strong style="color:#00CFFF">📍 Punto convertido</strong><br>' + labelHtml, {maxWidth:220}).openPopup();
+  setTimeout(() => _map.invalidateSize(), 50);
+}
+
+// Patch conversion functions to call showMap
+const _origDdToGms = ddToGms;
+window.ddToGms = function() {
+  _origDdToGms();
+  const lat = parseFloat(document.getElementById('dd-lat').value);
+  const lon = parseFloat(document.getElementById('dd-lon').value);
+  if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+};
+const _origGmsToDd = gmsToDd;
+window.gmsToDd = function() {
+  _origGmsToDd();
+  const lG=parseFloat(document.getElementById('gms-latG').value)||0,lM=parseFloat(document.getElementById('gms-latM').value)||0,lS=parseFloat(document.getElementById('gms-latS').value)||0,lH=document.getElementById('gms-latH').value;
+  const oG=parseFloat(document.getElementById('gms-lonG').value)||0,oM=parseFloat(document.getElementById('gms-lonM').value)||0,oS=parseFloat(document.getElementById('gms-lonS').value)||0,oH=document.getElementById('gms-lonH').value;
+  if(lG||lM||lS){
+    const lat=(lH==='S'?-1:1)*(lG+lM/60+lS/3600),lon=(oH==='W'?-1:1)*(oG+oM/60+oS/3600);
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+  }
+};
+const _origGeoToPlano = geoToPlano;
+window.geoToPlano = function() {
+  _origGeoToPlano();
+  const lat=parseFloat(document.getElementById('geo-lat').value),lon=parseFloat(document.getElementById('geo-lon').value);
+  if(!isNaN(lat)&&!isNaN(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180)
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+};
+const _origPlanoToGeo = planoToGeo;
+window.planoToGeo = function() {
+  _origPlanoToGeo();
+  const N=parseFloat(document.getElementById('pla-N').value),E=parseFloat(document.getElementById('pla-E').value),epsg=parseInt(document.getElementById('crs-zone').value);
+  if(!isNaN(N)&&!isNaN(E)){
+    try{const[lon,lat]=proj4('EPSG:'+epsg,'EPSG:4686',[E,N]);
+      showMap(lat,lon,'N: <strong>'+N.toFixed(2)+'m</strong><br>E: <strong>'+E.toFixed(2)+'m</strong><br>Lat: '+lat.toFixed(6)+'° · Lon: '+lon.toFixed(6)+'°');
+    }catch(e){}
+  }
+};
 </script></body></html>

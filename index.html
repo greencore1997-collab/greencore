@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+h<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -2176,7 +2176,7 @@ counters.forEach(el => cio.observe(el));
 
 // Form mock
 function sendForm(e) {
-  e.preventDefault();
+  e.preventDefault(); const f=e.target.elements; fetch('https://formsubmit.co/ajax/gerencia@greencoreanalytics.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({Nombre:f[0].value,email:f[1].value,Empresa:f[2].value,Asunto:f[3].value,Mensaje:f[4].value,_subject:'Contacto web: '+(f[3].value||'mensaje')})});
   const btn = e.target.querySelector('button[type=submit]');
   btn.textContent = '✓ Mensaje enviado — te contactamos pronto';
   btn.style.background = '#1565FF';

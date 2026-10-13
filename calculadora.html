@@ -11,9 +11,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
-#mini-map{height:280px;border-radius:12px;border:1px solid rgba(21,101,255,0.3);overflow:hidden;margin-top:1.2rem;display:none}
+#coord-layout{display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap}
+#coord-tools{flex:1;min-width:280px}
+#mini-map{flex:1;min-width:260px;height:420px;border-radius:12px;border:1px solid rgba(21,101,255,0.3);overflow:hidden;display:none}
 #mini-map.show{display:block}
-.leaflet-container{background:#030712}
+.leaflet-container{background:#e8eaed}
 .map-label{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);margin-top:1rem;margin-bottom:0.3rem;display:none}
 .map-label.show{display:block}
 .leaflet-popup-content-wrapper{background:rgba(4,10,30,0.95);color:#D0E8FF;border:1px solid rgba(21,101,255,0.4);border-radius:8px;font-family:'Exo 2',sans-serif;font-size:0.8rem}
@@ -142,6 +144,8 @@ footer a{color:var(--blue);text-decoration:none}
     <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
   </div>
   <div class="tab-panel" id="tab-coord">
+  <div id="coord-layout">
+  <div id="coord-tools">
     <div class="card">
       <p class="card-title">// Grados Decimales ↔ Grados, Minutos, Segundos</p>
       <div class="row">
@@ -201,8 +205,9 @@ footer a{color:var(--blue);text-decoration:none}
       </div>
       <div class="result-box" id="coord-result"><div id="coord-output"></div></div>
     </div>
-    <p class="map-label" id="map-label">📍 Visualización del punto en el mapa</p>
-    <div id="mini-map"></div>
+    </div><!-- /coord-tools -->
+  <div id="mini-map"></div>
+  </div><!-- /coord-layout -->
     <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
   </div>
   <div class="tab-panel" id="tab-gsd">
@@ -358,9 +363,9 @@ function showMap(lat, lon, labelHtml) {
 
   if (!_map) {
     _map = L.map('mini-map', {zoomControl:true, attributionControl:true}).setView([lat, lon], 13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd', maxZoom: 19
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
     }).addTo(_map);
     const icon = L.divIcon({
       html: '<div style="width:14px;height:14px;background:#00CFFF;border:2px solid #1565FF;border-radius:50%;box-shadow:0 0 12px rgba(0,207,255,0.8)"></div>',

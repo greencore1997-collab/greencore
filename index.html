@@ -677,7 +677,7 @@ footer {
    RESPONSIVE
 ======================================================== */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
+  .nav-links{display:flex;flex-direction:column}
   .pipeline-steps { flex-direction: column; }
   .pipeline-steps::before { display: none; }
   #about { flex-direction: column; gap: 40px; }
@@ -819,10 +819,10 @@ footer {
     <li><a href="calculadora.html" style="color:#00CFFF;font-weight:700;">🗺️ Calculadora</a></li>
   </ul>
   <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contactar</button>
-</nav>
+<button class="nav-hamburger" id="gc-hamburger" aria-label="Menu" onclick="(function(){var m=document.querySelector('.nav-links');var b=document.getElementById('gc-hamburger');m.classList.toggle('open');b.classList.toggle('open');})()"><span></span><span></span><span></span></button></nav>
 
 <!-- ==== HERO ==== -->
-<section id="hero">
+<section id="hero" style="position:relative;overflow:hidden">
   <div class="hero-content">
     <p class="hero-eyebrow">▸ Geointeligencia · Datos Espaciales · Innovación</p>
     <h1 class="hero-title">
@@ -840,7 +840,7 @@ footer {
     </div>
   </div>
   <div class="scroll-hint">scroll</div>
-</section>
+<div id="gc-sheet-wrap"><svg id="gc-sheet-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="56" height="56" rx="8" fill="#030712" stroke="#1565FF" stroke-width="2.5"/><rect x="4" y="4" width="56" height="18" rx="8" fill="#1565FF22"/><path d="M12 16h8M28 16h8M44 16h8" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"/><rect x="12" y="28" width="12" height="8" rx="2" fill="#1565FF33" stroke="#1565FF" stroke-width="1.5"/><rect x="28" y="28" width="12" height="8" rx="2" fill="#00FF8833" stroke="#00FF88" stroke-width="1.5"/><rect x="44" y="28" width="8" height="8" rx="2" fill="#1565FF33" stroke="#1565FF" stroke-width="1.5"/><rect x="12" y="42" width="12" height="8" rx="2" fill="#00FF8822" stroke="#00FF88" stroke-width="1.5"/><rect x="28" y="42" width="12" height="8" rx="2" fill="#1565FF22" stroke="#1565FF" stroke-width="1.5"/><rect x="44" y="42" width="8" height="8" rx="2" fill="#00CFFF22" stroke="#00CFFF" stroke-width="1.5"/></svg><div id="gc-sheet-bubble">¡Mira!, plantillas</div></div></section>
 
 <!-- ==== STATS ==== -->
 <div id="stats">
@@ -1013,40 +1013,39 @@ footer {
 </section>
 
 <!-- ==== ABOUT ==== -->
-<section id="about">
-  <div class="about-text reveal">
-    <p class="section-label">// Quiénes Somos</p>
-    <h2 class="section-title">GreenCore <span class="accent">Analytics</span></h2>
-    <p style="color:var(--sub);margin-bottom:24px;font-size:1rem;font-weight:300">
-      Somos una empresa colombiana especializada en geointeligencia aplicada al sector
-      energético, de infraestructura y gobierno. Combinamos tecnología satelital, análisis
-      avanzado de datos y cartografía de precisión para transformar territorios.
-    </p>
-    <p style="color:var(--sub);font-size:1rem;font-weight:300;margin-bottom:36px">
-      Trabajamos de la mano de Araucana de Gases S.A.S. E.S.P. y otras entidades públicas
-      y privadas para llevar información geoespacial confiable a quienes diseñan el futuro
-      de la infraestructura nacional.
-    </p>
-    <a href="#contact" class="btn-primary" style="display:inline-block">Trabajemos Juntos</a>
+<section id="about" class="gc-nosotros-section">
+<div class="gc-ns-header reveal">
+  <p class="section-label">// Quiénes Somos</p>
+  <h2 class="section-title">Nosotros</h2>
+  <p class="section-sub">Ingeniería, datos e innovación al servicio del territorio</p>
+</div>
+<div class="gc-ns-grid">
+  <div class="gc-ns-card reveal" data-delay="0">
+    <div class="gc-ns-icon">🎯</div>
+    <h3>Misión</h3>
+    <p>Transformar información geográfica, técnica y operativa en soluciones de valor para organizaciones que gestionan territorio, infraestructura y proyectos de ingeniería, mediante metodologías rigurosas, tecnología apropiada y talento comprometido.</p>
   </div>
-  <div class="about-vis">
-    <div class="about-badge reveal">
-      <strong>🛰️ CRS MAGNA-SIRGAS Colombia Oeste</strong>
-      Todos nuestros proyectos están georreferenciados en el sistema oficial colombiano EPSG:3115.
-    </div>
-    <div class="about-badge reveal">
-      <strong>📐 Normas GIS & CAD</strong>
-      Entregables compatibles con ArcGIS, QGIS, AutoCAD y plataformas de planificación energética.
-    </div>
-    <div class="about-badge reveal">
-      <strong>🌿 Compromiso Ambiental</strong>
-      Cartografía al servicio de proyectos de energía limpia, gas natural y desarrollo sostenible.
-    </div>
-    <div class="about-badge reveal">
-      <strong>⚡ Velocidad & Precisión</strong>
-      Planchas A1 en 700 DPI, redes de distribución con retiro de 1,50 m y cobertura del 100%.
-    </div>
+  <div class="gc-ns-card reveal" data-delay="100">
+    <div class="gc-ns-icon">🔭</div>
+    <h3>Visión</h3>
+    <p>Ser el aliado estratégico de referencia en geointeligencia y gestión de datos para empresas e instituciones que operan en el territorio colombiano, reconocidos por la calidad técnica, la innovación aplicada y la generación de impacto real en las decisiones.</p>
   </div>
+  <div class="gc-ns-card reveal" data-delay="200">
+    <div class="gc-ns-icon">✅</div>
+    <h3>Políticas de Calidad y Transparencia</h3>
+    <p>Entregamos productos verificables, documentados y trazables. Trabajamos con metodologías estandarizadas, comunicamos el alcance real de cada servicio y asumimos responsabilidad sobre los resultados. La calidad no es un slogan: es el requisito mínimo de cada entregable.</p>
+  </div>
+  <div class="gc-ns-card reveal" data-delay="300">
+    <div class="gc-ns-icon">💡</div>
+    <h3>Propuesta de Valor</h3>
+    <p>Integramos capacidades de levantamiento de campo, procesamiento geoespacial, analítica de datos y gestión de proyectos en un único equipo. Esto nos permite acompañar el ciclo completo de un proyecto: desde la captura de información hasta la entrega de productos técnicos y decisiones respaldadas por datos.</p>
+  </div>
+  <div class="gc-ns-card reveal gc-ns-card--highlight" data-delay="400">
+    <div class="gc-ns-icon">⚡</div>
+    <h3>Diferenciador Competitivo</h3>
+    <p>No somos solo una firma de topografía ni solo una consultora de datos. Somos una organización que combina <strong>precisión geomática</strong>, <strong>inteligencia de negocio</strong> y <strong>gestión técnica de proyectos</strong>. Esa combinación nos permite resolver problemas que requieren más de una disciplina, con una sola contraparte y sin fragmentar la responsabilidad.</p>
+  </div>
+</div>
 </section>
 
 
@@ -2295,5 +2294,52 @@ function sendForm(e) {
     });
   })();
 </script>
+<style id="gc-index-styles">
+/* --- HAMBURGER MENU (Order 6) --- */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100}
+.nav-hamburger span{display:block;width:25px;height:2px;background:#00CFFF;border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .nav-hamburger{display:flex}
+  .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#030712;padding:1rem 1.5rem;border-bottom:1px solid #1565FF33;gap:.5rem}
+  .nav-links.open{display:flex!important}
+  .nav-links li a,.nav-links li button{padding:.6rem .5rem;display:block;width:100%}
+}
+<style id="gc-nosotros-css">
+.gc-nosotros-section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.gc-ns-header{text-align:center;margin-bottom:3rem}
+.gc-ns-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.gc-ns-card{background:rgba(21,101,255,0.07);border:1px solid rgba(21,101,255,0.2);border-radius:16px;padding:1.8rem;transition:transform .3s,box-shadow .3s,border-color .3s}
+.gc-ns-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(21,101,255,.25);border-color:rgba(21,101,255,.5)}
+.gc-ns-card--highlight{background:linear-gradient(135deg,rgba(21,101,255,.12),rgba(0,207,255,.08));border-color:rgba(0,207,255,.4)}
+.gc-ns-icon{font-size:2rem;margin-bottom:.8rem}
+.gc-ns-card h3{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;color:#1565FF;letter-spacing:.06em;margin:0 0 .8rem}
+.gc-ns-card p{font-size:.88rem;color:#9ab;line-height:1.7;margin:0}
+.gc-ns-card p strong{color:#00CFFF}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+/* --- PLANTILLAS SECTION (Order 9) --- */
+#gc-plantillas-section{max-width:1100px;margin:4rem auto;padding:0 1.5rem}
+#gc-plantillas-section h2{font-family:'Orbitron',sans-serif;color:#00CFFF;text-align:center;margin-bottom:2rem;font-size:1.6rem;letter-spacing:.1em}
+.gc-xlsx-btn{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#1565FF22,#00FF8822);border:1px solid #1565FF55;color:#e2e8f0;padding:.5rem 1rem;border-radius:8px;text-decoration:none;font-size:.85rem;transition:all .25s;margin:.25rem}
+.gc-xlsx-btn:hover{background:linear-gradient(135deg,#1565FF44,#00FF8844);border-color:#00CFFF;transform:translateY(-2px)}
+.gc-xlsx-btn svg{flex-shrink:0}
+.gc-plantillas-grid{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.gc-plantillas-focus{margin-bottom:1.5rem}
+.gc-plantillas-focus h3{color:#00FF88;font-size:.9rem;font-family:'Orbitron',sans-serif;margin-bottom:.5rem;padding-left:.5rem;border-left:3px solid #1565FF}
+/* Spreadsheet icon in hero */
+#gc-sheet-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:.75rem;pointer-events:none}
+@media(max-width:768px){#gc-sheet-wrap{position:static;transform:none;margin:1.5rem auto 0;pointer-events:auto}}
+#gc-sheet-icon{width:72px;height:72px;animation:gcSheetBounce 2.5s ease-in-out infinite;filter:drop-shadow(0 0 12px #1565FF) drop-shadow(0 0 24px #00FF88)}
+@keyframes gcSheetBounce{0%,100%{transform:translateY(0) rotateY(0deg)}25%{transform:translateY(-18px) rotateY(15deg)}50%{transform:translateY(-8px) rotateY(-10deg)}75%{transform:translateY(-20px) rotateY(20deg)}}
+#gc-sheet-bubble{background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;padding:.4rem .9rem;border-radius:20px;font-size:.85rem;font-weight:700;animation:gcBubblePulse 2s ease-in-out infinite;white-space:nowrap}
+@keyframes gcBubblePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.95)}}</style>
+
+<section id="gc-plantillas-section">
+<h2>📋 Plantillas Profesionales Descargables</h2>
+<div class="gc-plantillas-focus"><h3>🏗️ Interventoría y Supervisión de Obra Civil</h3><div class="gc-plantillas-grid"><a class="gc-xlsx-btn" href="/plantillas/01_Control_Interventoria_Obra_Civil.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Control de Interventoría</a><a class="gc-xlsx-btn" href="/plantillas/02_Actas_Recibo_Liquidacion.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Actas de Recibo y Liquidación</a><a class="gc-xlsx-btn" href="/plantillas/03_APU_Cantidades_Obra.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> APU y Cantidades de Obra</a><a class="gc-xlsx-btn" href="/plantillas/04_Verificacion_Especificaciones_Tecnicas.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Verificación Esp. Técnicas</a><a class="gc-xlsx-btn" href="/plantillas/05_Gantt_CurvaS_Avance.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Gantt y Curva S de Avance</a></div></div><div class="gc-plantillas-focus"><h3>💰 Gestión Financiera y Presupuestal</h3><div class="gc-plantillas-grid"><a class="gc-xlsx-btn" href="/plantillas/06_Presupuesto_Ejecucion_Programado.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Presupuesto Ejecución vs Programado</a><a class="gc-xlsx-btn" href="/plantillas/07_Matriz_Riesgos_Plan_Respuesta.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Matriz de Riesgos</a><a class="gc-xlsx-btn" href="/plantillas/08_Informe_Gestion_Mensual_KPI.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Informe de Gestión Mensual KPI</a></div></div><div class="gc-plantillas-focus"><h3>🗺️ Topografía y Geodesia</h3><div class="gc-plantillas-grid"><a class="gc-xlsx-btn" href="/plantillas/09_Libreta_Campo_GPS_Estacion_Total.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Libreta de Campo GPS</a><a class="gc-xlsx-btn" href="/plantillas/10_Calculo_Coordenadas_Rumbos.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Cálculo Coordenadas y Rumbos</a><a class="gc-xlsx-btn" href="/plantillas/11_Inventario_Vertices_Geodesicos.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Inventario de Vértices Geodésicos</a><a class="gc-xlsx-btn" href="/plantillas/12_Metadatos_Productos_Cartograficos_SIG.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Metadatos Cartográficos SIG</a></div></div><div class="gc-plantillas-focus"><h3>📊 Análisis de Datos y Dashboards</h3><div class="gc-plantillas-grid"><a class="gc-xlsx-btn" href="/plantillas/13_Dashboard_Indicadores_Financieros_Operativos.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Dashboard Indicadores</a><a class="gc-xlsx-btn" href="/plantillas/14_Matriz_Cartera_Proyectos.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Matriz Cartera de Proyectos</a><a class="gc-xlsx-btn" href="/plantillas/15_Modelo_Rentabilidad_Lineas_Negocio.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Modelo de Rentabilidad</a><a class="gc-xlsx-btn" href="/plantillas/16_Tendencias_Variaciones_Alertas_Semaforo.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Tendencias y Alertas Semáforo</a></div></div><div class="gc-plantillas-focus"><h3>🚀 Innovación y Gestión del Conocimiento</h3><div class="gc-plantillas-grid"><a class="gc-xlsx-btn" href="/plantillas/17_Canvas_Innovacion_Metricas_Validacion.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Canvas de Innovación</a><a class="gc-xlsx-btn" href="/plantillas/18_Plan_Implementacion_Tecnologica.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Plan de Implementación Tecnológica</a><a class="gc-xlsx-btn" href="/plantillas/19_Matriz_Evaluacion_Seleccion_Herramientas.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Evaluación de Herramientas</a><a class="gc-xlsx-btn" href="/plantillas/20_Lecciones_Aprendidas_Gestion_Conocimiento.xlsx" download><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1565FF22" stroke="#00FF88" stroke-width="1.2"/><path d="M4 5h3M4 8h3M4 11h3M9 5h3M9 8h3M9 11h3" stroke="#00CFFF" stroke-width="1" stroke-linecap="round"/></svg> Lecciones Aprendidas</a></div></div></section>
 </body>
 </html>

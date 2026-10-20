@@ -64,6 +64,8 @@
 #mini-map{width:100%;height:200px;border:1.5px solid #00FF88;border-radius:10px;overflow:hidden;}
 #kml-dl-btn{background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;border:none;border-radius:7px;padding:.5rem;font-size:.82rem;cursor:pointer;font-family:'Exo 2',sans-serif;width:100%;letter-spacing:.04em;transition:opacity .2s;}
 #kml-dl-btn:hover{opacity:.82;}
+
+.gc-map-tip{background:#030712!important;border:1px solid #00FF88!important;color:#00FF88!important;font-size:.78rem!important;font-family:'Exo 2',sans-serif!important;padding:.25rem .5rem!important;border-radius:5px!important;}
 </style>
 <style>
 :root{--blue:#1565FF;--blue2:#0A3BCC;--green:#00CFFF;--dark:#030712;--dark2:#060E1F;--panel:rgba(4,10,30,0.82);--text:#D0E8FF;--sub:#7AA8CC;--font:'Exo 2','Segoe UI',sans-serif;--title:'Orbitron',sans-serif}
@@ -214,7 +216,7 @@ footer a{color:var(--blue);text-decoration:none}
       </div>
       <div id="dms-result" style="margin-top:.8rem"><div id="dms-output"></div></div>
       <div class="cbtn-row">
-        <button class="cbtn" onclick="ddToGms()">DD → GMS</button>
+        <button class="cbtn" onclick="ddToGms();gcPinFromDD()">DD → GMS</button>
         <button class="cbtn cbtn-sec" onclick="gmsToDd()">GMS → DD</button>
       </div>
     </div>
@@ -242,7 +244,7 @@ footer a{color:var(--blue);text-decoration:none}
       <div class="cf"><label>Este — E (metros)</label>
         <input type="number" id="pla-E" placeholder="Ej: 1000000" step="any"></div>
       <div class="cbtn-row" style="margin-top:auto;padding-top:.8rem">
-        <button class="cbtn" onclick="geoToPlano()">Geo → Planas</button>
+        <button class="cbtn" onclick="geoToPlano();gcPinFromGeo()">Geo → Planas</button>
         <button class="cbtn cbtn-sec" onclick="planoToGeo()">Planas → Geo</button>
       </div>
     </div>
@@ -709,6 +711,81 @@ function gcDownloadKML(){
   a.click();
   document.body.removeChild(a);
 }
+
+
+// ===== MINI-MAP PIN SYSTEM =====
+window._gcMapInst = null;
+window._gcMarker = null;
+
+function gcPinMap(lat, lon, label) {
+  var el = document.getElementById('mini-map');
+  if (!el) return;
+  // Initialize Leaflet map once
+  if (!window._gcMapInst) {
+    window._gcMapInst = L.map(el, {zoomControl:true, attributionControl:false});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18}).addTo(window._gcMapInst);
+    // Custom green marker icon
+    window._gcIcon = L.divIcon({
+      html: '<div style="width:14px;height:14px;background:#00FF88;border:2px solid #030712;border-radius:50%;box-shadow:0 0 8px #00FF88"></div>',
+      iconSize:[14,14], iconAnchor:[7,7], className:''
+    });
+  }
+  // Move map to new point
+  window._gcMapInst.setView([lat, lon], 14);
+  window._gcMapInst.invalidateSize();
+  // Add/move marker
+  if (window._gcMarker) {
+    window._gcMarker.setLatLng([lat, lon]);
+    window._gcMarker.setTooltipContent(label||'');
+  } else {
+    window._gcMarker = L.marker([lat, lon], {icon: window._gcIcon})
+      .bindTooltip(label||'', {permanent:false, direction:'top', className:'gc-map-tip'})
+      .addTo(window._gcMapInst);
+  }
+  window._gcMarker.openTooltip();
+}
+
+// Pin from DD input fields (used by ddToGms)
+function gcPinFromDD() {
+  var lat = parseFloat((document.getElementById('dd-lat')||{}).value);
+  var lon = parseFloat((document.getElementById('dd-lon')||{}).value);
+  if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
+    gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
+}
+
+// Pin from geographic input fields (used by geoToPlano)
+function gcPinFromGeo() {
+  var lat = parseFloat((document.getElementById('geo-lat')||{}).value);
+  var lon = parseFloat((document.getElementById('geo-lon')||{}).value);
+  if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
+    gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
+}
+
+// Observer: watches coord-output and dms-output for lat/lon results (gmsToDd, planoToGeo)
+(function gcSetupObs(){
+  function tryPin(text) {
+    var lm = text.match(/[Ll]at[^\d\-]*([+\-]?\d+\.\d+)/);
+    var nm = text.match(/[Ll]on[^\d\-]*([+\-]?\d+\.\d+)/);
+    if (lm && nm) {
+      var lat = parseFloat(lm[1]), lon = parseFloat(nm[1]);
+      if (!isNaN(lat)&&!isNaN(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180)
+        gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
+    }
+  }
+  var obs = new MutationObserver(function(muts){
+    muts.forEach(function(m){ tryPin(m.target.textContent||''); });
+  });
+  var cfg = {childList:true, subtree:true, characterData:true};
+  function attach(){
+    var co = document.getElementById('coord-output');
+    var dm = document.getElementById('dms-output');
+    if(co) obs.observe(co, cfg);
+    if(dm) obs.observe(dm, cfg);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', attach);
+  else attach();
+})();
+// ===== END MAP PIN SYSTEM =====
 
 </script>
 </body></html>

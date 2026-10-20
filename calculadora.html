@@ -586,7 +586,7 @@ to{transform:translateY(-7px) scale(1.09)}}
         a.href='data:application/vnd.google-earth.kml+xml;charset=utf-8,'+encodeURIComponent('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Placemark><name>'+name+'</name><Point><coordinates>'+lon+','+lat+',0</coordinates></Point></Placemark></kml>');
         a.download='punto_greencore.kml';
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function(){ ov.classList.remove('active'); }, 1000);
+        setTimeout(function(e){ ov.classList.remove('active'); }, 1000);
       }, 6500);
     });
 

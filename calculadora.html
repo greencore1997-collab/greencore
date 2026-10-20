@@ -66,6 +66,9 @@
 #kml-dl-btn:hover{opacity:.82;}
 
 .gc-map-tip{background:#030712!important;border:1px solid #00FF88!important;color:#00FF88!important;font-size:.78rem!important;font-family:'Exo 2',sans-serif!important;padding:.25rem .5rem!important;border-radius:5px!important;}
+
+.cbtn-full{width:100%;background:linear-gradient(135deg,#1565FF,#00FF88);color:#030712;border:none;border-radius:8px;padding:.65rem;font-size:.88rem;cursor:pointer;font-family:'Exo 2',sans-serif;letter-spacing:.06em;font-weight:700;transition:opacity .2s;margin-top:.8rem;}
+.cbtn-full:hover{opacity:.85;}
 </style>
 <style>
 :root{--blue:#1565FF;--blue2:#0A3BCC;--green:#00CFFF;--dark:#030712;--dark2:#060E1F;--panel:rgba(4,10,30,0.82);--text:#D0E8FF;--sub:#7AA8CC;--font:'Exo 2','Segoe UI',sans-serif;--title:'Orbitron',sans-serif}
@@ -215,10 +218,7 @@ footer a{color:var(--blue);text-decoration:none}
         <select id="gms-lonH"><option value="W">W</option><option value="E">E</option></select>
       </div>
       <div id="dms-result" style="margin-top:.8rem"><div id="dms-output"></div></div>
-      <div class="cbtn-row">
-        <button class="cbtn" onclick="ddToGms();gcPinFromDD()">DD → GMS</button>
-        <button class="cbtn cbtn-sec" onclick="gmsToDd()">GMS → DD</button>
-      </div>
+      <button class="cbtn cbtn-full" onclick="gcConvertDMS()">⇄ Convertir DD / GMS</button>
     </div>
 
     <!-- Card 2: Geográficas ↔ Planas MAGNA-SIRGAS -->
@@ -243,10 +243,7 @@ footer a{color:var(--blue);text-decoration:none}
         <input type="number" id="pla-N" placeholder="Ej: 1000000" step="any"></div>
       <div class="cf"><label>Este — E (metros)</label>
         <input type="number" id="pla-E" placeholder="Ej: 1000000" step="any"></div>
-      <div class="cbtn-row" style="margin-top:auto;padding-top:.8rem">
-        <button class="cbtn" onclick="geoToPlano();gcPinFromGeo()">Geo → Planas</button>
-        <button class="cbtn cbtn-sec" onclick="planoToGeo()">Planas → Geo</button>
-      </div>
+      <button class="cbtn cbtn-full" style="margin-top:auto" onclick="gcConvertGeo()">⇄ Convertir Geo / Planas</button>
     </div>
 
   </div><!-- .coord-grid -->
@@ -713,27 +710,67 @@ function gcDownloadKML(){
 }
 
 
+
+// ===== SMART SINGLE-BUTTON CONVERTERS =====
+function gcConvertDMS() {
+  // Auto-detect: if DD fields have values → DD→GMS, else GMS→DD
+  var latDD = document.getElementById('dd-lat').value.trim();
+  var lonDD = document.getElementById('dd-lon').value.trim();
+  var latG  = document.getElementById('gms-latG').value.trim();
+  if (latDD !== '' && lonDD !== '') {
+    ddToGms();
+    gcPinFromDD();
+  } else if (latG !== '') {
+    gmsToDd();
+  } else {
+    // Show hint
+    var out = document.getElementById('dms-output');
+    if(out) out.textContent = 'Ingresa Grados Decimales (DD) o GMS para convertir.';
+  }
+}
+
+function gcConvertGeo() {
+  // Auto-detect: if geo-lat/lon filled → Geo→Planas, else Planas→Geo
+  var gLat = document.getElementById('geo-lat').value.trim();
+  var gLon = document.getElementById('geo-lon').value.trim();
+  var pN   = document.getElementById('pla-N').value.trim();
+  var pE   = document.getElementById('pla-E').value.trim();
+  if (gLat !== '' && gLon !== '') {
+    geoToPlano();
+    gcPinFromGeo();
+  } else if (pN !== '' && pE !== '') {
+    planoToGeo();
+  } else {
+    var out = document.getElementById('coord-output');
+    if(out) out.textContent = 'Ingresa Latitud/Longitud geográfica o Norte/Este para convertir.';
+  }
+}
+// ===== END SMART CONVERTERS =====
+
 // ===== MINI-MAP PIN SYSTEM =====
 window._gcMapInst = null;
 window._gcMarker = null;
 
+function gcInitMap() {
+  var el = document.getElementById('mini-map');
+  if (!el || window._gcMapInst) return;
+  window._gcMapInst = L.map(el, {zoomControl:true, attributionControl:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(window._gcMapInst);
+  // Default center: Colombia
+  window._gcMapInst.setView([4.0, -74.0], 5);
+  window._gcIcon = L.divIcon({
+    html: '<div style="width:14px;height:14px;background:#00FF88;border:2px solid #030712;border-radius:50%;box-shadow:0 0 8px #00FF88"></div>',
+    iconSize:[14,14], iconAnchor:[7,7], className:''
+  });
+  setTimeout(function(){ window._gcMapInst.invalidateSize(); }, 300);
+}
+
 function gcPinMap(lat, lon, label) {
+  if (!window._gcMapInst) gcInitMap();
   var el = document.getElementById('mini-map');
   if (!el) return;
-  // Initialize Leaflet map once
-  if (!window._gcMapInst) {
-    window._gcMapInst = L.map(el, {zoomControl:true, attributionControl:false});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18}).addTo(window._gcMapInst);
-    // Custom green marker icon
-    window._gcIcon = L.divIcon({
-      html: '<div style="width:14px;height:14px;background:#00FF88;border:2px solid #030712;border-radius:50%;box-shadow:0 0 8px #00FF88"></div>',
-      iconSize:[14,14], iconAnchor:[7,7], className:''
-    });
-  }
-  // Move map to new point
   window._gcMapInst.setView([lat, lon], 14);
   window._gcMapInst.invalidateSize();
-  // Add/move marker
   if (window._gcMarker) {
     window._gcMarker.setLatLng([lat, lon]);
     window._gcMarker.setTooltipContent(label||'');
@@ -745,7 +782,6 @@ function gcPinMap(lat, lon, label) {
   window._gcMarker.openTooltip();
 }
 
-// Pin from DD input fields (used by ddToGms)
 function gcPinFromDD() {
   var lat = parseFloat((document.getElementById('dd-lat')||{}).value);
   var lon = parseFloat((document.getElementById('dd-lon')||{}).value);
@@ -753,7 +789,6 @@ function gcPinFromDD() {
     gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
 }
 
-// Pin from geographic input fields (used by geoToPlano)
 function gcPinFromGeo() {
   var lat = parseFloat((document.getElementById('geo-lat')||{}).value);
   var lon = parseFloat((document.getElementById('geo-lon')||{}).value);
@@ -761,7 +796,7 @@ function gcPinFromGeo() {
     gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
 }
 
-// Observer: watches coord-output and dms-output for lat/lon results (gmsToDd, planoToGeo)
+// Observer: catches output changes from gmsToDd and planoToGeo
 (function gcSetupObs(){
   function tryPin(text) {
     var lm = text.match(/[Ll]at[^\d\-]*([+\-]?\d+\.\d+)/);
@@ -781,6 +816,7 @@ function gcPinFromGeo() {
     var dm = document.getElementById('dms-output');
     if(co) obs.observe(co, cfg);
     if(dm) obs.observe(dm, cfg);
+    gcInitMap(); // <-- init map immediately on load
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', attach);
   else attach();

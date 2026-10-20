@@ -324,7 +324,7 @@ let _map = null, _marker = null;
 
 function showMap(lat, lon, labelHtml) {
   const mapEl = document.getElementById('mini-map');
-  const mapLbl = document.getElementById('map-label');
+  const mapLbl = (document.getElementById('map-label') || {textContent:''});
   mapEl.classList.add('show');
   if(mapLbl) mapLbl.classList.add('show');
 
@@ -380,15 +380,15 @@ window.planoToGeo = function() {
   if(!isNaN(N)&&!isNaN(E)){
     try{const[lon,lat]=proj4('EPSG:'+epsg,'EPSG:4686',[E,N]);
       showMap(lat,lon,'N: <strong>'+N.toFixed(2)+'m</strong><br>E: <strong>'+E.toFixed(2)+'m</strong><br>Lat: '+lat.toFixed(6)+'° · Lon: '+lon.toFixed(6)+'°');
-    }catch(e){}
+    }catch(e){console.warn("GC error:",e)}
   }
 };
 </script>
 <style id="gc-updates">
-#coord-layout{display:flex;flex-direction:row;gap:1.4rem;align-items:flex-start;flex-wrap:wrap;}
+
 #coord-tools{flex:1;min-width:280px;}
 #mini-map-panel{display:flex;flex-direction:column;gap:0.5rem;min-width:240px;max-width:280px;}
-#mini-map{width:100%;height:210px;border:1.5px solid #00FF88;border-radius:8px;overflow:hidden;}
+
 #kml-dl-btn{background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;border:none;border-radius:6px;padding:.45rem .8rem;font-size:.82rem;cursor:pointer;font-family:"Exo 2",sans-serif;letter-spacing:.04em;width:100%;transition:opacity .2s;}
 #kml-dl-btn:hover{opacity:.82;}
 #gc-bubble-wrap{position:fixed;bottom:80px;right:20px;z-index:8000;pointer-events:none;}

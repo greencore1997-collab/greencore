@@ -1,4 +1,4 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -13,6 +13,7 @@ h<!DOCTYPE html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap');
 /* ========================================================
    RESET & BASE
 ======================================================== */
@@ -42,7 +43,7 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* Google Font fallback via @import (CDN) */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap');
+
 
 /* ========================================================
    SCROLLBAR
@@ -73,7 +74,7 @@ nav {
   justify-content: space-between;
   padding: 18px 5vw;
   background: linear-gradient(to bottom, rgba(3,7,18,0.95) 0%, transparent 100%);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(21,101,255,0.18);
 }
 .nav-logo {
@@ -781,7 +782,7 @@ footer {
 #qr-fab { position:fixed; bottom:2rem; right:2rem; z-index:9999; width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--green)); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,207,255,0.35); transition:transform .25s,box-shadow .25s; }
 #qr-fab:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(0,207,255,0.55); }
 #qr-fab svg { width:26px; height:26px; fill:#fff; }
-#qr-overlay { display:none; position:fixed; inset:0; z-index:10000; background:rgba(3,7,18,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; }
+#qr-overlay { display:none; position:fixed; inset:0; z-index:10000; background:rgba(3,7,18,0.75); backdrop-filter:blur(6px); -webkit-backdrop-filter: blur(6px); align-items:center; justify-content:center; }
 #qr-overlay.open { display:flex; }
 #qr-modal { background:var(--panel); border:1px solid rgba(0,207,255,0.25); border-radius:20px; padding:2rem 2.5rem 1.8rem; text-align:center; max-width:320px; width:90%; position:relative; box-shadow:0 0 60px rgba(0,207,255,0.12); }
 #qr-modal h3 { font-family:'Orbitron',monospace; font-size:0.85rem; letter-spacing:0.12em; color:var(--green); margin:0 0 0.4rem; }
@@ -853,7 +854,7 @@ footer {
 <div id="gc-sheet-wrap" class="state-a">
   <div id="gc-sheet-bubble">
     <div class="chat-title">&#128196; Plantillas GreenCore</div>
-    <div class="chat-body">20 plantillas Excel para interventor�a, GIS y gesti�n de proyectos.</div>
+    <div class="chat-body">20 plantillas Excel para interventoría, GIS y gestión de proyectos.</div>
     <a class="chat-link" href="#plantillas-section">Ver plantillas &darr;</a>
   </div>
   <div class="fab-btn">

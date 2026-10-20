@@ -55,13 +55,13 @@
 .cbtn{flex:1;background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;border:none;border-radius:7px;padding:.55rem;font-size:.8rem;cursor:pointer;font-family:'Exo 2',sans-serif;letter-spacing:.04em;transition:opacity .2s;font-weight:600;}
 .cbtn:hover{opacity:.82;}
 .cbtn.cbtn-sec{background:linear-gradient(135deg,rgba(21,101,255,.25),rgba(0,207,255,.25));border:1px solid rgba(0,207,255,.4);color:#00CFFF;}
-.coord-result-row{display:grid;grid-template-columns:1fr 260px;gap:1.3rem;align-items:start;}
+.coord-left-col{display:flex;flex-direction:column;gap:.8rem;}.coord-right-col{display:flex;flex-direction:column;gap:.8rem;}#kml-dl-btn{background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;border:none;border-radius:10px;padding:.75rem 1.4rem;font-size:.85rem;font-family:'Orbitron',sans-serif;letter-spacing:.06em;cursor:pointer;width:100%;transition:opacity .2s;}#kml-dl-btn:hover{opacity:.85;}
 @media(max-width:680px){.coord-result-row{grid-template-columns:1fr;}}
 #coord-result{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.22);border-radius:12px;padding:1.2rem;}
 #coord-result h4{font-size:.85rem;color:#00FF88;font-family:'Orbitron',sans-serif;margin:0 0 .7rem;letter-spacing:.04em;}
 #coord-output{font-size:.85rem;color:#cbd5e1;line-height:1.9;white-space:pre-wrap;min-height:70px;}
-#mini-map-panel{display:flex;flex-direction:column;gap:.55rem;}
-#mini-map{width:100%;height:200px;border:1.5px solid #00FF88;border-radius:10px;overflow:hidden;}
+
+#mini-map{width:100%;height:420px;border:1.5px solid #00FF88;border-radius:12px;overflow:hidden;}
 #kml-dl-btn{background:linear-gradient(135deg,#1565FF,#00CFFF);color:#fff;border:none;border-radius:7px;padding:.5rem;font-size:.82rem;cursor:pointer;font-family:'Exo 2',sans-serif;width:100%;letter-spacing:.04em;transition:opacity .2s;}
 #kml-dl-btn:hover{opacity:.82;}
 
@@ -194,8 +194,7 @@ footer a{color:var(--blue);text-decoration:none}
     <p>Colombia · MAGNA-SIRGAS EPSG:4686 · WGS84</p>
   </div>
   <div class="coord-grid">
-
-    <!-- Card 1: Grados Decimales ↔ GMS -->
+  <div class="coord-left-col">
     <div class="coord-card">
       <h4>Grados Decimales ↔ GMS</h4>
       <div class="cf"><label>Latitud Decimal (°)</label>
@@ -220,20 +219,16 @@ footer a{color:var(--blue);text-decoration:none}
       <div id="dms-result" style="margin-top:.8rem"><div id="dms-output"></div></div>
       <button class="cbtn cbtn-full" onclick="gcConvertDMS()">⇄ Convertir DD / GMS</button>
     </div>
-
-    <!-- .coord-grid -->
-
-  <!-- Result row -->
-  <div class="coord-result-row">
-    <div id="coord-result">
+    <div id="coord-result" style="margin-top:.8rem">
       <h4>📍 Resultado</h4>
       <div id="coord-output">Ingresa coordenadas y pulsa Convertir...</div>
     </div>
-    <div id="mini-map-panel">
-      <div id="mini-map"></div>
-      <button id="kml-dl-btn" onclick="gcDownloadKML()">⬇ Descargar KML</button>
-    </div>
   </div>
+  <div class="coord-right-col">
+    <div id="mini-map"></div>
+    <button id="kml-dl-btn" onclick="gcDownloadKML()">⬇ Descargar KML</button>
+  </div>
+</div>
 
 .</strong> · NIT 901.937.088 · Arauca, Colombia</p>
   <p style="margin-top:0.4rem">Geointeligencia aplicada al territorio · <a href="index.html">greencoreanalytics.com</a></p>

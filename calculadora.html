@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversor Geográfico GIS — GreenCore Analytics</title>
-<meta name="description" content="Convierte unidades de área, coordenadas geográficas y planas MAGNA-SIRGAS, y calcula GSD (resolución de pixel en terreno). Herramienta gratuita de GreenCore Analytics.">
+<title>Conversor GeogrÃ¡fico GIS â GreenCore Analytics</title>
+<meta name="description" content="Convierte unidades de Ã¡rea, coordenadas geogrÃ¡ficas y planas MAGNA-SIRGAS, y calcula GSD (resoluciÃ³n de pixel en terreno). Herramienta gratuita de GreenCore Analytics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
@@ -144,22 +144,22 @@ footer a{color:var(--blue);text-decoration:none}
 </style></head><body>
 <nav>
   <a class="nav-brand" href="index.html">GREEN<span>CORE</span> ANALYTICS</a>
-  <a class="nav-back" href="index.html">← Volver al sitio</a>
+  <a class="nav-back" href="index.html">â Volver al sitio</a>
 </nav>
 <section class="hero">
-  <p class="hero-eyebrow">GIS · Cartografía · Colombia</p>
-  <h1>Conversor <span>Cartográfico</span> GIS</h1>
-  <p>Convierte unidades de área, coordenadas geográficas y planas MAGNA-SIRGAS, y calcula el GSD (tamaño de pixel en terreno) para tu proyecto cartográfico.</p>
+  <p class="hero-eyebrow">GIS Â· CartografÃ­a Â· Colombia</p>
+  <h1>Conversor <span>CartogrÃ¡fico</span> GIS</h1>
+  <p>Convierte unidades de Ã¡rea, coordenadas geogrÃ¡ficas y planas MAGNA-SIRGAS, y calcula el GSD (tamaÃ±o de pixel en terreno) para tu proyecto cartogrÃ¡fico.</p>
 </section>
 <div class="tabs-wrap">
   <div class="tabs-nav">
-    <button class="tab-btn active" onclick="showTab('area',this)">📐 Unidades de Área</button>
-    <button class="tab-btn" onclick="showTab('coord',this)">🌐 Coordenadas</button>
+    <button class="tab-btn active" onclick="showTab('area',this)">ð Unidades de Ãrea</button>
+    <button class="tab-btn" onclick="showTab('coord',this)">ð Coordenadas</button>
     
   </div>
   <div class="tab-panel active" id="tab-area">
     <div class="card">
-      <p class="card-title">// Conversor de Unidades de Área</p>
+      <p class="card-title">// Conversor de Unidades de Ãrea</p>
       <div class="row">
         <div class="field">
           <label>Valor a convertir</label>
@@ -169,10 +169,10 @@ footer a{color:var(--blue);text-decoration:none}
           <label>Unidad de entrada</label>
           <div class="ig">
             <select id="area-unit" onchange="convertArea()">
-              <option value="m2">m² — metros cuadrados</option>
-              <option value="ha" selected>ha — hectáreas</option>
-              <option value="km2">km² — kilómetros cuadrados</option>
-              <option value="acre">acre — acres</option>
+              <option value="m2">mÂ² â metros cuadrados</option>
+              <option value="ha" selected>ha â hectÃ¡reas</option>
+              <option value="km2">kmÂ² â kilÃ³metros cuadrados</option>
+              <option value="acre">acre â acres</option>
               <option value="fanegada">fanegada (Colombia)</option>
               <option value="cuadra">cuadra (llanera)</option>
               <option value="varaC">vara cuadrada (Colombia)</option>
@@ -186,64 +186,64 @@ footer a{color:var(--blue);text-decoration:none}
         <p class="rb-note" id="area-note"></p>
       </div>
     </div>
-    <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
+    <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartogrÃ¡fico â¤</a></div>
   </div>
   <div class="tab-panel" id="tab-coord">
   <div class="coord-section-hdr">
-    <h3>🌐 Conversor de Coordenadas</h3>
-    <p>Colombia · MAGNA-SIRGAS EPSG:4686 · WGS84</p>
+    <h3>ð Conversor de Coordenadas</h3>
+    <p>Colombia Â· MAGNA-SIRGAS EPSG:4686 Â· WGS84</p>
   </div>
   <div class="coord-grid">
 
-    <!-- Card 1: Grados Decimales ↔ GMS -->
+    <!-- Card 1: Grados Decimales â GMS -->
     <div class="coord-card">
-      <h4>Grados Decimales ↔ GMS</h4>
-      <div class="cf"><label>Latitud Decimal (°)</label>
+      <h4>Grados Decimales â GMS</h4>
+      <div class="cf"><label>Latitud Decimal (Â°)</label>
         <input type="number" id="dd-lat" placeholder="Ej: 6.2442" step="any"></div>
-      <div class="cf"><label>Longitud Decimal (°)</label>
+      <div class="cf"><label>Longitud Decimal (Â°)</label>
         <input type="number" id="dd-lon" placeholder="Ej: -75.5734" step="any"></div>
       <div class="coord-sep"></div>
       <p class="gms-lbl">Latitud GMS</p>
       <div class="gms-row">
-        <div><span class="gms-u">°</span><input type="number" id="gms-latG" placeholder="0" min="-90" max="90"></div>
+        <div><span class="gms-u">Â°</span><input type="number" id="gms-latG" placeholder="0" min="-90" max="90"></div>
         <div><span class="gms-u">'</span><input type="number" id="gms-latM" placeholder="0" min="0" max="59"></div>
         <div><span class="gms-u">''</span><input type="number" id="gms-latS" placeholder="0.0" step="any" min="0" max="59.999"></div>
         <select id="gms-latH"><option value="N">N</option><option value="S">S</option></select>
       </div>
       <p class="gms-lbl" style="margin-top:.6rem">Longitud GMS</p>
       <div class="gms-row">
-        <div><span class="gms-u">°</span><input type="number" id="gms-lonG" placeholder="0" min="0" max="180"></div>
+        <div><span class="gms-u">Â°</span><input type="number" id="gms-lonG" placeholder="0" min="0" max="180"></div>
         <div><span class="gms-u">'</span><input type="number" id="gms-lonM" placeholder="0" min="0" max="59"></div>
         <div><span class="gms-u">''</span><input type="number" id="gms-lonS" placeholder="0.0" step="any" min="0" max="59.999"></div>
         <select id="gms-lonH"><option value="W">W</option><option value="E">E</option></select>
       </div>
       <div id="dms-result" style="margin-top:.8rem"><div id="dms-output"></div></div>
-      <button class="cbtn cbtn-full" onclick="gcConvertDMS()">⇄ Convertir DD / GMS</button>
+      <button class="cbtn cbtn-full" onclick="gcConvertDMS()">â Convertir DD / GMS</button>
     </div>
 
-    <!-- Card 2: Geográficas ↔ Planas MAGNA-SIRGAS -->
+    <!-- Card 2: GeogrÃ¡ficas â Planas MAGNA-SIRGAS -->
     <div class="coord-card">
-      <h4>Geográficas ↔ Planas MAGNA-SIRGAS</h4>
-      <div class="cf"><label>Origen de Proyección</label>
+      <h4>GeogrÃ¡ficas â Planas MAGNA-SIRGAS</h4>
+      <div class="cf"><label>Origen de ProyecciÃ³n</label>
         <select id="crs-zone">
           <option value="NATIONAL">Colombia Origen Nacional</option>
-          <option value="BOGOTA">Colombia Bogotá</option>
-          <option value="MEDELLIN">Colombia Medellín</option>
+          <option value="BOGOTA">Colombia BogotÃ¡</option>
+          <option value="MEDELLIN">Colombia MedellÃ­n</option>
           <option value="CALI">Colombia Cali</option>
           <option value="ORIENTE">Colombia Oriente</option>
           <option value="OCCIDENTE">Colombia Occidente</option>
         </select>
       </div>
-      <div class="cf"><label>Latitud Geográfica (°)</label>
+      <div class="cf"><label>Latitud GeogrÃ¡fica (Â°)</label>
         <input type="number" id="geo-lat" placeholder="Ej: 6.2442" step="any"></div>
-      <div class="cf"><label>Longitud Geográfica (°)</label>
+      <div class="cf"><label>Longitud GeogrÃ¡fica (Â°)</label>
         <input type="number" id="geo-lon" placeholder="Ej: -75.5734" step="any"></div>
       <div class="coord-sep"></div>
-      <div class="cf"><label>Norte — N (metros)</label>
+      <div class="cf"><label>Norte â N (metros)</label>
         <input type="number" id="pla-N" placeholder="Ej: 1000000" step="any"></div>
-      <div class="cf"><label>Este — E (metros)</label>
+      <div class="cf"><label>Este â E (metros)</label>
         <input type="number" id="pla-E" placeholder="Ej: 1000000" step="any"></div>
-      <button class="cbtn cbtn-full" style="margin-top:auto" onclick="gcConvertGeo()">⇄ Convertir Geo / Planas</button>
+      <button class="cbtn cbtn-full" style="margin-top:auto" onclick="gcConvertGeo()">â Convertir Geo / Planas</button>
     </div>
 
   </div><!-- .coord-grid -->
@@ -251,22 +251,22 @@ footer a{color:var(--blue);text-decoration:none}
   <!-- Result row -->
   <div class="coord-result-row">
     <div id="coord-result">
-      <h4>📍 Resultado</h4>
+      <h4>ð Resultado</h4>
       <div id="coord-output">Ingresa coordenadas y pulsa Convertir...</div>
     </div>
     <div id="mini-map-panel">
       <div id="mini-map"></div>
-      <button id="kml-dl-btn" onclick="gcDownloadKML()">⬇ Descargar KML</button>
+      <button id="kml-dl-btn" onclick="gcDownloadKML()">â¬ Descargar KML</button>
     </div>
   </div>
 
-.</strong> · NIT 901.937.088 · Arauca, Colombia</p>
-  <p style="margin-top:0.4rem">Geointeligencia aplicada al territorio · <a href="index.html">greencoreanalytics.com</a></p>
+.</strong> Â· NIT 901.937.088 Â· Arauca, Colombia</p>
+  <p style="margin-top:0.4rem">Geointeligencia aplicada al territorio Â· <a href="index.html">greencoreanalytics.com</a></p>
 </footer>
 <script>
 function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active')}
 const AREA_TO_M2={m2:1,ha:10000,km2:1e6,acre:4046.8564,fanegada:6400,cuadra:10000,varaC:0.64};
-const AREA_LABELS={m2:'m²',ha:'ha',km2:'km²',acre:'acre',fanegada:'fanegada',cuadra:'cuadra',varaC:'vara²'};
+const AREA_LABELS={m2:'mÂ²',ha:'ha',km2:'kmÂ²',acre:'acre',fanegada:'fanegada',cuadra:'cuadra',varaC:'varaÂ²'};
 function convertArea(){
   const val=parseFloat(document.getElementById('area-val').value);
   const unit=document.getElementById('area-unit').value;
@@ -285,8 +285,8 @@ function convertArea(){
     tbody.appendChild(tr);
   });
   const ha=inM2/10000;
-  let ctx=ha<0.01?'Lote pequeño (<100m²)':ha<1?'Predio urbano o rural pequeño':ha<50?'Finca o proyecto urbano':ha<500?'Proyecto municipal o vereda':ha<5000?'Municipio o cuenca pequeña':'Proyecto regional o departamental';
-  note.textContent='Contexto GIS: '+ctx+'. Escala sugerida: '+(ha<5?'1:1.000–1:2.000':ha<200?'1:5.000–1:10.000':'1:25.000 o menor resolución')+'.';
+  let ctx=ha<0.01?'Lote pequeÃ±o (<100mÂ²)':ha<1?'Predio urbano o rural pequeÃ±o':ha<50?'Finca o proyecto urbano':ha<500?'Proyecto municipal o vereda':ha<5000?'Municipio o cuenca pequeÃ±a':'Proyecto regional o departamental';
+  note.textContent='Contexto GIS: '+ctx+'. Escala sugerida: '+(ha<5?'1:1.000â1:2.000':ha<200?'1:5.000â1:10.000':'1:25.000 o menor resoluciÃ³n')+'.';
 }
 function ddToGms(){
   const lat=parseFloat(document.getElementById('dd-lat').value);
@@ -296,7 +296,7 @@ function ddToGms(){
   if(Math.abs(lat)>90||Math.abs(lon)>180){out.innerHTML='<span class="error">Valores fuera de rango.</span>';box.classList.add('show');return}
   function toDMS(d){const a=Math.abs(d),g=Math.floor(a),mF=(a-g)*60,m=Math.floor(mF),s=((mF-m)*60).toFixed(4);return{g,m,s}}
   const ld=toDMS(lat),lo=toDMS(lon),lH=lat>=0?'N':'S',oH=lon>=0?'E':'W';
-  out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud GMS</div><div class="rb-val" style="font-size:1.1rem">'+ld.g+'° '+ld.m+"' "+ld.s+'" '+lH+'</div></div><div><div class="rb-lbl">Longitud GMS</div><div class="rb-val" style="font-size:1.1rem">'+lo.g+'° '+lo.m+"' "+lo.s+'" '+oH+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">DD: Lat <strong>'+lat.toFixed(8)+'°</strong> · Lon <strong>'+lon.toFixed(8)+'°</strong><br>Sistema: <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS Geográfico</p>';
+  out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud GMS</div><div class="rb-val" style="font-size:1.1rem">'+ld.g+'Â° '+ld.m+"' "+ld.s+'" '+lH+'</div></div><div><div class="rb-lbl">Longitud GMS</div><div class="rb-val" style="font-size:1.1rem">'+lo.g+'Â° '+lo.m+"' "+lo.s+'" '+oH+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">DD: Lat <strong>'+lat.toFixed(8)+'Â°</strong> Â· Lon <strong>'+lon.toFixed(8)+'Â°</strong><br>Sistema: <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS GeogrÃ¡fico</p>';
   box.classList.add('show');
 }
 function gmsToDd(){
@@ -305,18 +305,18 @@ function gmsToDd(){
   const box=document.getElementById('dms-result');const out=document.getElementById('dms-output');
   if(lG===0&&lM===0&&lS===0){out.innerHTML='<span class="error">Ingresa los grados de latitud.</span>';box.classList.add('show');return}
   const lat=(lH==='S'?-1:1)*(lG+lM/60+lS/3600),lon=(oH==='W'?-1:1)*(oG+oM/60+oS/3600);
-  out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud DD</div><div class="rb-val" style="font-size:1.1rem">'+lat.toFixed(8)+'°</div></div><div><div class="rb-lbl">Longitud DD</div><div class="rb-val" style="font-size:1.1rem">'+lon.toFixed(8)+'°</div></div></div><p class="rb-note" style="margin-top:0.8rem">Sistema: <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS Geográfico</p>';
+  out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud DD</div><div class="rb-val" style="font-size:1.1rem">'+lat.toFixed(8)+'Â°</div></div><div><div class="rb-lbl">Longitud DD</div><div class="rb-val" style="font-size:1.1rem">'+lon.toFixed(8)+'Â°</div></div></div><p class="rb-note" style="margin-top:0.8rem">Sistema: <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS GeogrÃ¡fico</p>';
   box.classList.add('show');
 }
 const CRS_DEFS={4686:'+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs',3116:'+proj=tmerc +lat_0=4.596200416666666 +lon_0=-74.07750791666666 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',3114:'+proj=tmerc +lat_0=4.596200416666666 +lon_0=-77.07750791666666 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',3115:'+proj=tmerc +lat_0=4.596200416666666 +lon_0=-75.57750791666666 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',3117:'+proj=tmerc +lat_0=4.596200416666666 +lon_0=-72.07750791666666 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',3118:'+proj=tmerc +lat_0=4.596200416666666 +lon_0=-68.07750791666666 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'};
 Object.entries(CRS_DEFS).forEach(([e,d])=>proj4.defs('EPSG:'+e,d));
-const CRS_LABELS={3116:'Colombia Bogotá',3114:'Colombia Oeste',3115:'Colombia Bogotá Oeste',3117:'Colombia Este',3118:'Colombia Este Central'};
+const CRS_LABELS={3116:'Colombia BogotÃ¡',3114:'Colombia Oeste',3115:'Colombia BogotÃ¡ Oeste',3117:'Colombia Este',3118:'Colombia Este Central'};
 function geoToPlano(){
   const lat=parseFloat(document.getElementById('geo-lat').value),lon=parseFloat(document.getElementById('geo-lon').value),epsg=parseInt(document.getElementById('crs-zone').value);
   const box=document.getElementById('coord-result');const out=document.getElementById('coord-output');
   if(isNaN(lat)||isNaN(lon)){out.innerHTML='<span class="error">Ingresa latitud y longitud en grados decimales.</span>';box.classList.add('show');return}
   try{const[E,N]=proj4('EPSG:4686','EPSG:'+epsg,[lon,lat]);
-    out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Norte (m)</div><div class="rb-val" style="font-size:1.1rem">'+N.toFixed(3)+'</div></div><div><div class="rb-lbl">Este (m)</div><div class="rb-val" style="font-size:1.1rem">'+E.toFixed(3)+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">Entrada: Lat <strong>'+lat.toFixed(8)+'°</strong> · Lon <strong>'+lon.toFixed(8)+'°</strong><br><span class="tag-crs">EPSG:4686</span> → <span class="tag-crs">EPSG:'+epsg+'</span> '+CRS_LABELS[epsg]+'</p>';
+    out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Norte (m)</div><div class="rb-val" style="font-size:1.1rem">'+N.toFixed(3)+'</div></div><div><div class="rb-lbl">Este (m)</div><div class="rb-val" style="font-size:1.1rem">'+E.toFixed(3)+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">Entrada: Lat <strong>'+lat.toFixed(8)+'Â°</strong> Â· Lon <strong>'+lon.toFixed(8)+'Â°</strong><br><span class="tag-crs">EPSG:4686</span> â <span class="tag-crs">EPSG:'+epsg+'</span> '+CRS_LABELS[epsg]+'</p>';
     box.classList.add('show');}catch(e){out.innerHTML='<span class="error">Error: '+e.message+'</span>';box.classList.add('show')}
 }
 function planoToGeo(){
@@ -324,8 +324,8 @@ function planoToGeo(){
   const box=document.getElementById('coord-result');const out=document.getElementById('coord-output');
   if(isNaN(N)||isNaN(E)){out.innerHTML='<span class="error">Ingresa Norte y Este en metros.</span>';box.classList.add('show');return}
   try{const[lon,lat]=proj4('EPSG:'+epsg,'EPSG:4686',[E,N]);
-    function toDMS(d){const a=Math.abs(d),g=Math.floor(a),mF=(a-g)*60,m=Math.floor(mF),s=((mF-m)*60).toFixed(3);return g+'° '+m+"' "+s+'"'}
-    out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud</div><div class="rb-val" style="font-size:1.1rem">'+lat.toFixed(8)+'°</div><div style="font-size:0.8rem;color:var(--sub);margin-top:0.2rem">'+toDMS(lat)+' '+(lat>=0?'N':'S')+'</div></div><div><div class="rb-lbl">Longitud</div><div class="rb-val" style="font-size:1.1rem">'+lon.toFixed(8)+'°</div><div style="font-size:0.8rem;color:var(--sub);margin-top:0.2rem">'+toDMS(lon)+' '+(lon>=0?'E':'W')+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">Entrada: N <strong>'+N.toFixed(3)+'m</strong> · E <strong>'+E.toFixed(3)+'m</strong><br><span class="tag-crs">EPSG:'+epsg+'</span> '+CRS_LABELS[epsg]+' → <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS Geográfico</p>';
+    function toDMS(d){const a=Math.abs(d),g=Math.floor(a),mF=(a-g)*60,m=Math.floor(mF),s=((mF-m)*60).toFixed(3);return g+'Â° '+m+"' "+s+'"'}
+    out.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem"><div><div class="rb-lbl">Latitud</div><div class="rb-val" style="font-size:1.1rem">'+lat.toFixed(8)+'Â°</div><div style="font-size:0.8rem;color:var(--sub);margin-top:0.2rem">'+toDMS(lat)+' '+(lat>=0?'N':'S')+'</div></div><div><div class="rb-lbl">Longitud</div><div class="rb-val" style="font-size:1.1rem">'+lon.toFixed(8)+'Â°</div><div style="font-size:0.8rem;color:var(--sub);margin-top:0.2rem">'+toDMS(lon)+' '+(lon>=0?'E':'W')+'</div></div></div><p class="rb-note" style="margin-top:0.8rem">Entrada: N <strong>'+N.toFixed(3)+'m</strong> Â· E <strong>'+E.toFixed(3)+'m</strong><br><span class="tag-crs">EPSG:'+epsg+'</span> '+CRS_LABELS[epsg]+' â <span class="tag-crs">EPSG:4686</span> MAGNA-SIRGAS GeogrÃ¡fico</p>';
     box.classList.add('show');}catch(e){out.innerHTML='<span class="error">Error: '+e.message+'</span>';box.classList.add('show')}
 }
 function calcGSD(){
@@ -334,8 +334,8 @@ function calcGSD(){
   if(!scale||!dpi||scale<=0||dpi<=0){box.classList.remove('show');return}
   const gm=(25.4/dpi/1000)*scale,gc=gm*100,gmm=gm*1000,gk=gm/1000;
   function fmt(v,u){return(v>=1000?v.toLocaleString('es-CO',{maximumFractionDigits:0}):v>=1?v.toLocaleString('es-CO',{maximumFractionDigits:3}):v.toLocaleString('es-CO',{maximumFractionDigits:6}))+' '+u}
-  grid.innerHTML='<div class="gsd-tile"><div class="gv green">'+fmt(gmm,'mm')+'</div><div class="gl">milímetros</div></div><div class="gsd-tile"><div class="gv green">'+fmt(gc,'cm')+'</div><div class="gl">centímetros</div></div><div class="gsd-tile"><div class="gv">'+fmt(gm,'m')+'</div><div class="gl">metros</div></div><div class="gsd-tile"><div class="gv">'+fmt(gk,'km')+'</div><div class="gl">kilómetros</div></div><div class="gsd-tile"><div class="gv" style="font-size:0.9rem">'+scale.toLocaleString('es-CO')+'</div><div class="gl">escala (1:X)</div></div><div class="gsd-tile"><div class="gv" style="font-size:0.9rem">'+dpi+'</div><div class="gl">DPI</div></div>';
-  const q=gc<0.5?'Ultra precisión — levantamiento de ingeniería':gc<5?'Alta precisión — predios, redes GLP, catastro':gc<50?'Precisión estándar — cartografía municipal/rural':gc<500?'Resolución media — SIG regional':'Baja resolución — escala pequeña nacional';
+  grid.innerHTML='<div class="gsd-tile"><div class="gv green">'+fmt(gmm,'mm')+'</div><div class="gl">milÃ­metros</div></div><div class="gsd-tile"><div class="gv green">'+fmt(gc,'cm')+'</div><div class="gl">centÃ­metros</div></div><div class="gsd-tile"><div class="gv">'+fmt(gm,'m')+'</div><div class="gl">metros</div></div><div class="gsd-tile"><div class="gv">'+fmt(gk,'km')+'</div><div class="gl">kilÃ³metros</div></div><div class="gsd-tile"><div class="gv" style="font-size:0.9rem">'+scale.toLocaleString('es-CO')+'</div><div class="gl">escala (1:X)</div></div><div class="gsd-tile"><div class="gv" style="font-size:0.9rem">'+dpi+'</div><div class="gl">DPI</div></div>';
+  const q=gc<0.5?'Ultra precisiÃ³n â levantamiento de ingenierÃ­a':gc<5?'Alta precisiÃ³n â predios, redes GLP, catastro':gc<50?'PrecisiÃ³n estÃ¡ndar â cartografÃ­a municipal/rural':gc<500?'ResoluciÃ³n media â SIG regional':'Baja resoluciÃ³n â escala pequeÃ±a nacional';
   note.innerHTML='A escala <strong>1:'+scale.toLocaleString('es-CO')+'</strong> con <strong>'+dpi+' DPI</strong>, cada pixel representa <strong>'+fmt(gc,'cm')+'</strong> en terreno. Uso: <em>'+q+'</em>.';
   box.classList.add('show');
 }
@@ -345,14 +345,14 @@ function calcDPI(){
   if(!scale||!gv||scale<=0||gv<=0){box.classList.remove('show');return}
   const toM={m:1,cm:0.01,mm:0.001,km:1000},gm=gv*toM[gu],dpi=(25.4/1000)*scale/gm;
   valEl.textContent=Math.ceil(dpi)+' DPI';
-  noteEl.innerHTML='Para GSD <strong>'+gv+' '+gu+'</strong> a escala <strong>1:'+scale.toLocaleString('es-CO')+'</strong> se necesitan <strong>'+Math.ceil(dpi)+' DPI</strong>.'+(dpi>2400?' ⚠️ Supera impresión convencional; ajusta la escala.':'');
+  noteEl.innerHTML='Para GSD <strong>'+gv+' '+gu+'</strong> a escala <strong>1:'+scale.toLocaleString('es-CO')+'</strong> se necesitan <strong>'+Math.ceil(dpi)+' DPI</strong>.'+(dpi>2400?' â ï¸ Supera impresiÃ³n convencional; ajusta la escala.':'');
   box.classList.add('show');
 }
 document.addEventListener('DOMContentLoaded',convertArea);
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // MINI-MAP (Leaflet + OpenStreetMap)
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 let _map = null, _marker = null;
 
 function showMap(lat, lon, labelHtml) {
@@ -364,7 +364,7 @@ function showMap(lat, lon, labelHtml) {
   if (!_map) {
     _map = L.map('mini-map', {zoomControl:true, attributionControl:true}).setView([lat, lon], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: 'Â© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19
     }).addTo(_map);
     const icon = L.divIcon({
@@ -376,7 +376,7 @@ function showMap(lat, lon, labelHtml) {
     _map.setView([lat, lon], 13);
     _marker.setLatLng([lat, lon]);
   }
-  _marker.bindPopup('<strong style="color:#00CFFF">📍 Punto convertido</strong><br>' + labelHtml, {maxWidth:220}).openPopup();
+  _marker.bindPopup('<strong style="color:#00CFFF">ð Punto convertido</strong><br>' + labelHtml, {maxWidth:220}).openPopup();
   setTimeout(() => _map.invalidateSize(), 50);
 }
 
@@ -387,7 +387,7 @@ window.ddToGms = function() {
   const lat = parseFloat(document.getElementById('dd-lat').value);
   const lon = parseFloat(document.getElementById('dd-lon').value);
   if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
-    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'Â°</strong><br>Lon: <strong>'+lon.toFixed(6)+'Â°</strong>');
 };
 const _origGmsToDd = gmsToDd;
 window.gmsToDd = function() {
@@ -396,7 +396,7 @@ window.gmsToDd = function() {
   const oG=parseFloat(document.getElementById('gms-lonG').value)||0,oM=parseFloat(document.getElementById('gms-lonM').value)||0,oS=parseFloat(document.getElementById('gms-lonS').value)||0,oH=document.getElementById('gms-lonH').value;
   if(lG||lM||lS){
     const lat=(lH==='S'?-1:1)*(lG+lM/60+lS/3600),lon=(oH==='W'?-1:1)*(oG+oM/60+oS/3600);
-    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'Â°</strong><br>Lon: <strong>'+lon.toFixed(6)+'Â°</strong>');
   }
 };
 const _origGeoToPlano = geoToPlano;
@@ -404,7 +404,7 @@ window.geoToPlano = function() {
   _origGeoToPlano();
   const lat=parseFloat(document.getElementById('geo-lat').value),lon=parseFloat(document.getElementById('geo-lon').value);
   if(!isNaN(lat)&&!isNaN(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180)
-    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'°</strong><br>Lon: <strong>'+lon.toFixed(6)+'°</strong>');
+    showMap(lat, lon, 'Lat: <strong>'+lat.toFixed(6)+'Â°</strong><br>Lon: <strong>'+lon.toFixed(6)+'Â°</strong>');
 };
 const _origPlanoToGeo = planoToGeo;
 window.planoToGeo = function() {
@@ -412,7 +412,7 @@ window.planoToGeo = function() {
   const N=parseFloat(document.getElementById('pla-N').value),E=parseFloat(document.getElementById('pla-E').value),epsg=parseInt(document.getElementById('crs-zone').value);
   if(!isNaN(N)&&!isNaN(E)){
     try{const[lon,lat]=proj4('EPSG:'+epsg,'EPSG:4686',[E,N]);
-      showMap(lat,lon,'N: <strong>'+N.toFixed(2)+'m</strong><br>E: <strong>'+E.toFixed(2)+'m</strong><br>Lat: '+lat.toFixed(6)+'° · Lon: '+lon.toFixed(6)+'°');
+      showMap(lat,lon,'N: <strong>'+N.toFixed(2)+'m</strong><br>E: <strong>'+E.toFixed(2)+'m</strong><br>Lat: '+lat.toFixed(6)+'Â° Â· Lon: '+lon.toFixed(6)+'Â°');
     }catch(e){console.warn("GC error:",e)}
   }
 };
@@ -457,7 +457,7 @@ to{transform:translateY(-7px) scale(1.09)}}
         mapEl.style.display='block';
         window._gcLeafMap = L.map('mini-map').setView([lat, lon], 14);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-          attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          attribution:'Â© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
           maxZoom:19
         }).addTo(window._gcLeafMap);
       } else {
@@ -485,8 +485,8 @@ to{transform:translateY(-7px) scale(1.09)}}
           var out = document.getElementById('coord-output');
           if (out && out.textContent.trim()) {
             var txt = out.textContent;
-            var latM = txt.match(/([0-9.-]+)[\s°]*[Nn]|[Ll]at[^0-9-]*([0-9.-]+)/);
-            var lonM = txt.match(/([0-9.-]+)[\s°]*[OoWw]|[Ll]on[^0-9-]*([0-9.-]+)/);
+            var latM = txt.match(/([0-9.-]+)[\sÂ°]*[Nn]|[Ll]at[^0-9-]*([0-9.-]+)/);
+            var lonM = txt.match(/([0-9.-]+)[\sÂ°]*[OoWw]|[Ll]on[^0-9-]*([0-9.-]+)/);
           }
         }, 100);
         return r;
@@ -506,22 +506,22 @@ to{transform:translateY(-7px) scale(1.09)}}
   }
   function getComparison(valM2){
     var v = valM2;
-    if (v < 1) return '<strong>' + (v*10000).toFixed(1) + ' cm²</strong>';
-    if (v < 0.5) return 'Menos que media baldosa estándar (0.09 m²)';
-    if (v < 5) return 'Similar a <strong>' + (v/0.09).toFixed(1) + ' baldosas</strong> estándar';
-    if (v < 30) return 'Equivale aprox. a <strong>' + (v/12).toFixed(1) + ' habitaciones</strong> promedio (~12 m² c/u)';
-    if (v < 200) return 'Similar a <strong>' + (v/60).toFixed(1) + ' apartamentos</strong> (~60 m² c/u)';
-    if (v < 2000) return 'Similar a <strong>' + (v/420).toFixed(2) + ' canchas de baloncesto</strong> (~420 m²)';
+    if (v < 1) return '<strong>' + (v*10000).toFixed(1) + ' cmÂ²</strong>';
+    if (v < 0.5) return 'Menos que media baldosa estÃ¡ndar (0.09 mÂ²)';
+    if (v < 5) return 'Similar a <strong>' + (v/0.09).toFixed(1) + ' baldosas</strong> estÃ¡ndar';
+    if (v < 30) return 'Equivale aprox. a <strong>' + (v/12).toFixed(1) + ' habitaciones</strong> promedio (~12 mÂ² c/u)';
+    if (v < 200) return 'Similar a <strong>' + (v/60).toFixed(1) + ' apartamentos</strong> (~60 mÂ² c/u)';
+    if (v < 2000) return 'Similar a <strong>' + (v/420).toFixed(2) + ' canchas de baloncesto</strong> (~420 mÂ²)';
     // hectares
     var ha = v/10000;
-    if (ha < 1) return '<strong>' + ha.toFixed(3) + ' ha</strong> — ' + (ha/0.71).toFixed(1) + ' canchas de fútbol prof. (~0.71 ha)';
-    if (ha < 5) return '<strong>' + ha.toFixed(2) + ' ha</strong> — similar a <strong>' + ha.toFixed(1) + ' manzanas urbanas</strong> (~1 ha c/u)';
-    if (ha < 100) return '<strong>' + ha.toFixed(1) + ' ha</strong> — equivalent a <strong>' + (ha/10).toFixed(1) + '–' + (ha/5).toFixed(0) + ' barrios</strong> urbanos';
-    // km²
+    if (ha < 1) return '<strong>' + ha.toFixed(3) + ' ha</strong> â ' + (ha/0.71).toFixed(1) + ' canchas de fÃºtbol prof. (~0.71 ha)';
+    if (ha < 5) return '<strong>' + ha.toFixed(2) + ' ha</strong> â similar a <strong>' + ha.toFixed(1) + ' manzanas urbanas</strong> (~1 ha c/u)';
+    if (ha < 100) return '<strong>' + ha.toFixed(1) + ' ha</strong> â equivalent a <strong>' + (ha/10).toFixed(1) + 'â' + (ha/5).toFixed(0) + ' barrios</strong> urbanos';
+    // kmÂ²
     var km2 = ha/100;
-    if (km2 < 50) return '<strong>' + km2.toFixed(2) + ' km²</strong> — Arauca ciudad ~15 km²';
-    if (km2 < 200) return '<strong>' + km2.toFixed(1) + ' km²</strong> — similar al área de <strong>Medellín</strong> (~105 km²)';
-    return '<strong>' + km2.toFixed(1) + ' km²</strong> — Dpto Arauca ~23.818 km²';
+    if (km2 < 50) return '<strong>' + km2.toFixed(2) + ' kmÂ²</strong> â Arauca ciudad ~15 kmÂ²';
+    if (km2 < 200) return '<strong>' + km2.toFixed(1) + ' kmÂ²</strong> â similar al Ã¡rea de <strong>MedellÃ­n</strong> (~105 kmÂ²)';
+    return '<strong>' + km2.toFixed(1) + ' kmÂ²</strong> â Dpto Arauca ~23.818 kmÂ²';
   }
   document.addEventListener('DOMContentLoaded', function(){
     addCompareDiv();
@@ -533,17 +533,17 @@ to{transform:translateY(-7px) scale(1.09)}}
       // Read first row value
       var rows = tbody.querySelectorAll('tr');
       if (!rows.length) { div.classList.remove('show'); return; }
-      // Find m² row
+      // Find mÂ² row
       var m2Val = null;
       rows.forEach(function(r){
         var cells = r.querySelectorAll('td');
-        if (cells.length >= 2 && cells[0].textContent.includes('m²')) {
+        if (cells.length >= 2 && cells[0].textContent.includes('mÂ²')) {
           var v = parseFloat(cells[1].textContent.replace(/[^0-9.-]/g,''));
           if (!isNaN(v)) m2Val = v;
         }
       });
       if (m2Val !== null) {
-        div.innerHTML = '📐 ' + getComparison(m2Val);
+        div.innerHTML = 'ð ' + getComparison(m2Val);
         div.classList.add('show');
       }
     });
@@ -559,7 +559,7 @@ to{transform:translateY(-7px) scale(1.09)}}
     if (coordRes) {
       var btn = document.createElement('button');
       btn.id = 'gc-kml-btn';
-      btn.innerHTML = '⬇ Descargar KML';
+      btn.innerHTML = 'â¬ Descargar KML';
       coordRes.parentNode.insertBefore(btn, coordRes.nextSibling);
     }
     // KML button click
@@ -596,7 +596,7 @@ to{transform:translateY(-7px) scale(1.09)}}
 
 // ===== ORDER 8: Speech Bubble =====
 (function(){
-  var MSGS = ["¿Y si pudieras entender tu territorio más allá de lo que muestra un mapa? Analizamos información espacial para descubrir patrones, optimizar recursos y respaldar decisiones estratégicas.","¿Cuántas horas pierde tu equipo en tareas repetitivas? Diseñamos flujos inteligentes que ayudan a reducir trabajo manual, estandarizar procesos y ampliar la capacidad operativa.","No necesitas más archivos: necesitas mejores respuestas. Convertimos tus datos en indicadores, tableros e información accionable para gestionar con mayor claridad.","¿Gestionas redes de servicios públicos? Integramos información geográfica y operativa para ayudarte a localizar activos, caracterizar infraestructura y mejorar el control de tus operaciones.","Un proyecto no debería depender de la intuición. Integramos cronogramas, presupuestos, indicadores y evidencias para mejorar el seguimiento y anticipar desviaciones.","No se trata de usar más tecnología. Se trata de utilizarla mejor. Seleccionamos herramientas según el problema, los riesgos, el costo total y el beneficio esperado.","¿Cuánto conocimiento de tu empresa se pierde cuando termina un proyecto? La gestión estructurada del conocimiento ayuda a conservar procedimientos, decisiones, evidencias y lecciones aprendidas.","Un proyecto exitoso comienza mucho antes de la ejecución. La planeación técnica, financiera y operativa establece las bases para controlar recursos, plazos y resultados.","Tus datos ya existen. La pregunta es qué estás haciendo con ellos. La analítica convierte registros dispersos en indicadores que ayudan a comprender el desempeño de una organización.","¿Gestionas tu negocio con información o solamente con reportes? Los tableros interactivos permiten explorar indicadores, detectar variaciones y evaluar tendencias.","¿Imaginas un asistente que conozca tus procedimientos técnicos? Una base de conocimiento bien organizada puede respaldar asistentes especializados que recuperen información y respondan con fuentes verificables.","El presupuesto no debería ser una sorpresa al final. El control de costos frente al avance físico ayuda a detectar desviaciones y evaluar la exposición financiera.","Del territorio físico al territorio digital. Creamos representaciones geográficas que facilitan la consulta, el análisis y la gestión de información territorial.","¿Necesitas conocer la superficie, las pendientes o la forma de un terreno? Los modelos digitales del terreno y de superficie pueden apoyar análisis topográficos y de ingeniería según su precisión y metodología.","Ver desde arriba es solo el comienzo. El verdadero valor de un levantamiento está en los productos técnicos que permiten medir, comparar y tomar decisiones.","La rentabilidad también se puede analizar desde los datos. Relacionar costos, tiempos, recursos y resultados ayuda a identificar oportunidades de eficiencia.","¿Sabes qué proyecto genera más valor para tu organización? La integración de datos técnicos y financieros permite comparar desempeño, costos y márgenes con criterios homogéneos.","La ingeniería necesita precisión técnica y control de gestión. Integramos variables técnicas, operativas y económicas para apoyar una administración más rigurosa.","Tu proyecto merece un aliado que entienda el problema completo. Combinamos capacidades de ingeniería, información y gestión para abordar desafíos desde diferentes perspectivas.","Tu próximo proyecto puede ser el comienzo de algo extraordinario."];
+  var MSGS = ["Â¿Y si pudieras entender tu territorio mÃ¡s allÃ¡ de lo que muestra un mapa? Analizamos informaciÃ³n espacial para descubrir patrones, optimizar recursos y respaldar decisiones estratÃ©gicas.","Â¿CuÃ¡ntas horas pierde tu equipo en tareas repetitivas? DiseÃ±amos flujos inteligentes que ayudan a reducir trabajo manual, estandarizar procesos y ampliar la capacidad operativa.","No necesitas mÃ¡s archivos: necesitas mejores respuestas. Convertimos tus datos en indicadores, tableros e informaciÃ³n accionable para gestionar con mayor claridad.","Â¿Gestionas redes de servicios pÃºblicos? Integramos informaciÃ³n geogrÃ¡fica y operativa para ayudarte a localizar activos, caracterizar infraestructura y mejorar el control de tus operaciones.","Un proyecto no deberÃ­a depender de la intuiciÃ³n. Integramos cronogramas, presupuestos, indicadores y evidencias para mejorar el seguimiento y anticipar desviaciones.","No se trata de usar mÃ¡s tecnologÃ­a. Se trata de utilizarla mejor. Seleccionamos herramientas segÃºn el problema, los riesgos, el costo total y el beneficio esperado.","Â¿CuÃ¡nto conocimiento de tu empresa se pierde cuando termina un proyecto? La gestiÃ³n estructurada del conocimiento ayuda a conservar procedimientos, decisiones, evidencias y lecciones aprendidas.","Un proyecto exitoso comienza mucho antes de la ejecuciÃ³n. La planeaciÃ³n tÃ©cnica, financiera y operativa establece las bases para controlar recursos, plazos y resultados.","Tus datos ya existen. La pregunta es quÃ© estÃ¡s haciendo con ellos. La analÃ­tica convierte registros dispersos en indicadores que ayudan a comprender el desempeÃ±o de una organizaciÃ³n.","Â¿Gestionas tu negocio con informaciÃ³n o solamente con reportes? Los tableros interactivos permiten explorar indicadores, detectar variaciones y evaluar tendencias.","Â¿Imaginas un asistente que conozca tus procedimientos tÃ©cnicos? Una base de conocimiento bien organizada puede respaldar asistentes especializados que recuperen informaciÃ³n y respondan con fuentes verificables.","El presupuesto no deberÃ­a ser una sorpresa al final. El control de costos frente al avance fÃ­sico ayuda a detectar desviaciones y evaluar la exposiciÃ³n financiera.","Del territorio fÃ­sico al territorio digital. Creamos representaciones geogrÃ¡ficas que facilitan la consulta, el anÃ¡lisis y la gestiÃ³n de informaciÃ³n territorial.","Â¿Necesitas conocer la superficie, las pendientes o la forma de un terreno? Los modelos digitales del terreno y de superficie pueden apoyar anÃ¡lisis topogrÃ¡ficos y de ingenierÃ­a segÃºn su precisiÃ³n y metodologÃ­a.","Ver desde arriba es solo el comienzo. El verdadero valor de un levantamiento estÃ¡ en los productos tÃ©cnicos que permiten medir, comparar y tomar decisiones.","La rentabilidad tambiÃ©n se puede analizar desde los datos. Relacionar costos, tiempos, recursos y resultados ayuda a identificar oportunidades de eficiencia.","Â¿Sabes quÃ© proyecto genera mÃ¡s valor para tu organizaciÃ³n? La integraciÃ³n de datos tÃ©cnicos y financieros permite comparar desempeÃ±o, costos y mÃ¡rgenes con criterios homogÃ©neos.","La ingenierÃ­a necesita precisiÃ³n tÃ©cnica y control de gestiÃ³n. Integramos variables tÃ©cnicas, operativas y econÃ³micas para apoyar una administraciÃ³n mÃ¡s rigurosa.","Tu proyecto merece un aliado que entienda el problema completo. Combinamos capacidades de ingenierÃ­a, informaciÃ³n y gestiÃ³n para abordar desafÃ­os desde diferentes perspectivas.","Tu prÃ³ximo proyecto puede ser el comienzo de algo extraordinario."];
   var idx = 0;
   function showBubble(){
     var bubble = document.getElementById('gc-bubble');
@@ -619,209 +619,154 @@ to{transform:translateY(-7px) scale(1.09)}}
 <!-- == GC Bubble Letreros == -->
 
 <script>
-
 (function(){
-  // === Init map on page load (Arauca, Colombia) ===
-  var _map=null,_marker=null;
-  function initMap(){
-    var mapEl=document.getElementById('mini-map');
-    if(!mapEl||_map)return;
-    var lat=7.0877,lon=-70.7480;
-    _map=L.map('mini-map',{zoomControl:true,attributionControl:false}).setView([lat,lon],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(_map);
-    var icon=L.divIcon({html:'<div style="width:14px;height:14px;background:#00CFFF;border:2px solid #1565FF;border-radius:50%;box-shadow:0 0 12px rgba(0,207,255,0.8)"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});
-    _marker=L.marker([lat,lon],{icon}).addTo(_map);
-    _marker.bindPopup('<strong style="color:#00CFFF">Arauca, Colombia</strong><br>Zona de trabajo GreenCore').openPopup();
-  }
-  // Patch showMap global to update existing map
-  var _origShowMap=window.showMap;
-  window.showMap=function(lat,lon,lbl){
-    if(!_map){initMap();}
-    _map.setView([lat,lon],14);
-    _marker.setLatLng([lat,lon]);
-    _marker.bindPopup('<strong style="color:#00CFFF">Punto convertido</strong><br>'+lbl,{maxWidth:220}).openPopup();
-    setTimeout(function(){_map.invalidateSize();},50);
+  var CRS={
+    MAGNA_NACIONAL:'+proj=tmerc +lat_0=4 +lon_0=-73 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs',
+    MAGNA_W:'+proj=tmerc +lat_0=4 +lon_0=-77 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs',
+    MAGNA_C:'+proj=tmerc +lat_0=4 +lon_0=-74 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs',
+    MAGNA_E:'+proj=tmerc +lat_0=4 +lon_0=-71 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs',
+    MAGNA_EE:'+proj=tmerc +lat_0=4 +lon_0=-68 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs',
+    MAGNA_ARAUCA:'+proj=tmerc +lat_0=4 +lon_0=-72 +k=1 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +units=m +no_defs'
   };
+  var WGS84='+proj=longlat +datum=WGS84 +no_defs';
+
+  function gcInitMap(){
+    var el=document.getElementById('mini-map');
+    if(!el||window._gcMapInst)return;
+    try{
+      window._gcMapInst=L.map(el,{zoomControl:true,attributionControl:false});
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(window._gcMapInst);
+      window._gcMapInst.setView([4,-74],5);
+      window._gcIcon=L.divIcon({html:'<div style="width:14px;height:14px;background:#00FF88;border:2px solid #030712;border-radius:50%;box-shadow:0 0 8px #00FF88"></div>',iconSize:[14,14],iconAnchor:[7,7],className:''});
+      setTimeout(function(){window._gcMapInst.invalidateSize();},400);
+    }catch(ex){console.warn('GC map init error',ex);}
+  }
+
+  function gcPinMap(lat,lon){
+    gcInitMap();
+    if(!window._gcMapInst)return;
+    try{
+      if(window._gcMarker)window._gcMapInst.removeLayer(window._gcMarker);
+      window._gcMarker=L.marker([lat,lon],{icon:window._gcIcon}).addTo(window._gcMapInst);
+      window._gcMapInst.setView([lat,lon],13);
+      window._gcLastLat=lat; window._gcLastLon=lon;
+      var kb=document.getElementById('kml-dl-btn');
+      if(kb)kb.style.display='block';
+    }catch(ex){console.warn('GC pin error',ex);}
+  }
+
+  function gcDdToGms(lat,lon){
+    function fmt(dd,isLat){
+      var h=dd<0?(isLat?'S':'W'):(isLat?'N':'E');
+      dd=Math.abs(dd);var g=Math.floor(dd);
+      var m=Math.floor((dd-g)*60);
+      var s=((dd-g-m/60)*3600).toFixed(2);
+      return g+'° '+m+"' "+s+'" '+h;
+    }
+    return{latStr:fmt(lat,true),lonStr:fmt(lon,false)};
+  }
+
+  function gcGmsToDD(axis){
+    var G=parseFloat(document.getElementById('gms-'+axis+'G').value);
+    var M=parseFloat(document.getElementById('gms-'+axis+'M').value);
+    var S=parseFloat(document.getElementById('gms-'+axis+'S').value);
+    var H=(document.getElementById('gms-'+axis+'H')||{}).value||'N';
+    if(isNaN(G)||isNaN(M)||isNaN(S))return null;
+    var dd=G+(M/60)+(S/3600);
+    if(H==='S'||H==='W')dd=-dd;
+    return dd;
+  }
+
+  function gcConvertDMS(){
+    var latDD=(document.getElementById('dd-lat').value||'').trim();
+    var lonDD=(document.getElementById('dd-lon').value||'').trim();
+    var latG=(document.getElementById('gms-latG').value||'').trim();
+    var out=document.getElementById('dms-output');
+    if(!out)return;
+    if(latDD!==''&&lonDD!==''){
+      var la=parseFloat(latDD),lo=parseFloat(lonDD);
+      if(isNaN(la)||isNaN(lo)){out.innerHTML='<span style="color:#ff6b6b">⚠ Valores inválidos.</span>';return;}
+      var res=gcDdToGms(la,lo);
+      out.innerHTML='<b>Lat GMS:</b> '+res.latStr+'<br><b>Lon GMS:</b> '+res.lonStr;
+      ['gms-latG','gms-latM','gms-latS','gms-lonG','gms-lonM','gms-lonS'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      gcPinMap(la,lo);
+    }else if(latG!==''){
+      var la=gcGmsToDD('lat'),lo=gcGmsToDD('lon');
+      if(la===null||lo===null){out.innerHTML='<span style="color:#ff6b6b">⚠ Completa los campos GMS.</span>';return;}
+      out.innerHTML='<b>Lat DD:</b> '+la.toFixed(6)+'°<br><b>Lon DD:</b> '+lo.toFixed(6)+'°';
+      document.getElementById('dd-lat').value=la.toFixed(6);
+      document.getElementById('dd-lon').value=lo.toFixed(6);
+      gcPinMap(la,lo);
+    }else{
+      out.innerHTML='<span style="opacity:.6">Ingresa Decimales (DD) o GMS para convertir.</span>';
+    }
+  }
+
+  function gcConvertGeo(){
+    var gLat=(document.getElementById('geo-lat').value||'').trim();
+    var gLon=(document.getElementById('geo-lon').value||'').trim();
+    var pN=(document.getElementById('pla-N').value||'').trim();
+    var pE=(document.getElementById('pla-E').value||'').trim();
+    var zoneEl=document.getElementById('crs-zone');
+    var zone=zoneEl?zoneEl.value:'MAGNA_NACIONAL';
+    var out=document.getElementById('coord-output');
+    if(!out)return;
+    if(!CRS[zone]){out.innerHTML='<span style="color:#ff6b6b">⚠ Zona no reconocida.</span>';return;}
+    if(gLat!==''&&gLon!==''){
+      var la=parseFloat(gLat),lo=parseFloat(gLon);
+      if(isNaN(la)||isNaN(lo)){out.innerHTML='<span style="color:#ff6b6b">⚠ Valores inválidos.</span>';return;}
+      try{
+        var pt=proj4(WGS84,CRS[zone],[lo,la]);
+        out.innerHTML='<b>Norte (N):</b> '+pt[1].toFixed(3)+' m<br><b>Este (E):</b> '+pt[0].toFixed(3)+' m';
+        document.getElementById('pla-N').value=pt[1].toFixed(3);
+        document.getElementById('pla-E').value=pt[0].toFixed(3);
+        gcPinMap(la,lo);
+      }catch(ex){out.innerHTML='<span style="color:#ff6b6b">⚠ Error: '+ex.message+'</span>';}
+    }else if(pN!==''&&pE!==''){
+      var N=parseFloat(pN),E=parseFloat(pE);
+      if(isNaN(N)||isNaN(E)){out.innerHTML='<span style="color:#ff6b6b">⚠ Valores inválidos.</span>';return;}
+      try{
+        var pt=proj4(CRS[zone],WGS84,[E,N]);
+        var lo2=pt[0],la2=pt[1];
+        out.innerHTML='<b>Latitud:</b> '+la2.toFixed(6)+'°<br><b>Longitud:</b> '+lo2.toFixed(6)+'°';
+        document.getElementById('geo-lat').value=la2.toFixed(6);
+        document.getElementById('geo-lon').value=lo2.toFixed(6);
+        gcPinMap(la2,lo2);
+      }catch(ex){out.innerHTML='<span style="color:#ff6b6b">⚠ Error: '+ex.message+'</span>';}
+    }else{
+      out.innerHTML='<span style="opacity:.6">Ingresa Lat/Lon geográfica o Norte/Este.</span>';
+    }
+  }
+
+  function gcDownloadKML(){
+    var lat=window._gcLastLat,lon=window._gcLastLon;
+    if(lat===undefined){alert('Primero realiza una conversión.');return;}
+    var kml='<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Placemark><name>Punto GreenCore</name>
+<Point><coordinates>'+lon+','+lat+',0</coordinates></Point>
+</Placemark></kml>';
+    var a=document.createElement('a');
+    a.href='data:text/xml;charset=utf-8,'+encodeURIComponent(kml);
+    a.download='punto_greencore.kml'; a.click();
+  }
+
   document.addEventListener('DOMContentLoaded',function(){
-    setTimeout(initMap,300);
+    gcInitMap();
+    var kb=document.getElementById('kml-dl-btn');
+    if(kb)kb.style.display='none';
   });
+  if(document.readyState!=='loading'){
+    gcInitMap();
+    var kb=document.getElementById('kml-dl-btn');
+    if(kb)kb.style.display='none';
+  }
 
-  // === Bubble Letreros System ===
- 
-// === Letreros / Bubble system — Green Core Analytics ===
-(function(){
-  var msgs=[
-    "Convierte coordenadas geográficas y planas MAGNA-SIRGAS con precisión GIS",
-    "Proyecciones Colombia: Origen Nacional, Bogotá, Medellín, Cali y más",
-    "Herramienta cartográfica profesional — Green Core Analytics SAS",
-    "MAGNA-SIRGAS EPSG:4686 — Sistema oficial de referencia de Colombia",
-    "Descarga tu punto convertido en formato KML para Google Earth"
-  ];
-  var idx=0, SHOW=10000, EXIT=900, GAP=1600;
-  var el=document.getElementById('gc-bubble');
-  var txt=document.getElementById('gc-bubble-text');
-  if(!el||!txt)return;
-  function spawnBin(){
-    var r=el.getBoundingClientRect();
-    var cx=r.left+r.width/2, cy=r.top+r.height/2;
-    for(var i=0;i<90;i++){
-      var p=document.createElement('span');
-      p.className='gc-bin';
-      p.textContent=Math.random()<.5?'0':'1';
-      var ang=Math.random()*Math.PI*2, dist=50+Math.random()*160;
-      p.style.cssText='left:'+Math.round(cx)+'px;top:'+Math.round(cy)+'px;--tx:'+Math.round(Math.cos(ang)*dist)+'px;--ty:'+Math.round(Math.sin(ang)*dist-20)+'px;--d:'+(0.4+Math.random()*.9).toFixed(2)+'s;font-size:'+(9+Math.floor(Math.random()*5))+'px;';
-      document.body.appendChild(p);
-      setTimeout(function(q){if(q.parentNode)q.parentNode.removeChild(q)},1500,p);
-    }
-  }
-  function showNext(){
-    txt.textContent=msgs[idx%msgs.length]; idx++;
-    el.classList.remove('disintegrate','visible');
-    void el.offsetWidth;
-    el.classList.add('visible');
-    setTimeout(function(){
-      spawnBin();
-      el.classList.add('disintegrate');
-      setTimeout(function(){
-        el.classList.remove('visible','disintegrate');
-        setTimeout(showNext,GAP);
-      },EXIT);
-    },SHOW);
-  }
-  setTimeout(showNext,1800);
+  window.gcConvertDMS=gcConvertDMS;
+  window.gcConvertGeo=gcConvertGeo;
+  window.gcInitMap=gcInitMap;
+  window.gcPinMap=gcPinMap;
+  window.gcDownloadKML=gcDownloadKML;
 })();
-// KML download helper
-function gcDownloadKML(){
-  var out=document.getElementById('coord-output');
-  var txt=out?out.textContent:'';
-  var latM=txt.match(/[Ll]at[^:]*:\s*([\-\d.]+)/);
-  var lonM=txt.match(/[Ll]on[^:]*:\s*([\-\d.]+)/);
-  var lat=latM?latM[1]:'6.0';
-  var lon=lonM?lonM[1]:'-67.5';
-  var kml='<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Placemark><name>Punto GreenCore</name><Point><coordinates>'+lon+','+lat+',0</coordinates></Point></Placemark></kml>';
-  var blob=new Blob([kml],{type:'application/vnd.google-earth.kml+xml'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='punto-greencore.kml';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
-
-
-// ===== SMART SINGLE-BUTTON CONVERTERS =====
-function gcConvertDMS() {
-  // Auto-detect: if DD fields have values → DD→GMS, else GMS→DD
-  var latDD = document.getElementById('dd-lat').value.trim();
-  var lonDD = document.getElementById('dd-lon').value.trim();
-  var latG  = document.getElementById('gms-latG').value.trim();
-  if (latDD !== '' && lonDD !== '') {
-    ddToGms();
-    gcPinFromDD();
-  } else if (latG !== '') {
-    gmsToDd();
-  } else {
-    // Show hint
-    var out = document.getElementById('dms-output');
-    if(out) out.textContent = 'Ingresa Grados Decimales (DD) o GMS para convertir.';
-  }
-}
-
-function gcConvertGeo() {
-  // Auto-detect: if geo-lat/lon filled → Geo→Planas, else Planas→Geo
-  var gLat = document.getElementById('geo-lat').value.trim();
-  var gLon = document.getElementById('geo-lon').value.trim();
-  var pN   = document.getElementById('pla-N').value.trim();
-  var pE   = document.getElementById('pla-E').value.trim();
-  if (gLat !== '' && gLon !== '') {
-    geoToPlano();
-    gcPinFromGeo();
-  } else if (pN !== '' && pE !== '') {
-    planoToGeo();
-  } else {
-    var out = document.getElementById('coord-output');
-    if(out) out.textContent = 'Ingresa Latitud/Longitud geográfica o Norte/Este para convertir.';
-  }
-}
-// ===== END SMART CONVERTERS =====
-
-// ===== MINI-MAP PIN SYSTEM =====
-window._gcMapInst = null;
-window._gcMarker = null;
-
-function gcInitMap() {
-  var el = document.getElementById('mini-map');
-  if (!el || window._gcMapInst) return;
-  window._gcMapInst = L.map(el, {zoomControl:true, attributionControl:false});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(window._gcMapInst);
-  // Default center: Colombia
-  window._gcMapInst.setView([4.0, -74.0], 5);
-  window._gcIcon = L.divIcon({
-    html: '<div style="width:14px;height:14px;background:#00FF88;border:2px solid #030712;border-radius:50%;box-shadow:0 0 8px #00FF88"></div>',
-    iconSize:[14,14], iconAnchor:[7,7], className:''
-  });
-  setTimeout(function(){ window._gcMapInst.invalidateSize(); }, 300);
-}
-
-function gcPinMap(lat, lon, label) {
-  if (!window._gcMapInst) gcInitMap();
-  var el = document.getElementById('mini-map');
-  if (!el) return;
-  window._gcMapInst.setView([lat, lon], 14);
-  window._gcMapInst.invalidateSize();
-  if (window._gcMarker) {
-    window._gcMarker.setLatLng([lat, lon]);
-    window._gcMarker.setTooltipContent(label||'');
-  } else {
-    window._gcMarker = L.marker([lat, lon], {icon: window._gcIcon})
-      .bindTooltip(label||'', {permanent:false, direction:'top', className:'gc-map-tip'})
-      .addTo(window._gcMapInst);
-  }
-  window._gcMarker.openTooltip();
-}
-
-function gcPinFromDD() {
-  var lat = parseFloat((document.getElementById('dd-lat')||{}).value);
-  var lon = parseFloat((document.getElementById('dd-lon')||{}).value);
-  if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
-    gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
-}
-
-function gcPinFromGeo() {
-  var lat = parseFloat((document.getElementById('geo-lat')||{}).value);
-  var lon = parseFloat((document.getElementById('geo-lon')||{}).value);
-  if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat)<=90 && Math.abs(lon)<=180)
-    gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
-}
-
-// Observer: catches output changes from gmsToDd and planoToGeo
-(function gcSetupObs(){
-  function tryPin(text) {
-    var lm = text.match(/[Ll]at[^\d\-]*([+\-]?\d+\.\d+)/);
-    var nm = text.match(/[Ll]on[^\d\-]*([+\-]?\d+\.\d+)/);
-    if (lm && nm) {
-      var lat = parseFloat(lm[1]), lon = parseFloat(nm[1]);
-      if (!isNaN(lat)&&!isNaN(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180)
-        gcPinMap(lat, lon, lat.toFixed(5)+'°, '+lon.toFixed(5)+'°');
-    }
-  }
-  var obs = new MutationObserver(function(muts){
-    muts.forEach(function(m){ tryPin(m.target.textContent||''); });
-  });
-  var cfg = {childList:true, subtree:true, characterData:true};
-  function attach(){
-    var co = document.getElementById('coord-output');
-    var dm = document.getElementById('dms-output');
-    if(co) obs.observe(co, cfg);
-    if(dm) obs.observe(dm, cfg);
-    gcInitMap(); // <-- init map immediately on load
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', attach);
-  else attach();
-  }
-})();
-// ===== END MAP PIN SYSTEM =====
-
 </script>
 </body></html>

@@ -221,32 +221,7 @@ footer a{color:var(--blue);text-decoration:none}
       <button class="cbtn cbtn-full" onclick="gcConvertDMS()">⇄ Convertir DD / GMS</button>
     </div>
 
-    <!-- Card 2: Geográficas ↔ Planas MAGNA-SIRGAS -->
-    <div class="coord-card">
-      <h4>Geográficas ↔ Planas MAGNA-SIRGAS</h4>
-      <div class="cf"><label>Origen de Proyección</label>
-        <select id="crs-zone">
-          <option value="NATIONAL">Colombia Origen Nacional</option>
-          <option value="BOGOTA">Colombia Bogotá</option>
-          <option value="MEDELLIN">Colombia Medellín</option>
-          <option value="CALI">Colombia Cali</option>
-          <option value="ORIENTE">Colombia Oriente</option>
-          <option value="OCCIDENTE">Colombia Occidente</option>
-        </select>
-      </div>
-      <div class="cf"><label>Latitud Geográfica (°)</label>
-        <input type="number" id="geo-lat" placeholder="Ej: 6.2442" step="any"></div>
-      <div class="cf"><label>Longitud Geográfica (°)</label>
-        <input type="number" id="geo-lon" placeholder="Ej: -75.5734" step="any"></div>
-      <div class="coord-sep"></div>
-      <div class="cf"><label>Norte — N (metros)</label>
-        <input type="number" id="pla-N" placeholder="Ej: 1000000" step="any"></div>
-      <div class="cf"><label>Este — E (metros)</label>
-        <input type="number" id="pla-E" placeholder="Ej: 1000000" step="any"></div>
-      <button class="cbtn cbtn-full" style="margin-top:auto" onclick="gcConvertGeo()">⇄ Convertir Geo / Planas</button>
-    </div>
-
-  </div><!-- .coord-grid -->
+    <!-- .coord-grid -->
 
   <!-- Result row -->
   <div class="coord-result-row">

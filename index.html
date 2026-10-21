@@ -2609,6 +2609,8 @@ window.gcDL = async function(idx){
 };
 window.GCT=GCT;
 window.gcDL=gcDL;
+window.gcTP=function(){var p=document.getElementById('gc-tp');if(p)p.classList.toggle('open');};
+document.addEventListener('click',function(e){var fw=document.getElementById('gc-fw');var tp=document.getElementById('gc-tp');if(tp&&tp.classList.contains('open')&&!tp.contains(e.target)&&fw&&!fw.contains(e.target))tp.classList.remove('open');});
 })();
 </script>
 <!-- /GC Floating Templates Widget -->

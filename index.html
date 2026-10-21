@@ -2434,180 +2434,176 @@ var GCT=[
 ];
 
 window.gcDL = async function(idx){
-  if(typeof ExcelJS==='undefined'){alert('Cargando librería... intente de nuevo.');return;}
-  var t=window.GCT[idx], acts=t[2], n=acts.length, ds=16, de=ds+n-1;
-  var wb=new ExcelJS.Workbook();
-  wb.creator='Green Core Analytics SAS'; wb.created=new Date();
-  var ws=wb.addWorksheet('Cronograma',{
-    views:[{state:'frozen',ySplit:15,xSplit:2}],
-    pageSetup:{paperSize:9,orientation:'landscape',fitToPage:true,fitToWidth:1}
+if(!window.GCT||!GCT[idx])return;
+if(typeof ExcelJS==='undefined'){
+  await new Promise((res,rej)=>{var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+}
+const [title,fname,acts]=GCT[idx];
+const g=Math.floor(idx/4);
+const TH=[
+ {bg:'FF1565FF',ac:'FF00CFFF',lt:'FF0A2066',nm:'OBRA CIVIL & SUPERVISIÓN'},
+ {bg:'FFB71C1C',ac:'FFFF7043',lt:'FF4A0000',nm:'ENERGÍA & MINERÍA'},
+ {bg:'FF1B5E20',ac:'FF69FF47',lt:'FF0A2A0D',nm:'GIS & CATASTRO'},
+ {bg:'FF4A148C',ac:'FFE040FB',lt:'FF200040',nm:'AMBIENTAL & PLANIFICACIÓN'},
+ {bg:'FF004D40',ac:'FF00E5CC',lt:'FF00201A',nm:'AUDITORÍA & CONSULTORÍA'}
+];
+const CC=[
+ {hd:['N°','Actividad','Responsable','Prioridad','F.Inicio','F.Fin','Días','Presup.COP','S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','Avance%','Estado','Costo.Real','Variación','Observaciones'],
+  wd:[5,34,18,12,12,12,6,15,4,4,4,4,4,4,4,4,4,4,4,4,9,14,15,13,22],
+  ki:[['Actividades','COUNTA(B{r}:B{e})',''],['Completadas','COUNTIF(V{r}:V{e},"Completado")',''],['En Progreso','COUNTIF(V{r}:V{e},"En Progreso")',''],['Retrasadas','COUNTIF(V{r}:V{e},"Retrasado")',''],['Avance Prom%','IFERROR(AVERAGE(U{r}:U{e}),0)','%'],['Presup.Total','SUM(H{r}:H{e})','$'],['Costo Real','SUM(W{r}:W{e})','$'],['Variacion','SUM(X{r}:X{e})','$'],['SPI','IFERROR(AVERAGE(U{r}:U{e})/100,0)','idx'],['%Retrasadas','IFERROR(COUNTIF(V{r}:V{e},"Retrasado")/COUNTA(V{r}:V{e})*100,0)','%']]},
+ {hd:['N°','Actividad','Responsable','Prioridad','F.Inicio','F.Fin','Dias','Riesgo','Impacto','Mitigacion','S1','S2','S3','S4','S5','S6','S7','S8','Avance%','Estado','Presup.COP','Costo.Real','CPI','Observaciones','Alerta'],
+  wd:[5,30,17,12,12,12,6,9,9,22,4,4,4,4,4,4,4,4,9,14,15,15,9,22,9],
+  ki:[['Actividades','COUNTA(B{r}:B{e})',''],['Completadas','COUNTIF(T{r}:T{e},"Completado")',''],['Riesgo Alto','COUNTIF(H{r}:H{e},"Alto")',''],['Riesgo Critico','COUNTIF(H{r}:H{e},"Critico")',''],['Avance Prom%','IFERROR(AVERAGE(S{r}:S{e}),0)','%'],['Presup.Total','SUM(U{r}:U{e})','$'],['Costo Real','SUM(V{r}:V{e})','$'],['CPI Prom.','IFERROR(AVERAGE(W{r}:W{e}),0)','idx'],['Tareas Criticas','COUNTIF(D{r}:D{e},"Critica")',''],['%Completado','IFERROR(COUNTIF(T{r}:T{e},"Completado")/COUNTA(T{r}:T{e})*100,0)','%']]},
+ {hd:['N°','Actividad','Responsable','Equipo/Recurso','Prioridad','F.Inicio','F.Fin','Dias','Horas.Est','Horas.Real','S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','Estado','Avance%','Presup.COP','Eficiencia%','Observaciones'],
+  wd:[5,30,16,18,12,12,12,6,9,9,4,4,4,4,4,4,4,4,4,4,14,9,15,13,22],
+  ki:[['Actividades','COUNTA(B{r}:B{e})',''],['Completadas','COUNTIF(U{r}:U{e},"Completado")',''],['Horas Estim.','SUM(I{r}:I{e})','h'],['Horas Reales','SUM(J{r}:J{e})','h'],['Eficiencia%','IFERROR(AVERAGE(X{r}:X{e}),0)','%'],['Avance%','IFERROR(AVERAGE(V{r}:V{e}),0)','%'],['Presup.Total','SUM(W{r}:W{e})','$'],['Desv.Horas','IFERROR(SUM(J{r}:J{e})-SUM(I{r}:I{e}),0)','h'],['Tareas Criticas','COUNTIF(E{r}:E{e},"Critica")',''],['%Tiempo usado','IFERROR(SUM(J{r}:J{e})/SUM(I{r}:I{e})*100,0)','%']]},
+ {hd:['N°','Actividad','Responsable','Prioridad','F.Inicio','F.Fin','Dias','P.Planificado','P.Ejecutado','Saldo','S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','Estado','Avance%','Observaciones'],
+  wd:[5,32,17,12,12,12,6,15,15,13,4,4,4,4,4,4,4,4,4,4,4,4,14,9,22],
+  ki:[['Actividades','COUNTA(B{r}:B{e})',''],['Completadas','COUNTIF(W{r}:W{e},"Completado")',''],['P.Planificado','SUM(H{r}:H{e})','$'],['P.Ejecutado','SUM(I{r}:I{e})','$'],['Saldo Total','SUM(J{r}:J{e})','$'],['%Ejecucion','IFERROR(SUM(I{r}:I{e})/SUM(H{r}:H{e})*100,0)','%'],['Avance Prom%','IFERROR(AVERAGE(X{r}:X{e}),0)','%'],['Tareas Criticas','COUNTIF(D{r}:D{e},"Critica")',''],['Retrasadas','COUNTIF(W{r}:W{e},"Retrasado")',''],['SPI Financiero','IFERROR(SUM(I{r}:I{e})/SUM(H{r}:H{e}),0)','idx']]},
+ {hd:['N°','Actividad','Responsable','Prioridad','F.Inicio','F.Fin','Dias','Criterio.Cal','Verificacion','Conformidad','S1','S2','S3','S4','S5','S6','S7','S8','Avance%','Estado','Presup.COP','No.Conform.','Acc.Correctivas','Cierre','Observaciones'],
+  wd:[5,30,17,12,12,12,6,20,16,13,4,4,4,4,4,4,4,4,9,14,15,11,22,11,22],
+  ki:[['Actividades','COUNTA(B{r}:B{e})',''],['Conformes','COUNTIF(J{r}:J{e},"Conforme")',''],['No Conformes','COUNTIF(J{r}:J{e},"No Conforme")',''],['Completadas','COUNTIF(T{r}:T{e},"Completado")',''],['Avance%','IFERROR(AVERAGE(S{r}:S{e}),0)','%'],['%Conformidad','IFERROR(COUNTIF(J{r}:J{e},"Conforme")/COUNTA(J{r}:J{e})*100,0)','%'],['Presup.Total','SUM(U{r}:U{e})','$'],['No Conform.Total','SUM(V{r}:V{e})',''],['Tareas Criticas','COUNTIF(D{r}:D{e},"Critica")',''],['%Completado','IFERROR(COUNTIF(T{r}:T{e},"Completado")/COUNTA(T{r}:T{e})*100,0)','%']]}
+];
+const th=TH[g];const cc=CC[g];
+const wb=new ExcelJS.Workbook();
+wb.creator='GREEN CORE ANALYTICS SAS';wb.created=new Date();
+const ws=wb.addWorksheet(fname.slice(0,28),{pageSetup:{paperSize:9,orientation:'landscape',fitToPage:true,fitToWidth:1},views:[{state:'frozen',xSplit:2,ySplit:15}]});
+const nCols=cc.hd.length;
+const lastL=String.fromCharCode(64+nCols);
+ws.columns=cc.hd.map((_,i)=>({width:cc.wd[i]||10}));
+const hFill=bg=>({type:'pattern',pattern:'solid',fgColor:{argb:bg}});
+const ctr={horizontal:'center',vertical:'middle'};
+const lft={horizontal:'left',vertical:'middle'};
+ws.mergeCells('A1:'+lastL+'1');ws.getRow(1).height=26;
+const c1=ws.getCell('A1');
+c1.value='GREEN CORE ANALYTICS SAS  - NIT 901.937.088  - Arauca, Colombia  - GESTION E INNOVACION';
+c1.fill=hFill(th.bg);c1.font={name:'Calibri',size:12,bold:true,color:{argb:'FFFFFFFF'}};c1.alignment=ctr;
+ws.mergeCells('A2:'+lastL+'2');ws.getRow(2).height=16;
+const c2=ws.getCell('A2');
+c2.value='  '+th.nm+'  -  Control, Seguimiento y Gestion de Cronograma';
+c2.fill=hFill(th.lt);c2.font={name:'Calibri',size:9,italic:true,color:{argb:th.ac}};c2.alignment=ctr;
+ws.mergeCells('A3:'+lastL+'3');ws.getRow(3).height=22;
+const c3=ws.getCell('A3');
+c3.value='  '+title;
+c3.fill=hFill('FF030D1E');c3.font={name:'Calibri',size:12,bold:true,color:{argb:th.ac}};c3.alignment=ctr;
+ws.getRow(4).height=6;ws.mergeCells('A4:'+lastL+'4');ws.getCell('A4').fill=hFill('FF0A0F1C');
+ws.mergeCells('A5:'+lastL+'5');ws.getRow(5).height=17;
+const c5=ws.getCell('A5');
+c5.value='  PANEL DE INDICADORES - '+cc.ki.length+' METRICAS ACTIVAS';
+c5.fill=hFill(th.lt);c5.font={name:'Calibri',size:10,bold:true,color:{argb:th.ac}};c5.alignment=lft;
+ws.getRow(6).height=30;ws.getRow(7).height=30;ws.getRow(8).height=13;ws.getRow(9).height=13;
+const half=Math.ceil(cc.ki.length/2);
+for(let k=0;k<cc.ki.length;k++){
+  const isBot=k>=half;
+  const row=isBot?7:6;
+  const labelRow=isBot?9:8;
+  const col=isBot?k-half:k;
+  const kColW=Math.floor(nCols/half);
+  const startCol=col*kColW+1;
+  const endCol=col===half-1?nCols:startCol+kColW-1;
+  const sL=String.fromCharCode(64+startCol);
+  const eL=String.fromCharCode(64+endCol);
+  ws.mergeCells(sL+row+':'+eL+row);
+  ws.mergeCells(sL+labelRow+':'+eL+labelRow);
+  const kc=ws.getCell(sL+row);
+  const formula=cc.ki[k][1].replace(/{r}/g,'16').replace(/{e}/g,'65');
+  kc.value={formula:formula};
+  kc.fill=hFill(th.lt);
+  kc.font={name:'Calibri',size:14,bold:true,color:{argb:th.ac}};
+  kc.alignment=ctr;
+  kc.numFmt=cc.ki[k][2]==='$'?'#,##0':cc.ki[k][2]==='%'?'0.0':cc.ki[k][2]==='h'?'0"h"':'0.00';
+  const lc=ws.getCell(sL+labelRow);
+  lc.value=cc.ki[k][0]+(cc.ki[k][2]?' ['+cc.ki[k][2]+']':'');
+  lc.fill=hFill('FF0A0F1C');
+  lc.font={name:'Calibri',size:8,color:{argb:'FFAAAAAA'}};
+  lc.alignment=ctr;
+}
+ws.getRow(10).height=6;ws.mergeCells('A10:'+lastL+'10');ws.getCell('A10').fill=hFill('FF0A0F1C');
+const firstWI=cc.hd.findIndex(h=>h==='S1');
+const lastWH=cc.hd.filter(h=>/^Sd+$/.test(h)).pop();
+const lastWI=cc.hd.lastIndexOf(lastWH);
+if(firstWI>=0){
+  const wSL=String.fromCharCode(64+firstWI+1);
+  const wEL=String.fromCharCode(64+lastWI+1);
+  ws.mergeCells(wSL+'11:'+wEL+'11');ws.getRow(11).height=15;
+  const cw=ws.getCell(wSL+'11');
+  cw.value='CRONOGRAMA SEMANAL / DIAGRAMA GANTT';
+  cw.fill=hFill(th.bg);cw.font={name:'Calibri',size:9,bold:true,color:{argb:'FFFFFFFF'}};cw.alignment=ctr;
+}
+[12,13,14].forEach(r=>{ws.getRow(r).height=5;ws.mergeCells('A'+r+':'+lastL+r);ws.getCell('A'+r).fill=hFill('FF030710');});
+ws.getRow(15).height=22;
+cc.hd.forEach((h,i)=>{
+  const c=ws.getCell(15,i+1);
+  c.value=h;c.fill=hFill(th.bg);
+  c.font={name:'Calibri',size:9,bold:true,color:{argb:'FFFFFFFF'}};
+  c.alignment=ctr;
+  c.border={top:{style:'medium',color:{argb:th.ac}},bottom:{style:'medium',color:{argb:th.ac}},left:{style:'thin',color:{argb:'FF333355'}},right:{style:'thin',color:{argb:'FF333355'}}};
+});
+ws.autoFilter={from:{row:15,column:1},to:{row:15,column:nCols}};
+const priIdx=cc.hd.indexOf('Prioridad')+1;
+const stIdx=cc.hd.findIndex(h=>h==='Estado')+1;
+const confIdx=cc.hd.indexOf('Conformidad')+1;
+const rsIdx=cc.hd.indexOf('Riesgo')+1;
+const iniIdx=cc.hd.indexOf('F.Inicio')+1;
+const finIdx2=cc.hd.indexOf('F.Fin')+1;
+const diasIdx2=cc.hd.indexOf('Dias')+1;
+const avIdx=cc.hd.findIndex(h=>h==='Avance%')+1;
+const varIdx=cc.hd.indexOf('Variacion')+1;
+const salIdx=cc.hd.indexOf('Saldo')+1;
+const ppIdx=cc.hd.indexOf('P.Planificado')+1;
+const peIdx=cc.hd.indexOf('P.Ejecutado')+1;
+const prIdx=cc.hd.findIndex(h=>h.startsWith('Presup')&&!h.startsWith('P.'))+1;
+const crIdx=cc.hd.indexOf('Costo.Real')+1;
+const iL=iniIdx>0?String.fromCharCode(64+iniIdx):'';
+const fL2=finIdx2>0?String.fromCharCode(64+finIdx2):'';
+const ppL=ppIdx>0?String.fromCharCode(64+ppIdx):'';
+const peL=peIdx>0?String.fromCharCode(64+peIdx):'';
+const prL=prIdx>0?String.fromCharCode(64+prIdx):'';
+const crL=crIdx>0?String.fromCharCode(64+crIdx):'';
+for(let r=0;r<50;r++){
+  const rn=16+r;ws.getRow(rn).height=r<acts.length?18:16;
+  const isAlt=r%2===1;
+  const rbg=isAlt?'FF0D1428':'FF060B18';
+  cc.hd.forEach((_,ci)=>{
+    const c2=ws.getCell(rn,ci+1);
+    c2.fill=hFill(rbg);
+    c2.font={name:'Calibri',size:10,color:{argb:'FFD0D8F0'}};
+    c2.border={top:{style:'thin',color:{argb:'FF111833'}},bottom:{style:'thin',color:{argb:'FF111833'}},left:{style:'thin',color:{argb:'FF111833'}},right:{style:'thin',color:{argb:'FF111833'}}};
+    c2.alignment={vertical:'middle',wrapText:true};
   });
-  ws.columns=[
-    {width:4},{width:40},{width:18},{width:11},{width:12},{width:12},{width:7},{width:15},
-    {width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},{width:4},
-    {width:10},{width:13},{width:15},{width:13},{width:28}
-  ];
-  function sf(a){return{type:'pattern',pattern:'solid',fgColor:{argb:a}};}
-  function fn(a,s,b){return{color:{argb:a||'FFD0E8FF'},size:s||9,bold:!!b,name:'Calibri'};}
-  function bd(a){var s={style:'thin',color:{argb:a||'FF1565FF'}};return{top:s,left:s,bottom:s,right:s};}
-  function sc(addr,val,fa,fc,fs,fb,ha,nf,isF){
-    var c=ws.getCell(addr);
-    c.value=isF?{formula:val}:val;
-    c.fill=sf(fa||'FF030D1E'); c.font=fn(fc,fs,fb);
-    c.alignment={horizontal:ha||'center',vertical:'middle'};
-    if(nf) c.numFmt=nf; return c;
+  if(r<acts.length){
+    const cn=ws.getCell(rn,1);cn.value=r+1;cn.font={name:'Calibri',size:10,bold:true,color:{argb:th.ac}};cn.alignment=ctr;
+    ws.getCell(rn,2).value=acts[r];
+  }else{
+    ws.getCell(rn,1).value=r+1;ws.getCell(rn,1).alignment=ctr;ws.getCell(rn,1).font={name:'Calibri',size:10,color:{argb:'FF333355'}};
   }
-  // Row 1: Company header
-  ws.mergeCells('A1:Y1'); ws.getRow(1).height=32;
-  sc('A1','GREEN CORE ANALYTICS SAS  ·  NIT 901.937.088  ·  Arauca, Colombia','FF1565FF','FFFFFFFF',13,true,'center');
-  // Row 2: Tagline
-  ws.mergeCells('A2:Y2'); ws.getRow(2).height=17;
-  var c2=sc('A2','GESTIÓN E INNOVACIÓN  ·  GEOINTELIGENCIA APLICADA AL TERRITORIO','FF0A1628','FF00CFFF',9,false,'center');
-  c2.font={color:{argb:'FF00CFFF'},size:9,italic:true,name:'Calibri'};
-  // Row 3: Title
-  ws.mergeCells('A3:Y3'); ws.getRow(3).height=28;
-  sc('A3',t[0].toUpperCase(),'FF030D1E','FF00FF88',13,true,'center');
-  // Row 4: Metadata
-  ws.mergeCells('A4:G4'); ws.mergeCells('H4:N4'); ws.mergeCells('O4:S4'); ws.mergeCells('T4:Y4');
-  ws.getRow(4).height=18;
-  sc('A4','Proyecto / Contrato: _________________________','FF051020','FF8AB4F8',9,false,'left');
-  sc('H4','Elaborado por: _________________________','FF051020','FF8AB4F8',9,false,'left');
-  sc('O4','Fecha: '+new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}),'FF051020','FF8AB4F8',9,false,'left');
-  sc('T4','Versión: 1.0','FF051020','FF00CFFF',9,false,'center');
-  // Row 5: separator
-  ws.mergeCells('A5:Y5'); ws.getRow(5).height=5;
-  ws.getCell('A5').fill=sf('FF1565FF');
-  // Row 6: KPI header
-  ws.mergeCells('A6:Y6'); ws.getRow(6).height=20;
-  sc('A6','📊  TABLERO DE KPIs — INDICADORES DE RENDIMIENTO DEL PROYECTO','FF0D2B5A','FF00CFFF',10,true,'center');
-  // Rows 7-8: KPI grid 1
-  ws.getRow(7).height=16; ws.getRow(8).height=26;
-  var dr='V'+ds+':V'+de, ar='U'+ds+':U'+de, br='H'+ds+':H'+de, wr='W'+ds+':W'+de;
-  var kg1=[
-    ['A7:D7','A8:D8','🎯 TOTAL ACTIVIDADES','COUNTA(B'+ds+':B'+de+')','0','FF00FF88'],
-    ['E7:H7','E8:H8','✅ COMPLETADAS','COUNTIF('+dr+',"Completado")','0','FF00FF88'],
-    ['I7:L7','I8:L8','🔄 EN PROGRESO','COUNTIF('+dr+',"En Progreso")','0','FF00CFFF'],
-    ['M7:P7','M8:P8','⏳ PENDIENTES','COUNTIF('+dr+',"Pendiente")','0','FFAAAAAA'],
-    ['Q7:S7','Q8:S8','⚠️ RETRASADAS','COUNTIF('+dr+',"Retrasado")','0','FFFF5555'],
-    ['T7:V7','T8:V8','📈 AVANCE GRAL.','IFERROR(AVERAGE('+ar+'),0)','0.0"%"','FF00CFFF'],
-    ['W7:Y7','W8:Y8','📋 CUMPLIMIENTO','IFERROR(COUNTIF('+dr+',"Completado")/COUNTA(B'+ds+':B'+de+'),0)','0%','FF00FF88']
-  ];
-  kg1.forEach(function(g){
-    ws.mergeCells(g[0]); ws.mergeCells(g[1]);
-    var la=g[0].split(':')[0], va=g[1].split(':')[0];
-    var lc=ws.getCell(la);
-    lc.value=g[2]; lc.fill=sf('FF0A1E40');
-    lc.font={color:{argb:'FFCCE4FF'},size:8,bold:true,name:'Calibri'};
-    lc.alignment={horizontal:'center',vertical:'middle'}; lc.border=bd('FF1565FF');
-    var vc=ws.getCell(va);
-    vc.value={formula:g[3]}; vc.fill=sf('FF051020');
-    vc.font={color:{argb:g[5]},size:16,bold:true,name:'Calibri'};
-    vc.alignment={horizontal:'center',vertical:'middle'}; vc.numFmt=g[4]; vc.border=bd('FF00CFFF');
-  });
-  // Row 9: separator
-  ws.mergeCells('A9:Y9'); ws.getRow(9).height=4;
-  ws.getCell('A9').fill=sf('FF00CFFF');
-  // Rows 10-11: KPI grid 2
-  ws.getRow(10).height=16; ws.getRow(11).height=24;
-  var kg2=[
-    ['A10:F10','A11:F11','💵 PRESUPUESTO TOTAL (COP)','IFERROR(SUM('+br+'),0)','#,##0','FFFFE082'],
-    ['G10:L10','G11:L11','💸 COSTO REAL ACUMULADO (COP)','IFERROR(SUM('+wr+'),0)','#,##0','FFFFE082'],
-    ['M10:Q10','M11:Q11','📉 VARIACIÓN PRESUPUESTAL (COP)','IFERROR(SUM('+br+')-SUM('+wr+'),0)','#,##0','FF00FF88'],
-    ['R10:Y10','R11:Y11','🏆 ÍNDICE RENDIMIENTO (SPI)','IFERROR(AVERAGE('+ar+')/100*COUNTA(B'+ds+':B'+de+')/MAX(COUNTIF('+dr+',"Completado"),1),0)','0.00','FFFFE082']
-  ];
-  kg2.forEach(function(g){
-    ws.mergeCells(g[0]); ws.mergeCells(g[1]);
-    var la=g[0].split(':')[0], va=g[1].split(':')[0];
-    var lc=ws.getCell(la);
-    lc.value=g[2]; lc.fill=sf('FF0A1E40');
-    lc.font={color:{argb:'FFCCE4FF'},size:8,bold:true,name:'Calibri'};
-    lc.alignment={horizontal:'center',vertical:'middle'}; lc.border=bd('FF1565FF');
-    var vc=ws.getCell(va);
-    vc.value={formula:g[3]}; vc.fill=sf('FF051020');
-    vc.font={color:{argb:g[5]},size:14,bold:true,name:'Calibri'};
-    vc.alignment={horizontal:'center',vertical:'middle'}; vc.numFmt=g[4]; vc.border=bd('FF00CFFF');
-  });
-  // Row 12: separator
-  ws.mergeCells('A12:Y12'); ws.getRow(12).height=4;
-  ws.getCell('A12').fill=sf('FF1565FF');
-  // Row 13: legend
-  ws.mergeCells('A13:Y13'); ws.getRow(13).height=15;
-  var lc13=ws.getCell('A13');
-  lc13.value='CONVENCIONES:   P = Programado   X = Ejecutado   |   Estado: Pendiente / En Progreso / Completado / Retrasado';
-  lc13.fill=sf('FF0A1628'); lc13.font={color:{argb:'FF8AB4F8'},size:8,italic:true,name:'Calibri'};
-  lc13.alignment={horizontal:'center',vertical:'middle'};
-  // Row 14: separator
-  ws.mergeCells('A14:Y14'); ws.getRow(14).height=4;
-  ws.getCell('A14').fill=sf('FF030D1E');
-  // Row 15: table header
-  ws.getRow(15).height=20;
-  ['N°','ACTIVIDAD','RESPONSABLE','PRIORIDAD','INICIO','FIN','DÍAS','PRESUPUESTO (COP)',
-   'S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12',
-   'AVANCE %','ESTADO','COSTO REAL (COP)','VARIACIÓN (COP)','OBSERVACIONES'].forEach(function(h,i){
-    var c=ws.getCell(String.fromCharCode(65+i)+'15');
-    c.value=h; c.fill=sf('FF1565FF');
-    c.font={color:{argb:'FFFFFFFF'},size:8,bold:true,name:'Calibri'};
-    c.alignment={horizontal:'center',vertical:'middle',wrapText:true};
-    c.border=bd('FF00CFFF');
-  });
-  // Activity rows
-  var pris=['Alta','Alta','Media','Media','Alta','Media','Baja','Media','Alta','Baja','Media','Alta'];
-  var priC={Alta:'FFFF6B6B',Media:'FFFFE082',Baja:'FF00FF88'};
-  var wks=['I','J','K','L','M','N','O','P','Q','R','S','T'];
-  acts.forEach(function(act,i){
-    var rn=ds+i; ws.getRow(rn).height=18;
-    var rf=sf(i%2===0?'FF071428':'FF030D1E');
-    var bdi=bd('FF1565FF22');
-    function cell(addr,val,fc,ha,nf,isF){
-      var c=ws.getCell(addr);
-      c.value=isF?{formula:val}:val; c.fill=rf;
-      c.font={color:{argb:fc||'FFD0E8FF'},size:9,name:'Calibri'};
-      c.alignment={horizontal:ha||'center',vertical:'middle'}; c.border=bdi;
-      if(nf) c.numFmt=nf; return c;
-    }
-    cell('A'+rn,i+1,'FF00CFFF','center','0');
-    ws.getCell('A'+rn).font={color:{argb:'FF00CFFF'},size:9,bold:true,name:'Calibri'};
-    var bc=ws.getCell('B'+rn);
-    bc.value=act; bc.fill=rf; bc.font={color:{argb:'FFFFFFFF'},size:9,name:'Calibri'};
-    bc.alignment={horizontal:'left',vertical:'middle',wrapText:true}; bc.border=bdi;
-    cell('C'+rn,'','FFD0E8FF','left');
-    var pc=ws.getCell('D'+rn); var pri=pris[i%12];
-    pc.value=pri; pc.fill=rf; pc.font={color:{argb:priC[pri]},size:9,bold:true,name:'Calibri'};
-    pc.alignment={horizontal:'center',vertical:'middle'}; pc.border=bdi;
-    cell('E'+rn,'','FF8AB4F8','center','DD/MM/YYYY');
-    cell('F'+rn,'','FF8AB4F8','center','DD/MM/YYYY');
-    cell('G'+rn,'IF(AND(E'+rn+'<>"",F'+rn+'<>""),F'+rn+'-E'+rn+',"—")','FF00CFFF','center','0',true);
-    cell('H'+rn,0,'FFFFE082','center','#,##0');
-    wks.forEach(function(col){cell(col+rn,'','FF8AB4F8','center');});
-    cell('U'+rn,0,'FF00FF88','center','0"%"');
-    ws.getCell('U'+rn).font={color:{argb:'FF00FF88'},size:9,bold:true,name:'Calibri'};
-    var stc=ws.getCell('V'+rn);
-    stc.value='Pendiente'; stc.fill=rf; stc.font={color:{argb:'FFAAAAAA'},size:9,name:'Calibri'};
-    stc.alignment={horizontal:'center',vertical:'middle'}; stc.border=bdi;
-    stc.dataValidation={type:'list',allowBlank:false,formulae:['"Pendiente,En Progreso,Completado,Retrasado"'],showErrorMessage:true};
-    cell('W'+rn,0,'FFFFE082','center','#,##0');
-    cell('X'+rn,'IF(H'+rn+'>0,H'+rn+'-W'+rn+',"—")','FF00FF88','center','#,##0',true);
-    var oc=ws.getCell('Y'+rn);
-    oc.value=''; oc.fill=rf; oc.font={color:{argb:'FF8AB4F8'},size:9,name:'Calibri'};
-    oc.alignment={horizontal:'left',vertical:'middle',wrapText:true}; oc.border=bdi;
-  });
-  ws.autoFilter={from:'A15',to:'Y15'};
-  // Footer
-  var fr=de+2; ws.mergeCells('A'+fr+':Y'+fr); ws.getRow(fr).height=15;
-  var fc=ws.getCell('A'+fr);
-  fc.value='GREEN CORE ANALYTICS SAS  ·  greencoreanalytics.com  ·  Geointeligencia aplicada al territorio  ·  Arauca, Colombia';
-  fc.fill=sf('FF030D1E'); fc.font={color:{argb:'FF1565FF'},size:8,italic:true,name:'Calibri'};
-  fc.alignment={horizontal:'center',vertical:'middle'};
-  // Download
-  var buffer=await wb.xlsx.writeBuffer();
-  var blob=new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='GreenCore_'+t[1]+'.xlsx';
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(a.href);
+  if(priIdx>0){
+    const pc=ws.getCell(rn,priIdx);
+    pc.dataValidation={type:'list',allowBlank:true,formulae:['"Critica,Alta,Media,Baja"'],showDropDown:false,showErrorMessage:true,errorTitle:'Prioridad',error:'Selecciona: Critica, Alta, Media o Baja'};
+    if(r<acts.length){pc.value='Media';pc.font={name:'Calibri',size:10,bold:true,color:{argb:'FFFF8F00'}};pc.alignment=ctr;}
+  }
+  if(iniIdx>0) ws.getCell(rn,iniIdx).numFmt='DD/MM/YYYY';
+  if(finIdx2>0) ws.getCell(rn,finIdx2).numFmt='DD/MM/YYYY';
+  if(diasIdx2>0&&iL&&fL2){ws.getCell(rn,diasIdx2).value={formula:'IF(AND('+iL+rn+'<>"",'+fL2+rn+'<>""),'+fL2+rn+'-'+iL+rn+',"x")'};ws.getCell(rn,diasIdx2).alignment=ctr;}
+  if(varIdx>0&&prL&&crL){ws.getCell(rn,varIdx).value={formula:'IF('+prL+rn+'>0,'+prL+rn+'-'+crL+rn+',"x")'};ws.getCell(rn,varIdx).numFmt='#,##0';}
+  if(salIdx>0&&ppL&&peL){ws.getCell(rn,salIdx).value={formula:ppL+rn+'-'+peL+rn};ws.getCell(rn,salIdx).numFmt='#,##0';}
+  if(avIdx>0) ws.getCell(rn,avIdx).numFmt='0"%"';
+  if(stIdx>0){ws.getCell(rn,stIdx).dataValidation={type:'list',allowBlank:true,formulae:['"Pendiente,En Progreso,Completado,Retrasado,Suspendido"'],showDropDown:false};if(r<acts.length){ws.getCell(rn,stIdx).value='Pendiente';ws.getCell(rn,stIdx).alignment=ctr;}}
+  if(confIdx>0){ws.getCell(rn,confIdx).dataValidation={type:'list',allowBlank:true,formulae:['"Conforme,No Conforme,En Revision,N/A"'],showDropDown:false};ws.getCell(rn,confIdx).alignment=ctr;}
+  if(rsIdx>0){ws.getCell(rn,rsIdx).dataValidation={type:'list',allowBlank:true,formulae:['"Critico,Alto,Medio,Bajo"'],showDropDown:false};ws.getCell(rn,rsIdx).alignment=ctr;}
+  [prIdx,ppIdx,peIdx,crIdx].filter(x=>x>0).forEach(ci=>{if(ci>0)ws.getCell(rn,ci).numFmt='#,##0';});
+}
+const footRow=67;ws.getRow(footRow).height=16;
+ws.mergeCells('A'+footRow+':'+lastL+footRow);
+const fc=ws.getCell('A'+footRow);
+fc.value='GREEN CORE ANALYTICS SAS  - Geointeligencia & Datos Espaciales  - NIT 901.937.088  - greencoreanalytics.com  - Arauca, Colombia';
+fc.fill=hFill(th.bg);fc.font={name:'Calibri',size:8,italic:true,color:{argb:'FFAACCFF'}};fc.alignment=ctr;
+const buf=await wb.xlsx.writeBuffer();
+const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+const url2=URL.createObjectURL(blob);
+const a=document.createElement('a');a.href=url2;a.download=fname+'_GreenCore.xlsx';a.click();
+setTimeout(()=>URL.revokeObjectURL(url2),8000);
 };
-window.GCT=GCT;
 window.gcDL=gcDL;
 window.gcTP=function(){var p=document.getElementById('gc-tp');if(p)p.classList.toggle('open');};
 document.addEventListener('click',function(e){var fw=document.getElementById('gc-fw');var tp=document.getElementById('gc-tp');if(tp&&tp.classList.contains('open')&&!tp.contains(e.target)&&fw&&!fw.contains(e.target))tp.classList.remove('open');});

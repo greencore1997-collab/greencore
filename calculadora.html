@@ -234,7 +234,7 @@ footer a{color:var(--blue);text-decoration:none}
   <p style="margin-top:0.4rem">Geointeligencia aplicada al territorio · <a href="index.html">greencoreanalytics.com</a></p>
 </footer>
 <script>
-function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');if(id==='coord'){if(!_map)gcInitMap();setTimeout(function(){if(typeof _map!=='undefined'&&_map)_map.invalidateSize();},150);}}
+function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');if(id==='coord'){if(window._gcMapInst){window._gcMapInst.remove();window._gcMapInst=null;}setTimeout(function(){gcInitMap();setTimeout(function(){if(window._gcMapInst)window._gcMapInst.invalidateSize(true);},200);},80);}}
 const AREA_TO_M2={m2:1,ha:10000,km2:1e6,acre:4046.8564,fanegada:6400,cuadra:10000,varaC:0.64};
 const AREA_LABELS={m2:'m²',ha:'ha',km2:'km²',acre:'acre',fanegada:'fanegada',cuadra:'cuadra',varaC:'vara²'};
 function convertArea(){

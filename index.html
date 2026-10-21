@@ -2385,40 +2385,97 @@ function sendForm(e) {
 <div id="gc-tp">
   <div class="gc-ph"><span>📊 Plantillas GreenCore</span><button class="gc-pc" onclick="gcTP()">✕</button></div>
   <div class="gc-pl">
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📋</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Interventoría de Obra Civil</span><span class="gc-pi-ct">Interventoría · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🏗️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Supervisión de Contratos de Obra</span><span class="gc-pi-ct">Interventoría · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🗺️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Proyecto GIS y Cartografía</span><span class="gc-pi-ct">GIS · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📍</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Levantamiento Topográfico</span><span class="gc-pi-ct">Topografía · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🛢️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inspección de Redes de Gas</span><span class="gc-pi-ct">Energía · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">⚡</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Mantenimiento Infraestructura Energética</span><span class="gc-pi-ct">Energía · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🏘️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Obra Pública Municipal</span><span class="gc-pi-ct">Gobierno · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📐</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Actualización Catastral</span><span class="gc-pi-ct">Catastro · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🔬</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Diagnóstico Territorial</span><span class="gc-pi-ct">Planificación · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🛤️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Señalización y Vías</span><span class="gc-pi-ct">Ingeniería · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">💻</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Implementación SIG Institucional</span><span class="gc-pi-ct">SIG · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📦</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inventario de Activos Georreferenciados</span><span class="gc-pi-ct">Inventario · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">⛏️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Proyecto Minero-Energético</span><span class="gc-pi-ct">Minería · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🌳</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Gestión Ambiental</span><span class="gc-pi-ct">Ambiental · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📊</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Plan de Ordenamiento Territorial (POT)</span><span class="gc-pi-ct">POT · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🔍</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Auditoría de Campo</span><span class="gc-pi-ct">Auditoría · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📈</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Proyecto de Consultoría Técnica</span><span class="gc-pi-ct">Consultoría · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🏭</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inspección de Infraestructura Industrial</span><span class="gc-pi-ct">Industrial · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">📡</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Monitoreo de Redes y Sensores</span><span class="gc-pi-ct">Monitoreo · Excel</span></span></a>
-    <a class="gc-pi" href="#" download><span class="gc-pi-ic">🎓</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Capacitación Técnica SIG</span><span class="gc-pi-ct">Formación · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(0)"><span class="gc-pi-ic">📋</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Interventoría de Obra Civil</span><span class="gc-pi-ct">Interventoría · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(1)"><span class="gc-pi-ic">🏗️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Supervisión de Contratos de Obra</span><span class="gc-pi-ct">Interventoría · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(2)"><span class="gc-pi-ic">🗺️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Proyecto GIS y Cartografía</span><span class="gc-pi-ct">GIS · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(3)"><span class="gc-pi-ic">📍</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Levantamiento Topográfico</span><span class="gc-pi-ct">Topografía · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(4)"><span class="gc-pi-ic">🛢️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inspección de Redes de Gas</span><span class="gc-pi-ct">Energía · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(5)"><span class="gc-pi-ic">⚡</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Mantenimiento Infraestructura Energética</span><span class="gc-pi-ct">Energía · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(6)"><span class="gc-pi-ic">🏘️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Obra Pública Municipal</span><span class="gc-pi-ct">Gobierno · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(7)"><span class="gc-pi-ic">📐</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Actualización Catastral</span><span class="gc-pi-ct">Catastro · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(8)"><span class="gc-pi-ic">🔬</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Diagnóstico Territorial</span><span class="gc-pi-ct">Planificación · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(9)"><span class="gc-pi-ic">🛤️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Señalización y Vías</span><span class="gc-pi-ct">Ingeniería · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(10)"><span class="gc-pi-ic">💻</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Implementación SIG Institucional</span><span class="gc-pi-ct">SIG · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(11)"><span class="gc-pi-ic">📦</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inventario de Activos Georreferenciados</span><span class="gc-pi-ct">Inventario · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(12)"><span class="gc-pi-ic">⛏️</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Proyecto Minero-Energético</span><span class="gc-pi-ct">Minería · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(13)"><span class="gc-pi-ic">🌳</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Gestión Ambiental</span><span class="gc-pi-ct">Ambiental · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(14)"><span class="gc-pi-ic">📊</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de POT</span><span class="gc-pi-ct">POT · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(15)"><span class="gc-pi-ic">🔍</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Auditoría de Campo</span><span class="gc-pi-ct">Auditoría · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(16)"><span class="gc-pi-ic">📈</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Consultoría Técnica</span><span class="gc-pi-ct">Consultoría · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(17)"><span class="gc-pi-ic">🏭</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Inspección Industrial</span><span class="gc-pi-ct">Industrial · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(18)"><span class="gc-pi-ic">📡</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Monitoreo de Redes y Sensores</span><span class="gc-pi-ct">Monitoreo · Excel</span></span></a>
+    <a class="gc-pi" href="#" onclick="event.preventDefault();gcDL(19)"><span class="gc-pi-ic">🎓</span><span class="gc-pi-tx"><span class="gc-pi-nm">Cronograma de Capacitación Técnica SIG</span><span class="gc-pi-ct">Formación · Excel</span></span></a>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
-  var open=false;
-  window.gcTP=function(){
-    open=!open;
-    document.getElementById('gc-tp').classList.toggle('open',open);
-  };
-  document.addEventListener('click',function(e){
-    if(open&&!e.target.closest('#gc-fw')&&!e.target.closest('#gc-tp')){
-      open=false;document.getElementById('gc-tp').classList.remove('open');
-    }
+var GCT=[
+['Cronograma de Interventoría de Obra Civil','interventoria_civil',['Revisión de planos y diseños','Verificación de especificaciones técnicas','Supervisión de excavación y cimentación','Control de obra gris y estructuras','Inspección de instalaciones hidráulicas','Inspección de instalaciones eléctricas','Control de calidad de concreto (ensayos)','Supervisión de acabados y obra exterior','Pruebas y ensayos de laboratorio','Elaboración de informes de interventoría','Actas de recibo parcial de obra','Liquidación y acta final de contrato']],
+['Cronograma de Supervisión de Contratos de Obra','supervision_contratos',['Revisión y análisis del contrato','Conformación del equipo supervisor','Verificación de pólizas y garantías','Seguimiento de cronograma contractual','Control de actas de cobro','Verificación de aportes parafiscales','Supervisión técnica en campo','Elaboración de informes de avance','Control presupuestal del contrato','Gestión de modificaciones contractuales','Cierre administrativo del contrato','Elaboración de acta de liquidación']],
+['Cronograma de Proyecto GIS y Cartografía','proyecto_gis',['Definición de alcance y requerimientos SIG','Recopilación de cartografía base','Configuración de geodatabase','Levantamiento de información en campo','Procesamiento y depuración de datos','Georeferenciación de capas temáticas','Análisis espacial y generación de mapas','Control de calidad cartográfica','Elaboración de metadatos','Publicación en plataforma web','Capacitación a usuarios finales','Entrega de productos cartográficos']],
+['Cronograma de Levantamiento Topográfico','levantamiento_topo',['Reconocimiento y planificación del área','Materialización de puntos de control','Levantamiento de poligonal principal','Levantamiento de detalles planimétricos','Nivelación geométrica','Procesamiento de datos de campo','Ajuste de poligonal y cierre','Elaboración de planos topográficos','Control de calidad y verificación','Elaboración de memoria técnica','Revisión y aprobación de productos','Entrega final de planos y archivos']],
+['Cronograma de Inspección de Redes de Gas','inspeccion_gas',['Revisión de planos de red existente','Preparación de equipos de inspección','Verificación de presiones en tramos','Inspección visual de acometidas','Pruebas de hermeticidad','Detección de fugas con equipo especializado','Inspección de válvulas y accesorios','Registro fotográfico y georeferenciación','Análisis de resultados y clasificación','Elaboración de informe técnico','Plan de mantenimiento correctivo','Entrega de informe a operador de red']],
+['Cronograma de Mantenimiento Infraestructura Energética','mant_energia',['Diagnóstico inicial de infraestructura','Programación de actividades de mantenimiento','Mantenimiento preventivo de subestaciones','Inspección de líneas de transmisión','Mantenimiento de transformadores','Revisión de sistemas de protección','Pruebas eléctricas y mediciones','Mantenimiento de sistemas de puesta a tierra','Registro y documentación de actividades','Control de repuestos y materiales','Elaboración de informe de mantenimiento','Cierre técnico y entrega de informes']],
+['Cronograma de Obra Pública Municipal','obra_publica',['Estudios y diseños previos','Proceso de contratación','Acta de inicio de obra','Adecuación y descapote del área','Construcción de obras preliminares','Ejecución de obra principal fase 1','Ejecución de obra principal fase 2','Instalación de mobiliario y dotación','Pruebas y puesta en operación','Capacitación a comunidad beneficiaria','Entrega comunitaria del proyecto','Acta de liquidación y cierre']],
+['Cronograma de Actualización Catastral','actualizacion_catastral',['Análisis de información catastral existente','Definición de zonas a actualizar','Capacitación al equipo de campo','Levantamiento de información predial','Verificación de linderos y áreas','Actualización de base de datos catastral','Verificación de avalúos catastrales','Control de calidad de información','Cargue al sistema de información','Elaboración de informes estadísticos','Socialización con propietarios','Entrega al IGAC y ente territorial']],
+['Cronograma de Diagnóstico Territorial','diagnostico_territorial',['Recopilación de información secundaria','Análisis de cartografía existente','Trabajo de campo – zona urbana','Trabajo de campo – zona rural','Identificación de conflictos de uso del suelo','Análisis de dinámicas socioeconómicas','Cartografía social con comunidades','Procesamiento de información SIG','Elaboración de mapas temáticos','Análisis integrado del territorio','Elaboración de documento diagnóstico','Socialización de resultados']],
+['Cronograma de Señalización y Vías','senalizacion_vias',['Diagnóstico vial y estado de señalización','Diseño del plan de señalización','Proceso de contratación de suministro','Demarcación horizontal de vías','Instalación de señales verticales','Instalación de semáforos (si aplica)','Señalización de zonas escolares','Señalización de zonas de riesgo','Control de calidad de materiales','Georeferenciación de señales instaladas','Elaboración de inventario vial','Entrega y acta de recibo']],
+['Cronograma de Implementación SIG Institucional','implementacion_sig',['Diagnóstico de necesidades SIG institucional','Definición de arquitectura tecnológica','Instalación de software SIG','Configuración de geodatabase institucional','Cargue de información base','Desarrollo de aplicaciones SIG','Configuración de visor web cartográfico','Pruebas de funcionalidad del sistema','Capacitación a usuarios','Elaboración de manuales de usuario','Puesta en producción del sistema','Soporte y ajustes post-implementación']],
+['Cronograma de Inventario de Activos Georreferenciados','inventario_activos',['Definición de tipos de activos a inventariar','Diseño de formulario de captura en campo','Configuración de app de colecta de datos','Levantamiento de activos fase 1','Levantamiento de activos fase 2','Toma de fotografías y registro','Cargue y procesamiento de datos','Depuración y validación de información','Generación de mapas de distribución','Valoración y clasificación de activos','Elaboración de informe de inventario','Entrega de base de datos y planos']],
+['Cronograma de Proyecto Minero-Energético','proyecto_minero',['Revisión de títulos y permisos mineros','Diagnóstico ambiental del área','Levantamiento topográfico de concesión','Georreferenciación de puntos clave','Elaboración de plan de trabajo','Muestreo y análisis geológico','Procesamiento de información geoespacial','Elaboración de cartografía minera','Evaluación de recursos estimados','Gestión de permisos y licencias','Elaboración de informe técnico','Socialización y entrega de resultados']],
+['Cronograma de Gestión Ambiental','gestion_ambiental',['Caracterización ambiental del área de influencia','Diagnóstico de flora y fauna','Análisis de calidad de agua y suelo','Identificación de áreas de protección','Elaboración de plan de manejo ambiental','Implementación de medidas de compensación','Revegetalización y restauración ecológica','Monitoreo de indicadores ambientales','Socialización comunitaria','Elaboración de informes de cumplimiento','Seguimiento a indicadores de biodiversidad','Cierre y entrega de informe final']],
+['Cronograma de Plan de Ordenamiento Territorial (POT)','pot',['Diagnóstico territorial (componente urbano)','Diagnóstico territorial (componente rural)','Diagnóstico ambiental','Análisis de riesgo y amenazas','Formulación de modelo de ocupación','Definición de clasificación del suelo','Elaboración de norma urbanística','Cartografía POT – mapas estructurales','Proceso de concertación con autoridad ambiental','Socialización con comunidad y concejo','Ajustes según observaciones','Adopción y publicación del POT']],
+['Cronograma de Auditoría de Campo','auditoria_campo',['Definición del plan de auditoría','Revisión de documentación técnica previa','Preparación de listas de chequeo','Visita de campo – reconocimiento general','Verificación técnica de obra o servicio','Toma de muestras y registros','Entrevistas a responsables y comunidad','Análisis de hallazgos','Elaboración de informe preliminar','Revisión con la entidad auditada','Elaboración de informe definitivo','Seguimiento a plan de mejoramiento']],
+['Cronograma de Consultoría Técnica','consultoria_tecnica',['Reunión de inicio y definición de alcance','Revisión de información existente','Diagnóstico y análisis de situación actual','Elaboración de propuesta técnica','Revisión y aprobación con el cliente','Implementación de fase 1','Implementación de fase 2','Monitoreo y ajustes','Elaboración de entregables','Presentación de avances al cliente','Revisión y aprobación de entregables','Cierre del proyecto y lecciones aprendidas']],
+['Cronograma de Inspección Infraestructura Industrial','inspeccion_industrial',['Revisión de planos de infraestructura','Preparación de equipos de inspección','Inspección de estructuras civiles','Inspección de instalaciones mecánicas','Inspección de sistemas eléctricos','Inspección de sistemas contra incendios','Inspección de sistemas HVAC','Verificación de normas de seguridad','Registro fotográfico detallado','Análisis de resultados y diagnóstico','Elaboración de informe técnico','Plan de mantenimiento recomendado']],
+['Cronograma de Monitoreo de Redes y Sensores','monitoreo_redes',['Diseño de red de monitoreo','Instalación de sensores y equipos','Configuración de plataforma IoT','Calibración de instrumentos','Pruebas de transmisión de datos','Validación de datos recibidos','Análisis de series temporales','Elaboración de tableros de control','Generación de alertas automáticas','Elaboración de informes periódicos','Mantenimiento de equipos de campo','Evaluación de funcionamiento del sistema']],
+['Cronograma de Capacitación Técnica SIG','capacitacion_sig',['Diagnóstico de necesidades de formación','Diseño curricular del programa','Elaboración de material didáctico','Configuración de equipos y software','Módulo 1: Fundamentos SIG','Módulo 2: Software ArcGIS / QGIS','Módulo 3: Datos espaciales y geodatabase','Módulo 4: Análisis espacial','Módulo 5: Cartografía digital','Módulo 6: SIG web y aplicaciones móviles','Evaluaciones y certificación','Entrega de memorias y recursos digitales']]
+];
+
+function gcDL(idx){
+  if(typeof XLSX==='undefined'){alert('Cargando librería, intente de nuevo...');return;}
+  var t=GCT[idx];
+  var hdr=['N°','ACTIVIDAD','RESPONSABLE','FECHA INICIO','FECHA FIN',
+    'S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12',
+    'AVANCE %','ESTADO','OBSERVACIONES'];
+  var rows=[
+    ['GREEN CORE ANALYTICS SAS – NIT 901.937.088 – Arauca, Colombia'],
+    [t[0]],
+    ['Fecha de elaboración: '+new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'})],
+    [],
+    hdr
+  ];
+  t[2].forEach(function(act,i){
+    rows.push([i+1,act,'','','','','','','','','','','','','','','','0%','Pendiente','']);
   });
+  rows.push([]);
+  rows.push(['','CONVENCIONES:','','','','X = Ejecutado','','P = Programado','','','','','','','','','','','','']);
+  var ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:4},{wch:42},{wch:18},{wch:13},{wch:13},
+    {wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},{wch:4},
+    {wch:10},{wch:12},{wch:22}];
+  ws['!merges']=[
+    {s:{r:0,c:0},e:{r:0,c:19}},
+    {s:{r:1,c:0},e:{r:1,c:19}},
+    {s:{r:2,c:0},e:{r:2,c:19}}
+  ];
+  var wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Cronograma');
+  XLSX.writeFile(wb,'GreenCore_'+t[1]+'.xlsx');
+}
+
+var open=false;
+window.gcTP=function(){
+  open=!open;
+  document.getElementById('gc-tp').classList.toggle('open',open);
+};
+document.addEventListener('click',function(e){
+  if(open&&!e.target.closest('#gc-fw')&&!e.target.closest('#gc-tp')){
+    open=false;document.getElementById('gc-tp').classList.remove('open');
+  }
+});
+window.GCT=GCT;
 })();
 </script>
 <!-- /GC Floating Templates Widget -->

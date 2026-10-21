@@ -2601,7 +2601,7 @@ fc.fill=hFill(th.bg);fc.font={name:'Calibri',size:8,italic:true,color:{argb:'FFA
 const buf=await wb.xlsx.writeBuffer();
 const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 const url2=URL.createObjectURL(blob);
-const a=document.createElement('a');a.href=url2;a.download=fname+'_GreenCore.xlsx';a.click();
+const a=document.createElement('a');a.href=url2;a.download=fname+'_GreenCore.xlsx';document.body.appendChild(a);a.click();document.body.removeChild(a);
 setTimeout(()=>URL.revokeObjectURL(url2),8000);
 };
 window.gcDL=gcDL;

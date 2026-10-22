@@ -2579,7 +2579,7 @@ const lastWI=cc.hd.lastIndexOf(lastWH);
 if(firstWI>=0){
   const wSL=String.fromCharCode(64+firstWI+1);
   const wEL=String.fromCharCode(64+lastWI+1);
-  ws.mergeCells(wSL+'11:'+wEL+'23');ws.getRow(23).height=15;
+  ws.mergeCells(wSL+'23:'+wEL+'23');ws.getRow(23).height=15;
   const cw=ws.getCell(wSL+'23');
   cw.value='CRONOGRAMA SEMANAL / DIAGRAMA GANTT';
   cw.fill=hFill(th.bg);cw.font={name:'Calibri',size:9,bold:true,color:{argb:'FFFFFFFF'}};cw.alignment=ctr;

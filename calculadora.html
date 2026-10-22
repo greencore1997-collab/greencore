@@ -739,3 +739,77 @@ to{transform:translateY(-7px) scale(1.09)}}
   window.gcDownloadKML=gcDownloadKML;
 })();
 </script>
+
+<!-- GC Letreros Rotativos Widget -->
+<style>
+#gc-lb{position:fixed;bottom:24px;left:24px;z-index:9990;display:flex;align-items:flex-end;gap:12px;pointer-events:none;}
+#gc-bubble{max-width:340px;background:rgba(3,13,30,.96);border:1px solid rgba(21,101,255,.5);border-radius:16px 16px 16px 4px;padding:14px 16px 14px 16px;box-shadow:0 0 24px rgba(21,101,255,.3),0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(10px);pointer-events:auto;position:relative;opacity:0;transform:translateY(12px) scale(.96);transition:opacity .5s,transform .5s;}
+#gc-bubble.show{opacity:1;transform:translateY(0) scale(1);}
+#gc-bubble::after{content:'';position:absolute;bottom:-10px;left:18px;border:6px solid transparent;border-top-color:rgba(21,101,255,.5);}
+#gc-bmsg{font-family:'Segoe UI',sans-serif;font-size:12.5px;line-height:1.55;color:#c8d8f0;margin:0;}
+#gc-bcount{font-size:10px;color:rgba(0,207,255,.5);margin-top:6px;text-align:right;}
+#gc-logo3d{width:52px;height:52px;position:relative;flex-shrink:0;pointer-events:auto;cursor:pointer;animation:gcLb 3s ease-in-out infinite;}
+@keyframes gcLb{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-6px) rotate(2deg);}}
+#gc-logo3d svg{width:100%;height:100%;filter:drop-shadow(0 0 6px #1565FF) drop-shadow(0 0 12px #00FF88);animation:gcPulse 2s ease-in-out infinite alternate;}
+@keyframes gcPulse{from{filter:drop-shadow(0 0 4px #1565FF) drop-shadow(0 0 8px #00FF88);}to{filter:drop-shadow(0 0 10px #00CFFF) drop-shadow(0 0 20px #00FF88);}}
+</style>
+<div id="gc-lb">
+  <div id="gc-logo3d" title="Green Core Analytics" onclick="document.getElementById('gc-bubble').classList.toggle('show')">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="28" fill="url(#gcLgrad)" stroke="#1565FF" stroke-width="1.5"/>
+      <defs><radialGradient id="gcLgrad" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#0d2b6b"/><stop offset="100%" stop-color="#030D1E"/></radialGradient></defs>
+      <text x="50%" y="36%" dominant-baseline="middle" text-anchor="middle" fill="#1565FF" font-size="9" font-family="Calibri,sans-serif" font-weight="bold" letter-spacing="1">GREEN</text>
+      <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="#00CFFF" font-size="9" font-family="Calibri,sans-serif" font-weight="bold" letter-spacing="1">CORE</text>
+      <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" fill="#00FF88" font-size="7" font-family="Calibri,sans-serif" letter-spacing=".5">ANALYTICS</text>
+      <circle cx="30" cy="30" r="27" stroke="url(#gcRing)" stroke-width=".6" fill="none"/>
+      <defs><linearGradient id="gcRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565FF"/><stop offset="50%" stop-color="#00CFFF"/><stop offset="100%" stop-color="#00FF88"/></linearGradient></defs>
+    </svg>
+  </div>
+  <div id="gc-bubble">
+    <p id="gc-bmsg"></p>
+    <div id="gc-bcount"></div>
+  </div>
+</div>
+<script>
+(function(){
+var MSGS=[
+"¿Y si pudieras entender tu territorio más allá de lo que muestra un mapa? Analizamos información espacial para descubrir patrones, optimizar recursos y respaldar decisiones estratégicas.",
+"¿Cuántas horas pierde tu equipo en tareas repetitivas? Diseñamos flujos inteligentes que ayudan a reducir trabajo manual, estandarizar procesos y ampliar la capacidad operativa.",
+"No necesitas más archivos: necesitas mejores respuestas. Convertimos tus datos en indicadores, tableros e información accionable para gestionar con mayor claridad.",
+"¿Gestionas redes de servicios públicos? Integramos información geográfica y operativa para ayudarte a localizar activos, caracterizar infraestructura y mejorar el control de tus operaciones.",
+"Un proyecto no debería depender de la intuición. Integramos cronogramas, presupuestos, indicadores y evidencias para mejorar el seguimiento y anticipar desviaciones.",
+"No se trata de usar más tecnología. Se trata de utilizarla mejor. Seleccionamos herramientas según el problema, los riesgos, el costo total y el beneficio esperado.",
+"¿Cuánto conocimiento de tu empresa se pierde cuando termina un proyecto? La gestión estructurada del conocimiento ayuda a conservar procedimientos, decisiones, evidencias y lecciones aprendidas.",
+"Un proyecto exitoso comienza mucho antes de la ejecución. La planeación técnica, financiera y operativa establece las bases para controlar recursos, plazos y resultados.",
+"Tus datos ya existen. La pregunta es qué estás haciendo con ellos. La analítica convierte registros dispersos en indicadores que ayudan a comprender el desempeño de una organización.",
+"¿Gestionas tu negocio con información o solamente con reportes? Los tableros interactivos permiten explorar indicadores, detectar variaciones y evaluar tendencias.",
+"¿Imaginas un asistente que conozca tus procedimientos técnicos? Una base de conocimiento bien organizada puede respaldar asistentes especializados que recuperen información y respondan con fuentes verificables.",
+"El presupuesto no debería ser una sorpresa al final. El control de costos frente al avance físico ayuda a detectar desviaciones y evaluar la exposición financiera.",
+"Del territorio físico al territorio digital. Creamos representaciones geográficas que facilitan la consulta, el análisis y la gestión de información territorial.",
+"¿Necesitas conocer la superficie, las pendientes o la forma de un terreno? Los modelos digitales del terreno y de superficie pueden apoyar análisis topográficos y de ingeniería según su precisión y metodología.",
+"Ver desde arriba es solo el comienzo. El verdadero valor de un levantamiento está en los productos técnicos que permiten medir, comparar y tomar decisiones.",
+"La rentabilidad también se puede analizar desde los datos. Relacionar costos, tiempos, recursos y resultados ayuda a identificar oportunidades de eficiencia.",
+"¿Sabes qué proyecto genera más valor para tu organización? La integración de datos técnicos y financieros permite comparar desempeño, costos y márgenes con criterios homogéneos.",
+"La ingeniería necesita precisión técnica y control de gestión. Integramos variables técnicas, operativas y económicas para apoyar una administración más rigurosa.",
+"Tu proyecto merece un aliado que entienda el problema completo. Combinamos capacidades de ingeniería, información y gestión para abordar desafíos desde diferentes perspectivas.",
+"Tu próximo proyecto puede ser el comienzo de algo extraordinario."
+];
+var idx=0;
+var bubble=document.getElementById('gc-bubble');
+var msg=document.getElementById('gc-bmsg');
+var cnt=document.getElementById('gc-bcount');
+function show(){
+  msg.textContent=MSGS[idx];
+  cnt.textContent=(idx+1)+' / '+MSGS.length;
+  bubble.classList.add('show');
+  setTimeout(function(){
+    bubble.classList.remove('show');
+    setTimeout(function(){
+      idx=(idx+1)%MSGS.length;
+      show();
+    },3000);
+  },5000);
+}
+setTimeout(show,2000);
+})();
+</script>

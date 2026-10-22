@@ -2408,6 +2408,7 @@ function sendForm(e) {
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
 (function(){
 var GCT=[
@@ -2600,8 +2601,7 @@ fc.value='GREEN CORE ANALYTICS SAS  - Geointeligencia & Datos Espaciales  - NIT 
 fc.fill=hFill(th.bg);fc.font={name:'Calibri',size:8,italic:true,color:{argb:'FFAACCFF'}};fc.alignment=ctr;
 const buf=await wb.xlsx.writeBuffer();
 const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-const url2=URL.createObjectURL(blob);
-const a=document.createElement('a');a.href=url2;a.download=fname+'_GreenCore.xlsx';document.body.appendChild(a);document.body.appendChild(a);a.click();document.body.removeChild(a);document.body.removeChild(a);
+saveAs(blob,fname+'_GreenCore.xlsx');
 setTimeout(()=>URL.revokeObjectURL(url2),8000);
 };
 window.gcDL=gcDL;

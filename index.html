@@ -2584,7 +2584,7 @@ if(firstWI>=0){
   cw.value='CRONOGRAMA SEMANAL / DIAGRAMA GANTT';
   cw.fill=hFill(th.bg);cw.font={name:'Calibri',size:9,bold:true,color:{argb:'FFFFFFFF'}};cw.alignment=ctr;
 }
-[12,13,14].forEach(r=>{ws.getRow(r).height=5;ws.mergeCells('A'+r+':'+lastL+r);ws.getCell('A'+r).fill=hFill('FF030710');});
+[24,25,26].forEach(r=>{ws.getRow(r).height=5;ws.mergeCells('A'+r+':'+lastL+r);ws.getCell('A'+r).fill=hFill('FF030710');});
 ws.getRow(27).height=22;
 cc.hd.forEach((h,i)=>{
   const c=ws.getCell(15,i+1);

@@ -756,14 +756,39 @@ to{transform:translateY(-7px) scale(1.09)}}
 <div id="gc-lb">
   <div id="gc-logo3d" title="Green Core Analytics" onclick="document.getElementById('gc-bubble').classList.toggle('show')">
     <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="30" r="28" fill="url(#gcLgrad)" stroke="#1565FF" stroke-width="1.5"/>
-      <defs><radialGradient id="gcLgrad" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#0d2b6b"/><stop offset="100%" stop-color="#030D1E"/></radialGradient></defs>
-      <text x="50%" y="36%" dominant-baseline="middle" text-anchor="middle" fill="#1565FF" font-size="9" font-family="Calibri,sans-serif" font-weight="bold" letter-spacing="1">GREEN</text>
-      <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="#00CFFF" font-size="9" font-family="Calibri,sans-serif" font-weight="bold" letter-spacing="1">CORE</text>
-      <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" fill="#00FF88" font-size="7" font-family="Calibri,sans-serif" letter-spacing=".5">ANALYTICS</text>
-      <circle cx="30" cy="30" r="27" stroke="url(#gcRing)" stroke-width=".6" fill="none"/>
-      <defs><linearGradient id="gcRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565FF"/><stop offset="50%" stop-color="#00CFFF"/><stop offset="100%" stop-color="#00FF88"/></linearGradient></defs>
-    </svg>
+  <defs>
+    <radialGradient id="gcBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0a1a0f"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+    <filter id="gcGlow">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Fondo circular -->
+  <circle cx="30" cy="30" r="29" fill="url(#gcBg)" stroke="#1565FF" stroke-width="1"/>
+  <!-- Espiral GreenCore: arcos concéntricos que forman la hélice -->
+  <g filter="url(#gcGlow)" transform="translate(30,30)">
+    <!-- Brazo exterior cian -->
+    <path d="M0,-18 A18,18 0 1,1 -18,0" stroke="#00CFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- Brazo medio verde -->
+    <path d="M0,-13 A13,13 0 1,1 -13,0" stroke="#00FF88" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- Brazo interior azul -->
+    <path d="M0,-8 A8,8 0 1,1 -8,0" stroke="#1565FF" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <!-- Núcleo -->
+    <circle cx="0" cy="0" r="2.5" fill="#00FF88"/>
+    <!-- Puntas de espiral -->
+    <circle cx="0" cy="-18" r="1.5" fill="#00CFFF"/>
+    <circle cx="-18" cy="0" r="1.5" fill="#00CFFF"/>
+    <circle cx="0" cy="-13" r="1.2" fill="#00FF88"/>
+    <circle cx="-13" cy="0" r="1.2" fill="#00FF88"/>
+    <circle cx="0" cy="-8" r="1" fill="#1565FF"/>
+    <circle cx="-8" cy="0" r="1" fill="#1565FF"/>
+  </g>
+  <!-- Texto GC pequeño en la base -->
+  <text x="30" y="54" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="5.5" font-weight="700" fill="#00CFFF" letter-spacing="1">GC</text>
+</svg>
   </div>
   <div id="gc-bubble">
     <p id="gc-bmsg"></p>

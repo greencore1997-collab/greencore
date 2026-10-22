@@ -2489,11 +2489,63 @@ const c3=ws.getCell('A3');
 c3.value='  '+title;
 c3.fill=hFill('FF030D1E');c3.font={name:'Calibri',size:12,bold:true,color:{argb:th.ac}};c3.alignment=ctr;
 ws.getRow(4).height=6;ws.mergeCells('A4:'+lastL+'4');ws.getCell('A4').fill=hFill('FF0A0F1C');
-ws.mergeCells('A5:'+lastL+'5');ws.getRow(5).height=17;
-const c5=ws.getCell('A5');
+
+// ===== INFORMACIÓN DEL PROYECTO (filas 5-16) =====
+ws.mergeCells('A5:'+lastL+'5');ws.getRow(5).height=18;
+const pi5=ws.getCell('A5');
+pi5.value='\u{1F5C2}  INFORMACI\u00D3N DEL PROYECTO  \u2014  Complete los campos antes de usar el cronograma';
+pi5.fill=hFill(th.bg);pi5.font={name:'Calibri',size:10,bold:true,color:{argb:th.ac}};pi5.alignment=ctr;
+// Row 6: separator
+ws.getRow(6).height=4;ws.mergeCells('A6:'+lastL+'6');ws.getCell('A6').fill=hFill(th.lt);
+// Helper: label + value cell pair  
+const hL=th.lt;const hV='FF0D1420';
+const piLbl=(addr,txt)=>{const c=ws.getCell(addr);c.value=txt;c.fill=hFill(hL);c.font={name:'Calibri',size:8,bold:true,color:{argb:'FFAABBCC'}};c.alignment={horizontal:'right',vertical:'middle',wrapText:false};c.border={right:{style:'medium',color:{argb:th.ac}}};};
+const piVal=(addr,hint)=>{const c=ws.getCell(addr);c.value=hint;c.fill=hFill(hV);c.font={name:'Calibri',size:9,italic:true,color:{argb:'FF607090'}};c.alignment={horizontal:'left',vertical:'middle',wrapText:true};c.border={bottom:{style:'thin',color:{argb:'22'+th.ac.slice(2)}},right:{style:'thin',color:{argb:'11'+th.ac.slice(2)}}};};
+// Col splits: A-B label, C-L value | M-N label, O-lastL value
+const [labL1,valL1,labL2,valL2]=['A','C','M','O'];
+// Row 7: Nombre del Proyecto (full width, tall)
+ws.getRow(7).height=24;ws.mergeCells('A7:B7');ws.mergeCells('C7:'+lastL+'7');
+piLbl('A7','NOMBRE DEL PROYECTO');piVal('C7','\u2190 Escriba aqu\u00ED el nombre completo del proyecto tal como aparece en el contrato');
+// Row 8: Empresa Contratante | No. de Contrato
+ws.getRow(8).height=18;ws.mergeCells('A8:B8');ws.mergeCells('C8:L8');ws.mergeCells('M8:N8');ws.mergeCells('O8:'+lastL+'8');
+piLbl('A8','EMPRESA CONTRATANTE');piVal('C8','\u2190 Raz\u00F3n social de la empresa u entidad que financia');
+piLbl('M8','N\u00BA DE CONTRATO');piVal('O8','\u2190 Ej: C-045-2025');
+// Row 9: NIT | Valor del Contrato
+ws.getRow(9).height=18;ws.mergeCells('A9:B9');ws.mergeCells('C9:L9');ws.mergeCells('M9:N9');ws.mergeCells('O9:'+lastL+'9');
+piLbl('A9','NIT EMPRESA');piVal('C9','\u2190 Sin d\u00EDgito de verificaci\u00F3n. Ej: 900.123.456');
+piLbl('M9','VALOR DEL CONTRATO');piVal('O9','\u2190 En pesos COP. Ej: $2.500.000.000');
+// Row 10: Fecha Inicio | Fecha Terminación
+ws.getRow(10).height=18;ws.mergeCells('A10:B10');ws.mergeCells('C10:L10');ws.mergeCells('M10:N10');ws.mergeCells('O10:'+lastL+'10');
+piLbl('A10','FECHA DE INICIO');piVal('C10','\u2190 DD/MM/AAAA');
+piLbl('M10','FECHA DE TERMINACI\u00D3N');piVal('O10','\u2190 DD/MM/AAAA (seg\u00FAn acta de inicio o contrato)');
+// Row 11: Municipio | Departamento
+ws.getRow(11).height=18;ws.mergeCells('A11:B11');ws.mergeCells('C11:L11');ws.mergeCells('M11:N11');ws.mergeCells('O11:'+lastL+'11');
+piLbl('A11','MUNICIPIO / VEREDA');piVal('C11','\u2190 Localidad donde se ejecuta el proyecto');
+piLbl('M11','DEPARTAMENTO');piVal('O11','\u2190 Ej: Arauca');
+// Row 12: Director del Proyecto | Supervisor
+ws.getRow(12).height=18;ws.mergeCells('A12:B12');ws.mergeCells('C12:L12');ws.mergeCells('M12:N12');ws.mergeCells('O12:'+lastL+'12');
+piLbl('A12','DIRECTOR DEL PROYECTO');piVal('C12','\u2190 Nombre y cargo del responsable interno');
+piLbl('M12','SUPERVISOR / INTERVENTOR');piVal('O12','\u2190 Nombre del supervisor designado por el contratante');
+// Row 13: Tel | Correo
+ws.getRow(13).height=18;ws.mergeCells('A13:B13');ws.mergeCells('C13:L13');ws.mergeCells('M13:N13');ws.mergeCells('O13:'+lastL+'13');
+piLbl('A13','TEL\u00C9FONO DE CONTACTO');piVal('C13','\u2190 Incluya indicativo. Ej: +57 310 000 0000');
+piLbl('M13','CORREO ELECTR\u00D3NICO');piVal('O13','\u2190 Correo oficial del proyecto');
+// Row 14: Fuente financiación | Tipo contrato
+ws.getRow(14).height=18;ws.mergeCells('A14:B14');ws.mergeCells('C14:L14');ws.mergeCells('M14:N14');ws.mergeCells('O14:'+lastL+'14');
+piLbl('A14','FUENTE DE FINANCIACI\u00D3N');piVal('C14','\u2190 Ej: SGR, PGN, Recursos propios, Cr\u00E9dito externo');
+piLbl('M14','TIPO DE CONTRATO');piVal('O14','\u2190 Obra, Consultor\u00EDa, Prestaci\u00F3n de Servicios, Concesi\u00F3n');
+// Row 15: Objeto del Contrato (full width, tall)
+ws.getRow(15).height=32;ws.mergeCells('A15:B15');ws.mergeCells('C15:'+lastL+'15');
+piLbl('A15','OBJETO DEL CONTRATO');
+const pi15v=ws.getCell('C15');pi15v.value='\u2190 Copie textualmente el objeto del contrato como aparece en el documento oficial. Este campo es de referencia.';
+pi15v.fill=hFill(hV);pi15v.font={name:'Calibri',size:9,italic:true,color:{argb:'FF607090'}};pi15v.alignment={horizontal:'left',vertical:'top',wrapText:true};pi15v.border={bottom:{style:'thin',color:{argb:'22'+th.ac.slice(2)}}};
+// Row 16: separator before KPI
+ws.getRow(16).height=5;ws.mergeCells('A16:'+lastL+'16');ws.getCell('A16').fill=hFill(th.ac.length>6?th.ac:'FF1565FF');
+ws.mergeCells('A17:'+lastL+'17');ws.getRow(17).height=17;
+const c5=ws.getCell('A17');
 c5.value='  PANEL DE INDICADORES - '+cc.ki.length+' METRICAS ACTIVAS';
 c5.fill=hFill(th.lt);c5.font={name:'Calibri',size:10,bold:true,color:{argb:th.ac}};c5.alignment=lft;
-ws.getRow(6).height=30;ws.getRow(7).height=30;ws.getRow(8).height=13;ws.getRow(9).height=13;
+ws.getRow(18).height=30;ws.getRow(19).height=30;ws.getRow(20).height=13;ws.getRow(21).height=13;
 const half=Math.ceil(cc.ki.length/2);
 for(let k=0;k<cc.ki.length;k++){
   const isBot=k>=half;
@@ -2508,7 +2560,7 @@ for(let k=0;k<cc.ki.length;k++){
   ws.mergeCells(sL+row+':'+eL+row);
   ws.mergeCells(sL+labelRow+':'+eL+labelRow);
   const kc=ws.getCell(sL+row);
-  const formula=cc.ki[k][1].replace(/{r}/g,'16').replace(/{e}/g,'65');
+  const formula=cc.ki[k][1].replace(/{r}/g,'28').replace(/{e}/g,'77');
   kc.value={formula:formula};
   kc.fill=hFill(th.lt);
   kc.font={name:'Calibri',size:14,bold:true,color:{argb:th.ac}};
@@ -2520,20 +2572,20 @@ for(let k=0;k<cc.ki.length;k++){
   lc.font={name:'Calibri',size:8,color:{argb:'FFAAAAAA'}};
   lc.alignment=ctr;
 }
-ws.getRow(10).height=6;ws.mergeCells('A10:'+lastL+'10');ws.getCell('A10').fill=hFill('FF0A0F1C');
+ws.getRow(22).height=6;ws.mergeCells('A22:'+lastL+'22');ws.getCell('A22').fill=hFill('FF0A0F1C');
 const firstWI=cc.hd.findIndex(h=>h==='S1');
 const lastWH=cc.hd.filter(h=>/^Sd+$/.test(h)).pop();
 const lastWI=cc.hd.lastIndexOf(lastWH);
 if(firstWI>=0){
   const wSL=String.fromCharCode(64+firstWI+1);
   const wEL=String.fromCharCode(64+lastWI+1);
-  ws.mergeCells(wSL+'11:'+wEL+'11');ws.getRow(11).height=15;
-  const cw=ws.getCell(wSL+'11');
+  ws.mergeCells(wSL+'11:'+wEL+'23');ws.getRow(23).height=15;
+  const cw=ws.getCell(wSL+'23');
   cw.value='CRONOGRAMA SEMANAL / DIAGRAMA GANTT';
   cw.fill=hFill(th.bg);cw.font={name:'Calibri',size:9,bold:true,color:{argb:'FFFFFFFF'}};cw.alignment=ctr;
 }
 [12,13,14].forEach(r=>{ws.getRow(r).height=5;ws.mergeCells('A'+r+':'+lastL+r);ws.getCell('A'+r).fill=hFill('FF030710');});
-ws.getRow(15).height=22;
+ws.getRow(27).height=22;
 cc.hd.forEach((h,i)=>{
   const c=ws.getCell(15,i+1);
   c.value=h;c.fill=hFill(th.bg);
@@ -2563,7 +2615,7 @@ const peL=peIdx>0?String.fromCharCode(64+peIdx):'';
 const prL=prIdx>0?String.fromCharCode(64+prIdx):'';
 const crL=crIdx>0?String.fromCharCode(64+crIdx):'';
 for(let r=0;r<50;r++){
-  const rn=16+r;ws.getRow(rn).height=r<acts.length?18:16;
+  const rn=28+r;ws.getRow(rn).height=r<acts.length?18:16;
   const isAlt=r%2===1;
   const rbg=isAlt?'FF0D1428':'FF060B18';
   cc.hd.forEach((_,ci)=>{

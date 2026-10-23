@@ -186,6 +186,57 @@ footer a{color:var(--blue);text-decoration:none}
         <p class="rb-note" id="area-note"></p>
       </div>
     </div>
+    
+<!-- GC Letreros Inline — Área Tab -->
+<div id="gc-area-letreros" style="margin:1.2rem 0 0.5rem;display:flex;align-items:center;gap:14px;background:rgba(3,13,30,.92);border:1px solid rgba(21,101,255,.45);border-radius:14px;padding:14px 18px;position:relative;overflow:hidden;min-height:72px;">
+  <div id="gc-al-logo" style="flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(21,101,255,.7);display:flex;align-items:center;justify-content:center;background:rgba(10,20,50,.9);box-shadow:0 0 12px rgba(21,101,255,.35);">
+    <svg viewBox="0 0 100 100" width="30" height="30" style="display:block;">
+      <path d="M50 10 C50 10,90 10,90 50 C90 90,50 90,50 90 C50 90,15 90,15 55 C15 20,50 22,50 42 C50 62,25 65,25 50 C25 35,50 34,50 50" fill="none" stroke="url(#sp)" stroke-width="6" stroke-linecap="round"/>
+      <defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565FF"/><stop offset="100%" stop-color="#00CFFF"/></linearGradient></defs>
+    </svg>
+  </div>
+  <div style="flex:1;overflow:hidden;position:relative;">
+    <div id="gc-al-tag" style="font-size:.6rem;font-weight:700;letter-spacing:.12em;color:rgba(21,101,255,.9);text-transform:uppercase;margin-bottom:3px;">GreenCore Analytics</div>
+    <div id="gc-al-msg" style="font-size:.78rem;color:rgba(200,220,255,.92);line-height:1.45;transition:opacity .5s,transform .5s;"></div>
+  </div>
+  <div id="gc-al-dot" style="position:absolute;bottom:8px;right:14px;display:flex;gap:5px;"></div>
+</div>
+<style>
+#gc-area-letreros::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(21,101,255,.06),transparent 60%);pointer-events:none;}
+</style>
+<script>
+(function(){
+  const msgs=[
+    {t:"Cartograf\u00eda predial",m:"GreenCore ha delimitado m\u00e1s de 1.200 predios rurales en el Llano con precisi\u00f3n centim\u00e9trica \u2014 cada metro cuadrado, perfectamente documentado."},
+    {t:"Equivalencias catastrales",m:"\u00bfSabes cu\u00e1ntas fanegadas tiene tu predio? Esta herramienta convierte fanegadas, varas y cuadras llaneras a las unidades del catastro nacional."},
+    {t:"Zonificaci\u00f3n de \u00e1reas",m:"Acompa\u00f1amos proyectos de ordenamiento territorial, zonificando \u00e1reas de influencia ambiental y per\u00edmetros urbanos con GIS de alta precisi\u00f3n."},
+    {t:"Informes de \u00e1rea",m:"Generamos informes t\u00e9cnicos de \u00e1rea con c\u00e1lculos de pol\u00edgonos en proyecci\u00f3n MAGNA-SIRGAS, v\u00e1lidos ante Catastro, IGAC y notar\u00edas."},
+    {t:"GIS aplicado al campo",m:"Desde an\u00e1lisis de aptitud de suelos hasta delimitaci\u00f3n de ecosistemas: convertimos datos espaciales en decisiones estrat\u00e9gicas."},
+    {t:"Medici\u00f3n de predios",m:"Nuestros levantamientos topogr\u00e1ficos determinan con exactitud la extensi\u00f3n, forma y coordenadas de cada predio \u2014 de ha a m\u00b2 y viceversa."},
+    {t:"Planimet\u00eda urbana",m:"Creamos planos urban\u00edsticos a escala con \u00e1reas de lotes, v\u00edas, equipamientos y espacio p\u00fablico \u2014 listos para expedientes de POT y licencias."},
+  ];
+  let idx=0;
+  const msgEl=document.getElementById('gc-al-msg');
+  const dotEl=document.getElementById('gc-al-dot');
+  if(!msgEl||!dotEl) return;
+  msgs.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,'+(i===0?'.9':'.3')+');transition:background .4s';
+    dotEl.appendChild(d);
+  });
+  function show(i){
+    msgEl.style.opacity='0';msgEl.style.transform='translateY(6px)';
+    setTimeout(()=>{
+      msgEl.innerHTML='<strong style="color:rgba(21,101,255,.95);font-size:.7rem;display:block;margin-bottom:2px;">'+msgs[i].t+'<\/strong>'+msgs[i].m;
+      msgEl.style.opacity='1';msgEl.style.transform='translateY(0)';
+      [...dotEl.children].forEach((d,j)=>d.style.background=j===i?'rgba(21,101,255,.9)':'rgba(21,101,255,.3)');
+    },420);
+  }
+  show(0);
+  setInterval(()=>{ idx=(idx+1)%msgs.length; show(idx); },4800);
+})();
+</script>
+
     <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
   </div>
   <div class="tab-panel" id="tab-coord">

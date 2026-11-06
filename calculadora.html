@@ -308,7 +308,48 @@ footer a{color:var(--blue);text-decoration:none}
   <div class="coord-right-col">
     <div id="mini-map"></div>
     
-
+<div id="gc-coord-letreros" style="display:flex;align-items:center;gap:14px;background:rgba(3,13,30,.92);border:1px solid rgba(21,101,255,.45);border-radius:14px;padding:14px 18px;margin:18px 0;box-shadow:0 0 24px rgba(21,101,255,.12);">
+  <div id="gc-cl-logo" style="flex-shrink:0;"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><filter id="gcNg" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <radialGradient id="gcBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0a1a0f"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+    <filter id="gcGlow">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Fondo circular -->
+  <circle cx="30" cy="30" r="29" fill="url(#gcBg)" stroke="#1565FF" stroke-width="1"/>
+  <!-- Espiral GreenCore: arcos concéntricos que forman la hélice -->
+  <g filter="url(#gcGlow)" transform="translate(30,30)">
+    <!-- Brazo exterior cian -->
+    <path d="M0,-18 A18,18 0 1,1 -18,0" stroke="#00CFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- Brazo medio verde -->
+    <path d="M0,-13 A13,13 0 1,1 -13,0" stroke="#00FF88" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- Brazo interior azul -->
+    <path d="M0,-8 A8,8 0 1,1 -8,0" stroke="#1565FF" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <!-- Núcleo -->
+    <circle cx="0" cy="0" r="2.5" fill="#00FF88"/>
+    <!-- Puntas de espiral -->
+    <circle cx="0" cy="-18" r="1.5" fill="#00CFFF"/>
+    <circle cx="-18" cy="0" r="1.5" fill="#00CFFF"/>
+    <circle cx="0" cy="-13" r="1.2" fill="#00FF88"/>
+    <circle cx="-13" cy="0" r="1.2" fill="#00FF88"/>
+    <circle cx="0" cy="-8" r="1" fill="#1565FF"/>
+    <circle cx="-8" cy="0" r="1" fill="#1565FF"/>
+  </g>
+  <!-- Texto GC pequeño en la base -->
+  <text x="30" y="54" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="5.5" font-weight="700" fill="#00CFFF" letter-spacing="1">GC</text>
+</svg></div>
+  <div style="flex:1;min-width:0;">
+    <div id="gc-cl-tag" style="font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(21,101,255,.9);text-transform:uppercase;opacity:1;margin-bottom:4px;">GreenCore Analytics</div>
+    <div id="gc-cl-msg" style="font-size:13px;color:rgba(200,220,255,.92);line-height:1.4;min-height:38px;transition:opacity .4s,transform .4s;"></div>
+  </div>
+  <div id="gc-cl-dot" style="display:flex;flex-direction:column;gap:4px;"></div>
+</div>
+<script>(function(){const ms=[{"t":"Cartografía y planos temáticos","m":"Mapas y planos a escala para licencias, POT y expedientes técnicos."},{"t":"Levantamientos topográficos","m":"Captura de coordenadas y altimetría para diseño e ingeniería."},{"t":"Fotogrametría con drones","m":"Vuelos UAV y modelos 3D de alta precisión del terreno."},{"t":"Catastro y saneamiento predial","m":"Actualización catastral, deslinde y legalización de predios."},{"t":"Estudios ambientales con GIS","m":"Modelado de coberturas, cuencas y zonas de riesgo ambiental."},{"t":"Ordenamiento territorial","m":"POT, EOT, PBOT: soporte técnico geoespacial completo."},{"t":"Análisis de imágenes satelitales","m":"Clasificación multiespectral y detección de cambios del suelo."},{"t":"Interventoría y control de obra","m":"Seguimiento georreferenciado de proyectos de infraestructura."},{"t":"Bases de datos geográficas","m":"Diseño e implementación de geodatabases corporativas."},{"t":"Tableros e indicadores","m":"Dashboards interactivos con datos territoriales y geoespaciales."}];const mg=document.getElementById('gc-cl-msg');const dt=document.getElementById('gc-cl-dot');if(!mg||!dt)return;dt.innerHTML=ms.map((_,i)=>'<span id="gcld'+i+'" style="width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,'+(i===0?'.9':'.3')+');display:block;transition:background .4s"></span>').join('');let cur=0;function sh(i){mg.style.opacity='0';mg.style.transform='translateY(6px)';setTimeout(()=>{mg.innerHTML='<strong style="color:rgba(21,101,255,.95);margin-right:6px;">'+ms[i].t+'</strong>'+ms[i].m;mg.style.opacity='1';mg.style.transform='translateY(0)';},350);ms.forEach((_,j)=>{const d=document.getElementById('gcld'+j);if(d)d.style.background='rgba(21,101,255,'+(j===i?'.9':'.3')+')';});}sh(0);setInterval(()=>{cur=(cur+1)%ms.length;sh(cur);},4800);})();</script>
     <button id="kml-dl-btn" onclick="gcDownloadKML()">⬇ Descargar KML</button>
   </div>
 </div>

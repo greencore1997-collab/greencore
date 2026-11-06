@@ -188,9 +188,9 @@ footer a{color:var(--blue);text-decoration:none}
     </div>
     
 <!-- GC Letreros Inline — Área Tab -->
-<div id="gc-area-letreros" style="margin:1.2rem 0 0.5rem;display:flex;align-items:center;gap:14px;background:rgba(3,13,30,.92);border:1px solid rgba(21,101,255,.45);border-radius:14px;padding:14px 18px;position:relative;overflow:hidden;min-height:72px;">
-  <div id="gc-al-logo" style="flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(21,101,255,.7);display:flex;align-items:center;justify-content:center;background:rgba(10,20,50,.9);box-shadow:0 0 12px rgba(21,101,255,.35);">
-    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<div id="gc-area-letreros" style="display:flex;align-items:center;gap:14px;background:rgba(3,13,30,.92);border:1px solid rgba(21,101,255,.45);border-radius:14px;padding:14px 18px;margin:18px 0;box-shadow:0 0 24px rgba(21,101,255,.12);">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;">
+    <div id="gc-al-logo"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs><filter id="gcNg" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <radialGradient id="gcBg" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#0a1a0f"/>
@@ -223,52 +223,15 @@ footer a{color:var(--blue);text-decoration:none}
   </g>
   <!-- Texto GC pequeño en la base -->
   <text x="30" y="54" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="5.5" font-weight="700" fill="#00CFFF" letter-spacing="1">GC</text>
-</svg>
+</svg></div>
+    <div id="gc-al-dot" style="display:flex;flex-direction:row;gap:4px;"></div>
   </div>
-  <div style="flex:1;overflow:hidden;position:relative;">
-    <div id="gc-al-tag" style="font-size:.6rem;font-weight:700;letter-spacing:.12em;color:rgba(21,101,255,.9);text-transform:uppercase;margin-bottom:3px;">GreenCore Analytics</div>
-    <div id="gc-al-msg" style="font-size:.78rem;color:rgba(200,220,255,.92);line-height:1.45;transition:opacity .5s,transform .5s;"></div>
+  <div style="flex:1;min-width:0;">
+    <div id="gc-al-tag" style="font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(21,101,255,.9);text-transform:uppercase;margin-bottom:4px;">GreenCore Analytics</div>
+    <div id="gc-al-msg" style="font-size:13px;color:rgba(200,220,255,.92);line-height:1.4;min-height:38px;transition:opacity .4s,transform .4s;"></div>
   </div>
-  <div id="gc-al-dot" style="position:absolute;bottom:8px;right:14px;display:flex;gap:5px;"></div>
 </div>
-<style>
-#gc-area-letreros::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(21,101,255,.06),transparent 60%);pointer-events:none;}
-</style>
-<script>
-(function(){
-  const msgs=[
-    {t:"Cartografía y planos temáticos",m:"Diseñamos mapas y planos a escala listos para impresión, licencias, POT y expedientes técnicos."},
-    {t:"Levantamientos topográficos",m:"Medimos predios, vías y obras con GPS RTK y estación total, con precisión centimétrica."},
-    {t:"Fotogrametría con drones",m:"Capturamos ortofotos, modelos 3D y curvas de nivel para seguimiento de obra y planeación."},
-    {t:"Catastro y saneamiento predial",m:"Delimitamos linderos, calculamos áreas y preparamos soportes válidos ante IGAC, notarías y catastro."},
-    {t:"Estudios ambientales con GIS",m:"Analizamos coberturas, rondas hídricas y áreas protegidas para licencias y planes de manejo."},
-    {t:"Ordenamiento territorial",m:"Apoyamos POT, EOT y planes parciales con zonificación, usos del suelo y análisis de amenazas."},
-    {t:"Análisis de imágenes satelitales",m:"Detectamos cambios de cobertura, deforestación y crecimiento urbano a partir de imágenes multitemporales."},
-    {t:"Interventoría y control de obra",m:"Seguimos avances físicos con evidencias georreferenciadas, cronogramas e indicadores de cumplimiento."},
-    {t:"Bases de datos geográficas",m:"Estructuramos geodatabases y visores web para que su información espacial sea consultable y segura."},
-    {t:"Tableros e indicadores",m:"Convertimos datos de campo en dashboards claros para decidir rápido y reportar a la entidad o al cliente."}
-  ];
-  let idx=0;
-  const msgEl=document.getElementById('gc-al-msg');
-  const dotEl=document.getElementById('gc-al-dot');
-  if(!msgEl||!dotEl) return;
-  msgs.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.style.cssText='width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,'+(i===0?'.9':'.3')+');transition:background .4s';
-    dotEl.appendChild(d);
-  });
-  function show(i){
-    msgEl.style.opacity='0';msgEl.style.transform='translateY(6px)';
-    setTimeout(()=>{
-      msgEl.innerHTML='<strong style="color:rgba(21,101,255,.95);font-size:.7rem;display:block;margin-bottom:2px;">'+msgs[i].t+'<\/strong>'+msgs[i].m;
-      msgEl.style.opacity='1';msgEl.style.transform='translateY(0)';
-      [...dotEl.children].forEach((d,j)=>d.style.background=j===i?'rgba(21,101,255,.9)':'rgba(21,101,255,.3)');
-    },420);
-  }
-  show(0);
-  setInterval(()=>{ idx=(idx+1)%msgs.length; show(idx); },4800);
-})();
-</script>
+<script>(function(){const ms=[{"t":"Cartografía y planos temáticos","m":"Mapas y planos a escala para licencias, POT y expedientes técnicos."},{"t":"Levantamientos topográficos","m":"Captura de coordenadas y altimetría para diseño e ingeniería."},{"t":"Fotogrametría con drones","m":"Vuelos UAV y modelos 3D de alta precisión del terreno."},{"t":"Catastro y saneamiento predial","m":"Actualización catastral, deslinde y legalización de predios."},{"t":"Estudios ambientales con GIS","m":"Modelado de coberturas, cuencas y zonas de riesgo ambiental."},{"t":"Ordenamiento territorial","m":"POT, EOT, PBOT: soporte técnico geoespacial completo."},{"t":"Análisis de imágenes satelitales","m":"Clasificación multiespectral y detección de cambios del suelo."},{"t":"Interventoría y control de obra","m":"Seguimiento georreferenciado de proyectos de infraestructura."},{"t":"Bases de datos geográficas","m":"Diseño e implementación de geodatabases corporativas."},{"t":"Tableros e indicadores","m":"Dashboards interactivos con datos territoriales y geoespaciales."}];const mg=document.getElementById('gc-al-msg');const dt=document.getElementById('gc-al-dot');if(!mg||!dt)return;dt.innerHTML=ms.map((_,i)=>'<span id="gcad'+i+'" style="width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,.9);opacity:'+(0===i?'1':'.3')+';display:block;transition:all .4s"></span>').join('');let cur=0;function sh(i){mg.style.opacity='0';mg.style.transform='translateY(6px)';setTimeout(()=>{mg.innerHTML='<strong style="color:rgba(21,101,255,.9);margin-right:6px;">'+ms[i].t+'</strong>'+ms[i].m;mg.style.opacity='1';mg.style.transform='translateY(0)';},350);ms.forEach((_,j)=>{const d=document.getElementById('gcad'+j);if(d){d.style.opacity=j===i?'1':'.3';}});}sh(0);setInterval(()=>{cur=(cur+1)%ms.length;sh(cur);},4800);})();</script>
 
     <div class="cta-row"><a class="btn-cta" href="index.html#contact">Solicitar proyecto cartográfico ➤</a></div>
   </div>
@@ -309,7 +272,8 @@ footer a{color:var(--blue);text-decoration:none}
     <div id="mini-map"></div>
     
 <div id="gc-coord-letreros" style="display:flex;align-items:center;gap:14px;background:rgba(3,13,30,.92);border:1px solid rgba(21,101,255,.45);border-radius:14px;padding:14px 18px;margin:18px 0;box-shadow:0 0 24px rgba(21,101,255,.12);">
-  <div id="gc-cl-logo" style="flex-shrink:0;"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;">
+    <div id="gc-cl-logo"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs><filter id="gcNg" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <radialGradient id="gcBg" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#0a1a0f"/>
@@ -343,13 +307,14 @@ footer a{color:var(--blue);text-decoration:none}
   <!-- Texto GC pequeño en la base -->
   <text x="30" y="54" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="5.5" font-weight="700" fill="#00CFFF" letter-spacing="1">GC</text>
 </svg></div>
+    <div id="gc-cl-dot" style="display:flex;flex-direction:row;gap:4px;"></div>
+  </div>
   <div style="flex:1;min-width:0;">
-    <div id="gc-cl-tag" style="font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(21,101,255,.9);text-transform:uppercase;opacity:1;margin-bottom:4px;">GreenCore Analytics</div>
+    <div id="gc-cl-tag" style="font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(21,101,255,.9);text-transform:uppercase;margin-bottom:4px;">GreenCore Analytics</div>
     <div id="gc-cl-msg" style="font-size:13px;color:rgba(200,220,255,.92);line-height:1.4;min-height:38px;transition:opacity .4s,transform .4s;"></div>
   </div>
-  <div id="gc-cl-dot" style="display:flex;flex-direction:column;gap:4px;"></div>
 </div>
-<script>(function(){const ms=[{"t":"Cartografía y planos temáticos","m":"Mapas y planos a escala para licencias, POT y expedientes técnicos."},{"t":"Levantamientos topográficos","m":"Captura de coordenadas y altimetría para diseño e ingeniería."},{"t":"Fotogrametría con drones","m":"Vuelos UAV y modelos 3D de alta precisión del terreno."},{"t":"Catastro y saneamiento predial","m":"Actualización catastral, deslinde y legalización de predios."},{"t":"Estudios ambientales con GIS","m":"Modelado de coberturas, cuencas y zonas de riesgo ambiental."},{"t":"Ordenamiento territorial","m":"POT, EOT, PBOT: soporte técnico geoespacial completo."},{"t":"Análisis de imágenes satelitales","m":"Clasificación multiespectral y detección de cambios del suelo."},{"t":"Interventoría y control de obra","m":"Seguimiento georreferenciado de proyectos de infraestructura."},{"t":"Bases de datos geográficas","m":"Diseño e implementación de geodatabases corporativas."},{"t":"Tableros e indicadores","m":"Dashboards interactivos con datos territoriales y geoespaciales."}];const mg=document.getElementById('gc-cl-msg');const dt=document.getElementById('gc-cl-dot');if(!mg||!dt)return;dt.innerHTML=ms.map((_,i)=>'<span id="gcld'+i+'" style="width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,'+(i===0?'.9':'.3')+');display:block;transition:background .4s"></span>').join('');let cur=0;function sh(i){mg.style.opacity='0';mg.style.transform='translateY(6px)';setTimeout(()=>{mg.innerHTML='<strong style="color:rgba(21,101,255,.95);margin-right:6px;">'+ms[i].t+'</strong>'+ms[i].m;mg.style.opacity='1';mg.style.transform='translateY(0)';},350);ms.forEach((_,j)=>{const d=document.getElementById('gcld'+j);if(d)d.style.background='rgba(21,101,255,'+(j===i?'.9':'.3')+')';});}sh(0);setInterval(()=>{cur=(cur+1)%ms.length;sh(cur);},4800);})();</script>
+<script>(function(){const ms=[{"t":"Cartografía y planos temáticos","m":"Mapas y planos a escala para licencias, POT y expedientes técnicos."},{"t":"Levantamientos topográficos","m":"Captura de coordenadas y altimetría para diseño e ingeniería."},{"t":"Fotogrametría con drones","m":"Vuelos UAV y modelos 3D de alta precisión del terreno."},{"t":"Catastro y saneamiento predial","m":"Actualización catastral, deslinde y legalización de predios."},{"t":"Estudios ambientales con GIS","m":"Modelado de coberturas, cuencas y zonas de riesgo ambiental."},{"t":"Ordenamiento territorial","m":"POT, EOT, PBOT: soporte técnico geoespacial completo."},{"t":"Análisis de imágenes satelitales","m":"Clasificación multiespectral y detección de cambios del suelo."},{"t":"Interventoría y control de obra","m":"Seguimiento georreferenciado de proyectos de infraestructura."},{"t":"Bases de datos geográficas","m":"Diseño e implementación de geodatabases corporativas."},{"t":"Tableros e indicadores","m":"Dashboards interactivos con datos territoriales y geoespaciales."}];const mg=document.getElementById('gc-cl-msg');const dt=document.getElementById('gc-cl-dot');if(!mg||!dt)return;dt.innerHTML=ms.map((_,i)=>'<span id="gcld'+i+'" style="width:5px;height:5px;border-radius:50%;background:rgba(21,101,255,.9);opacity:'+(0===i?'1':'.3')+';display:block;transition:all .4s"></span>').join('');let cur=0;function sh(i){mg.style.opacity='0';mg.style.transform='translateY(6px)';setTimeout(()=>{mg.innerHTML='<strong style="color:rgba(21,101,255,.9);margin-right:6px;">'+ms[i].t+'</strong>'+ms[i].m;mg.style.opacity='1';mg.style.transform='translateY(0)';},350);ms.forEach((_,j)=>{const d=document.getElementById('gcld'+j);if(d){d.style.opacity=j===i?'1':'.3';}});}sh(0);setInterval(()=>{cur=(cur+1)%ms.length;sh(cur);},4800);})();</script>
     <button id="kml-dl-btn" onclick="gcDownloadKML()">⬇ Descargar KML</button>
   </div>
 </div>

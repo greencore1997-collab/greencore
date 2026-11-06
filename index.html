@@ -1490,6 +1490,11 @@ footer {
     { rx: 2.7,  ry: 2.3,  tiltX:  Math.PI * 0.08,  tiltZ: -Math.PI * 0.22, color: 0x00FF88 },
     { rx: 3.2,  ry: 2.8,  tiltX:  Math.PI * 0.42, tiltZ: -Math.PI * 0.08, color: 0xFF6600 },
     { rx: 2.55, ry: 2.15, tiltX: -Math.PI * 0.33,  tiltZ:  Math.PI * 0.28, color: 0xCC44FF },
+  ,
+    { rx:2.1, ry:1.8, tiltX:-0.20, tiltZ: 0.35, color:0x44DDFF },
+    { rx:3.4, ry:2.9, tiltX: 0.52, tiltZ:-0.12, color:0xFFAA22 },
+    { rx:2.85,ry:2.4, tiltX:-0.38, tiltZ: 0.42, color:0x88FFBB },
+    { rx:3.15,ry:2.65,tiltX: 0.18, tiltZ:-0.30, color:0xFF4488 }
   ];
 
   // Euler objects (order XZ, matching Three.js line.rotation applied sequentially)
@@ -1909,6 +1914,77 @@ footer {
     return root;
   }
 
+  
+  // ---- RAPIDEYE-STYLE satellites (compact bus + flat wing solar panels)
+  function makeRapidEye(accentColor) {
+    const root = new THREE.Group();
+    // Bus principal - cubo compacto plateado con bordes dorados
+    const busMat = new THREE.MeshStandardMaterial({color:0x2a3d55,roughness:0.3,metalness:0.9,envMapIntensity:1.2});
+    const bus = new THREE.Mesh(new THREE.BoxGeometry(0.6,0.5,0.8), busMat);
+    root.add(bus);
+    // Franja dorada alrededor del bus
+    const bandMat = new THREE.MeshStandardMaterial({color:0xc8822a,roughness:0.15,metalness:0.95,emissive:new THREE.Color(0x402200),emissiveIntensity:0.3});
+    const band = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.08,0.82), bandMat);
+    band.position.y = 0.0;
+    root.add(band);
+    // Instrumento de teledetección (morro frontal oscuro)
+    const noseGeo = new THREE.CylinderGeometry(0.12,0.16,0.3,8);
+    const noseMat = new THREE.MeshStandardMaterial({color:0x0a0f1a,roughness:0.5,metalness:0.7});
+    const nose = new THREE.Mesh(noseGeo, noseMat);
+    nose.rotation.x = Math.PI/2;
+    nose.position.z = 0.55;
+    root.add(nose);
+    // Lente del sensor (círculo brillante)
+    const lensMat = new THREE.MeshStandardMaterial({color:0x1a3a6a,roughness:0.05,metalness:0.9,emissive:new THREE.Color(accentColor),emissiveIntensity:0.4});
+    const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.05,12), lensMat);
+    lens.rotation.x = Math.PI/2;
+    lens.position.z = 0.71;
+    root.add(lens);
+    // Paneles solares - dos alas planas (RapidEye tiene paneles dobles por ala)
+    const panelMat = new THREE.MeshStandardMaterial({color:0x06112a,roughness:0.2,metalness:0.6,emissive:new THREE.Color(accentColor),emissiveIntensity:0.08});
+    const cellLineMat = new THREE.MeshStandardMaterial({color:0x0d2550,roughness:0.3,metalness:0.5});
+    // Ala izquierda (2 paneles)
+    const pL1 = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.04,0.55), panelMat);
+    pL1.position.set(-0.75,0,0.05);
+    root.add(pL1);
+    const pL2 = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.04,0.55), panelMat);
+    pL2.position.set(-0.75,0,-0.5);
+    root.add(pL2);
+    // Ala derecha (2 paneles)
+    const pR1 = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.04,0.55), panelMat);
+    pR1.position.set(0.75,0,0.05);
+    root.add(pR1);
+    const pR2 = new THREE.Mesh(new THREE.BoxGeometry(0.9,0.04,0.55), panelMat);
+    pR2.position.set(0.75,0,-0.5);
+    root.add(pR2);
+    // Mástil de conexión entre paneles
+    const mástilMat = new THREE.MeshStandardMaterial({color:0x888888,roughness:0.4,metalness:0.8});
+    const mastL = new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,1.1), mástilMat);
+    mastL.position.set(-0.75,0,-0.225);
+    root.add(mastL);
+    const mastR = new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,1.1), mástilMat);
+    mastR.position.set(0.75,0,-0.225);
+    root.add(mastR);
+    // Antena omnidireccional
+    const antMat = new THREE.MeshStandardMaterial({color:0xdddddd,roughness:0.3,metalness:0.9});
+    const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.015,0.015,0.6,6), antMat);
+    ant.position.y = 0.55;
+    root.add(ant);
+    // Luz de navegación (parpadeo)
+    const navL = new THREE.PointLight(accentColor, 0, 0.8);
+    navL.position.set(0,0.3,0);
+    root.add(navL);
+    root.userData.navLight = navL;
+    return root;
+  }
+  const C_RE1=0x44DDFF, C_RE2=0xFFAA22, C_RE3=0x88FFBB, C_RE4=0xFF4488;
+  const re1 = makeRapidEye(C_RE1); const re2 = makeRapidEye(C_RE2);
+  const re3 = makeRapidEye(C_RE3); const re4 = makeRapidEye(C_RE4);
+  re1.scale.setScalar(44); re2.scale.setScalar(40); re3.scale.setScalar(42); re4.scale.setScalar(38);
+  scene.add(re1); scene.add(re2); scene.add(re3); scene.add(re4);
+  window._satGlow4=mkGlow(C_RE1); window._satGlow5=mkGlow(C_RE2);
+  window._satGlow6=mkGlow(C_RE3); window._satGlow7=mkGlow(C_RE4);
+
   const sat1 = makeSatellite(C_BLUE, 'A');
   const sat2 = makeSatellite(0x00CFFF, 'B');
   const sat3 = makeSatellite(0x00FF88, 'A');
@@ -2143,6 +2219,36 @@ function animate() {
     if (sat5.userData.engineLight)
       sat5.userData.engineLight.intensity = 0.45 + Math.cos(t*4.7)*0.3;
 
+
+    
+    // RapidEye RE1
+    const a6 = t*0.27; const p6=orbitPos(5,a6); const fwd6=orbitTangent(5,a6);
+    const right6=new THREE.Vector3().crossVectors(fwd6,p6.clone().normalize()).normalize();
+    const up6=new THREE.Vector3().crossVectors(right6,fwd6).normalize();
+    _mat3.makeBasis(fwd6,up6,right6); re1.position.copy(p6); re1.quaternion.setFromRotationMatrix(_mat3);
+    if(re1.userData.navLight) re1.userData.navLight.intensity = Math.floor(t*2.1)%2===0?0.9:0;
+    if(window._satGlow4) { window._satGlow4.position.copy(p6); }
+    // RapidEye RE2
+    const a7 = t*0.21+1.8; const p7=orbitPos(6,a7); const fwd7=orbitTangent(6,a7);
+    const right7=new THREE.Vector3().crossVectors(fwd7,p7.clone().normalize()).normalize();
+    const up7=new THREE.Vector3().crossVectors(right7,fwd7).normalize();
+    _mat3.makeBasis(fwd7,up7,right7); re2.position.copy(p7); re2.quaternion.setFromRotationMatrix(_mat3);
+    if(re2.userData.navLight) re2.userData.navLight.intensity = Math.floor(t*1.7)%2===0?0.9:0;
+    if(window._satGlow5) { window._satGlow5.position.copy(p7); }
+    // RapidEye RE3
+    const a8 = t*0.19+3.5; const p8=orbitPos(7,a8); const fwd8=orbitTangent(7,a8);
+    const right8=new THREE.Vector3().crossVectors(fwd8,p8.clone().normalize()).normalize();
+    const up8=new THREE.Vector3().crossVectors(right8,fwd8).normalize();
+    _mat3.makeBasis(fwd8,up8,right8); re3.position.copy(p8); re3.quaternion.setFromRotationMatrix(_mat3);
+    if(re3.userData.navLight) re3.userData.navLight.intensity = Math.floor(t*2.3)%2===0?0.9:0;
+    if(window._satGlow6) { window._satGlow6.position.copy(p8); }
+    // RapidEye RE4
+    const a9 = t*0.23+5.2; const p9=orbitPos(8,a9); const fwd9=orbitTangent(8,a9);
+    const right9=new THREE.Vector3().crossVectors(fwd9,p9.clone().normalize()).normalize();
+    const up9=new THREE.Vector3().crossVectors(right9,fwd9).normalize();
+    _mat3.makeBasis(fwd9,up9,right9); re4.position.copy(p9); re4.quaternion.setFromRotationMatrix(_mat3);
+    if(re4.userData.navLight) re4.userData.navLight.intensity = Math.floor(t*1.9)%2===0?0.9:0;
+    if(window._satGlow7) { window._satGlow7.position.copy(p9); }
 
     // Pulsing lights
     blueLight.intensity  = 3.0 + Math.sin(t * 0.9) * 0.7;

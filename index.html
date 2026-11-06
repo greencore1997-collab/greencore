@@ -1490,11 +1490,7 @@ footer {
     { rx: 2.7,  ry: 2.3,  tiltX:  Math.PI * 0.08,  tiltZ: -Math.PI * 0.22, color: 0x00FF88 },
     { rx: 3.2,  ry: 2.8,  tiltX:  Math.PI * 0.42, tiltZ: -Math.PI * 0.08, color: 0xFF6600 },
     { rx: 2.55, ry: 2.15, tiltX: -Math.PI * 0.33,  tiltZ:  Math.PI * 0.28, color: 0xCC44FF },
-    { rx:5.0, ry:1.8, tiltX:28, tiltZ:15, color:0xFFAA00 },
-  { rx:4.4, ry:1.5, tiltX:-35, tiltZ:22, color:0xFF6600 },
-  { rx:5.5, ry:2.0, tiltX:50, tiltZ:-10, color:0xFF4488 },
-  { rx:3.9, ry:1.4, tiltX:-20, tiltZ:-30, color:0xFFDD44 },
-];
+  ];
 
   // Euler objects (order XZ, matching Three.js line.rotation applied sequentially)
   const _orbitEulers = ORBITS.map(o => new THREE.Euler(o.tiltX, 0, o.tiltZ, 'XZY'));
@@ -1913,46 +1909,7 @@ footer {
     return root;
   }
 
-    function makeRapidEye(accentColor) {
-    const root = new THREE.Group();
-    const matBus = new THREE.MeshStandardMaterial({ color:0x2a3d55, metalness:0.8, roughness:0.3 });
-    const bus = new THREE.Mesh(new THREE.BoxGeometry(0.6,0.5,0.8), matBus);
-    root.add(bus);
-    const matBand = new THREE.MeshStandardMaterial({ color:0xc8822a, metalness:0.9, roughness:0.2 });
-    const band = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.08,0.82), matBand);
-    root.add(band);
-    const matNose = new THREE.MeshStandardMaterial({ color:0x1a2a3a, metalness:0.7, roughness:0.4 });
-    const nose = new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.16,0.3,8), matNose);
-    nose.rotation.x = Math.PI/2; nose.position.z = 0.55;
-    root.add(nose);
-    const matLens = new THREE.MeshStandardMaterial({ color:accentColor, emissive:accentColor, emissiveIntensity:0.8, metalness:0.5 });
-    const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.05,12), matLens);
-    lens.rotation.x = Math.PI/2; lens.position.z = 0.71;
-    root.add(lens);
-    const matPanel = new THREE.MeshStandardMaterial({ color:0x1a3a5c, metalness:0.6, roughness:0.5 });
-    [[-0.75,0,0.05],[-0.75,0,-0.5],[0.75,0,0.05],[0.75,0,-0.5]].forEach(p=>{
-      const panel=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.04,0.55),matPanel);
-      panel.position.set(p[0],p[1],p[2]); root.add(panel);
-    });
-    const matMast=new THREE.MeshStandardMaterial({color:0x888888});
-    [-0.75,0.75].forEach(x=>{
-      const mast=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,1.1),matMast);
-      mast.position.x=x; root.add(mast);
-    });
-    const ant=new THREE.Mesh(new THREE.CylinderGeometry(0.015,0.015,0.6,6),matMast);
-    ant.position.y=0.55; root.add(ant);
-    const navL=new THREE.PointLight(accentColor,0,0.8);
-    navL.position.y=0.3; root.add(navL);
-    root.userData.navLight=navL;
-    return root;
-  }
-  const C_RE1=0xFFAA00,C_RE2=0xFF6600,C_RE3=0xFF4488,C_RE4=0xFFDD44;
-  const re1=makeRapidEye(C_RE1); re1.scale.setScalar(50);
-  const re2=makeRapidEye(C_RE2); re2.scale.setScalar(48);
-  const re3=makeRapidEye(C_RE3); re3.scale.setScalar(46);
-  const re4=makeRapidEye(C_RE4); re4.scale.setScalar(44);
-  scene.add(re1); scene.add(re2); scene.add(re3); scene.add(re4);
-const sat1 = makeSatellite(C_BLUE, 'A');
+  const sat1 = makeSatellite(C_BLUE, 'A');
   const sat2 = makeSatellite(0x00CFFF, 'B');
   const sat3 = makeSatellite(0x00FF88, 'A');
   const sat4 = makeSatellite(0xFF6600, 'B');
@@ -1984,11 +1941,7 @@ const sat1 = makeSatellite(C_BLUE, 'A');
     };
     window._satGlow1 = mkGlow(0x4488ff);
     window._satGlow2 = mkGlow(0x00CFFF);
-    window._satGlow3 = mkGlow(0x00FF88);  window._satGlow4=mkGlow(C_RE1);
-  window._satGlow5=mkGlow(C_RE2);
-  window._satGlow6=mkGlow(C_RE3);
-  window._satGlow7=mkGlow(C_RE4);
-
+    window._satGlow3 = mkGlow(0x00FF88);
   })();
 
   // ==== COUNTRY HIGHLIGHT (click simulation) ====
@@ -2191,18 +2144,7 @@ function animate() {
       sat5.userData.engineLight.intensity = 0.45 + Math.cos(t*4.7)*0.3;
 
 
-        // RapidEye satellites
-    const _reArr=[re1,re2,re3,re4],_reGl=[window._satGlow4,window._satGlow5,window._satGlow6,window._satGlow7];
-    for(let _ri=0;_ri<4;_ri++){
-      const _ang=t*0.38+_ri*Math.PI/2;
-      const _pos=orbitPos(5+_ri,_ang),_tan=orbitTangent(5+_ri,_ang);
-      _reArr[_ri].position.copy(_pos);
-      _reArr[_ri].lookAt(_pos.x+_tan.x,_pos.y+_tan.y,_pos.z+_tan.z);
-      if(_reGl[_ri]) _reGl[_ri].position.copy(_pos);
-      const _nL=_reArr[_ri].userData.navLight;
-      if(_nL) _nL.intensity=0.6+0.4*Math.sin(t*3+_ri);
-    }
-// Pulsing lights
+    // Pulsing lights
     blueLight.intensity  = 3.0 + Math.sin(t * 0.9) * 0.7;
     greenLight.intensity = 2.5 + Math.cos(t * 0.7) * 0.7;
 
